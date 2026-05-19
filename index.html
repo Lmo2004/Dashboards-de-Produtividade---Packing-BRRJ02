@@ -221,34 +221,13 @@ main{
   border-color:var(--am) !important;
   background:rgba(255,230,0,.12) !important;
 }
-.expbtn{
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  padding:9px 14px;
-  border-radius:10px;
-  border:1px solid #D8E1EE;
-  background:#fff;
-  color:#1D4ED8;
-  font-family:"DM Sans",sans-serif;
-  font-size:12px;
-  font-weight:700;
-  cursor:pointer;
-  transition:.2s all;
-  white-space:nowrap;
-  box-shadow:0 6px 14px rgba(15,23,42,.04);
-}
+
 .expbtn:hover{
   transform:translateY(-1px);
   border-color:#BFD2FF;
 }
-.expbtn.csv{
-  color:#0F766E;
-}
-.expbtn.xlsx{
-  color:#1D4ED8;
-  background:linear-gradient(180deg,#FFFFFF,#F8FAFF);
-}
+
+
 .twrap{
   background:#fff !important;
   border:1px solid #E5E7EB !important;
@@ -308,66 +287,33 @@ footer{
   backdrop-filter:blur(6px);
 }
 @media (max-width:768px){
-  .expbtn{flex:1 1 calc(50% - 6px);justify-content:center;}
+  
   .toolbar{gap:8px;}
 }
 
-/* ── Export Tray ──────────────────────────── */
-#export-tray{
-  position:fixed;bottom:0;left:0;right:0;z-index:500;
-  background:#fff;border-top:2px solid var(--am);
-  box-shadow:0 -4px 24px rgba(15,23,42,.10);
-  padding:10px 24px;
-  display:none;
-  align-items:center;
-  gap:12px;
-  flex-wrap:wrap;
-}
-.tray-label{
-  font-size:10px;letter-spacing:2px;text-transform:uppercase;
-  color:#64748B;font-weight:600;white-space:nowrap;flex-shrink:0;
-}
-#export-cards{display:flex;gap:10px;flex-wrap:wrap;flex:1;align-items:center;}
-.exp-card{
-  display:flex;align-items:center;gap:8px;
-  background:#F8FAFC;border:1px solid #E5E7EB;
-  border-radius:10px;padding:7px 12px;
-  animation:fadeU .3s ease both;
-  min-width:220px;
-}
-.exp-ico{font-size:18px;flex-shrink:0;}
-.exp-info{flex:1;min-width:0;}
-.exp-tab{
-  display:inline-block;font-size:9px;font-weight:700;letter-spacing:1.5px;
-  background:var(--am);color:#111827;border-radius:4px;
-  padding:2px 6px;margin-bottom:2px;
-}
-.exp-fname{
-  display:block;font-size:11px;font-weight:600;color:#111827;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:160px;
-}
-.exp-meta{display:block;font-size:10px;color:#94A3B8;}
-.exp-dl{
-  display:inline-flex;align-items:center;gap:4px;
-  background:var(--az);color:#fff;
-  font-size:11px;font-weight:700;
-  padding:6px 12px;border-radius:8px;
-  text-decoration:none;white-space:nowrap;
-  transition:background .2s;flex-shrink:0;
-}
-.exp-dl:hover{background:#1d6bf0;}
-.tray-close{
-  background:none;border:none;color:#94A3B8;
-  font-size:18px;cursor:pointer;padding:4px;
-  margin-left:4px;flex-shrink:0;line-height:1;
-}
-.tray-close:hover{color:#111827;}
-@media(max-width:768px){
-  #export-tray{padding:8px 12px;}
+
   .exp-card{min-width:calc(50% - 6px);}
 }
 
-body { padding-bottom: 80px; }
+
+/* ── Save Page Button ─────────────────────── */
+.savebtn{
+  display:inline-flex;align-items:center;gap:7px;
+  background:var(--am);color:#111827;
+  font-family:"DM Sans",sans-serif;font-weight:700;font-size:12px;
+  padding:9px 18px;border-radius:9px;border:none;cursor:pointer;
+  transition:all .2s;white-space:nowrap;letter-spacing:.3px;
+  box-shadow:0 4px 14px rgba(255,230,0,.25);
+}
+.savebtn:hover{background:#FFD700;transform:translateY(-1px);box-shadow:0 6px 18px rgba(255,230,0,.35);}
+.savebtn svg{flex-shrink:0;}
+/* Status dot for loaded data */
+.loaded-badge{
+  display:inline-flex;align-items:center;gap:5px;
+  background:#DCFCE7;border:1px solid #BBF7D0;color:#166534;
+  font-size:10px;font-weight:600;padding:3px 9px;border-radius:20px;
+  margin-top:6px;letter-spacing:.5px;
+}
 </style>
 
 </head>
@@ -380,6 +326,7 @@ body { padding-bottom: 80px; }
   </div>
   <div class="hright">
     <span class="ts"><span class="dot"></span><span id="clk">--:--:--</span></span>
+    <button class="savebtn" onclick="savePage()" title="Baixar HTML com todos os dados embutidos">&#128190; Salvar página com dados</button>
   </div>
 </header>
 
@@ -422,8 +369,6 @@ body { padding-bottom: 80px; }
       <button class="fbtn"     onclick="setF('mono','at',this)">&#9989; Atingiram</button>
       <button class="fbtn"     onclick="setF('mono','qu',this)">&#9888; Quase</button>
       <button class="fbtn"     onclick="setF('mono','ab',this)">&#10060; Abaixo</button>
-      <button class="expbtn csv" onclick="exportTab('mono','csv')">⬇ CSV</button>
-      <button class="expbtn xlsx" onclick="exportTab('mono','xlsx')">⬆ Excel</button>
     </div>
     <div class="twrap">
       <table>
@@ -477,8 +422,6 @@ body { padding-bottom: 80px; }
       <button class="fbtn"     onclick="setF('machine','at',this)">&#9989; Atingiram</button>
       <button class="fbtn"     onclick="setF('machine','qu',this)">&#9888; Quase</button>
       <button class="fbtn"     onclick="setF('machine','ab',this)">&#10060; Abaixo</button>
-      <button class="expbtn csv" onclick="exportTab('machine','csv')">⬇ CSV</button>
-      <button class="expbtn xlsx" onclick="exportTab('machine','xlsx')">⬆ Excel</button>
     </div>
     <div class="twrap">
       <table>
@@ -532,8 +475,6 @@ body { padding-bottom: 80px; }
       <button class="fbtn"     onclick="setF('putwall','at',this)">&#9989; Atingiram</button>
       <button class="fbtn"     onclick="setF('putwall','qu',this)">&#9888; Quase</button>
       <button class="fbtn"     onclick="setF('putwall','ab',this)">&#10060; Abaixo</button>
-      <button class="expbtn csv" onclick="exportTab('putwall','csv')">⬇ CSV</button>
-      <button class="expbtn xlsx" onclick="exportTab('putwall','xlsx')">⬆ Excel</button>
     </div>
     <div class="twrap">
       <table>
@@ -587,8 +528,6 @@ body { padding-bottom: 80px; }
       <button class="fbtn"     onclick="setF('wallin','at',this)">&#9989; Atingiram</button>
       <button class="fbtn"     onclick="setF('wallin','qu',this)">&#9888; Quase</button>
       <button class="fbtn"     onclick="setF('wallin','ab',this)">&#10060; Abaixo</button>
-      <button class="expbtn csv" onclick="exportTab('wallin','csv')">⬇ CSV</button>
-      <button class="expbtn xlsx" onclick="exportTab('wallin','xlsx')">⬆ Excel</button>
     </div>
     <div class="twrap">
       <table>
@@ -612,10 +551,6 @@ body { padding-bottom: 80px; }
   </div>
 
 
-<!-- Export Tray -->
-<div id="export-tray">
-  <span class="tray-label">📥 Exportações</span>
-  <div id="export-cards"></div>
   <button class="tray-close" onclick="clearExportTray()" title="Fechar">✕</button>
 </div>
 
@@ -624,6 +559,59 @@ body { padding-bottom: 80px; }
 <footer>Mercado Livre &nbsp;&middot;&nbsp; BRRJ02 &nbsp;&middot;&nbsp; Packing Dashboard &nbsp;&middot;&nbsp; v5.0</footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script>
+/* ── Preloaded data (injected when saving page) ─────── */
+const PRELOADED_DATA = null; /* PRELOADED_MARKER */
+
+/* ── Save page with embedded data ───────────────────── */
+function savePage(){
+  const payload = {};
+  for(const tab of ["mono","machine","putwall","wallin"]){
+    if(ST[tab].data.length > 0){
+      payload[tab] = {
+        data: ST[tab].data,
+        filename: document.getElementById("fn-"+tab).textContent || "dados"
+      };
+    }
+  }
+  if(!Object.keys(payload).length){
+    alert("Carregue pelo menos um arquivo antes de salvar a página.");
+    return;
+  }
+  const raw = document.documentElement.outerHTML;
+  const marker = 'const PRELOADED_DATA = null; /* PRELOADED_MARKER */';
+  const injected = "const PRELOADED_DATA = " + JSON.stringify(payload) + "; /* PRELOADED_MARKER */";
+  if(!raw.includes(marker)){
+    alert("Erro: marcador não encontrado no HTML.");
+    return;
+  }
+  const newHtml = "<!DOCTYPE html>\n" + raw.replace(marker, injected);
+  const blob = new Blob([newHtml], {type:"text/html;charset=utf-8"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  const dt = new Date().toISOString().slice(0,10);
+  a.href = url; a.download = "packing_dashboard_" + dt + ".html";
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url), 8000);
+}
+
+/* ── Boot: load preloaded data on page open ─────────── */
+function bootPreloaded(){
+  if(!PRELOADED_DATA) return;
+  for(const [tab, info] of Object.entries(PRELOADED_DATA)){
+    if(!ST[tab]) continue;
+    ST[tab].data = info.data;
+    const fnEl = document.getElementById("fn-"+tab);
+    if(fnEl) fnEl.textContent = (info.filename || "Dados carregados") + " ✓";
+    // Mark upload zone as loaded
+    const dz = document.getElementById("dz-"+tab);
+    if(dz) dz.style.borderColor = "var(--vd)";
+    render(tab);
+  }
+}
+
+bootPreloaded();
+</script>
 <script>
 const ID_GROOT = {"ADRIANA DE SOUZA FERREIRA": "2132392", "ALESSANDRA COUTINHO DE FIGUEIREDO": "2148553", "ALEXSANDRE THOMPSOM DE OLIVEIRA": "436179", "ALEXY FERNANDES DOS SANTOS": "441931", "ALICE SANTOS DE AZEVEDO": "2253081", "ALINE SILVA DE OLIVEIRA": "2194257", "ALLAN DOS SANTOS SILVA TELES": "2109387", "ANA BEATRIZ DA SILVA SOUSA DE OLIVEIRA": "1921690", "ANA LUCIA SOARES PENA CARNEIRO": "2132386", "ANA PAULA DE SOUZA LIMA": "2027354", "ANNY GABRIELLE MARTINS SANTOS": "436756", "ANTHONY ALEIXO VIEGAS DA ROCHA": "2027462", "BEATRIZ DA SILVA FERNANDES": "2132402", "BEATRIZ MOREIRA DA SILVA": "2109397", "BIANCA PEREIRA GUIMARAES": "2148514", "BRUNIELI FAGUNDES DA SILVA": "2132439", "CARLA ANEZIA FERREIRA DOS SANTOS": "1762361", "CARLA DE LIMA BASTOS": "556233", "CESAR DE FARIAS FIRMINO": "548992", "CID SANDERSON INACIO DE ALMEIDA": "2027485", "CLEIDE DIAS DA SILVA": "2027343", "CRISTIANO GAIAO BREDA": "2027348", "DANIEL BORGES DA SILVA": "2126576", "DANIELLE DA ROCHA SILVARES": "2109403", "DAVI GALVAO MARQUES": "2194272", "ERIKA DOS SANTOS VIEIRA": "2125422", "ESTEVAO COSTA DOS SANTOS": "2194273", "EVELYN DAS NEVES DE OLIVEIRA": "2134248", "FABIO RIBAMAR FEQUES": "2027509", "FABRICIO BARRADAS SANTOS": "2148524", "FELIPE DE LIMA SALLES": "2140774", "FELIPE ROCHA VIDAL": "2060448", "GABRIEL FEIJO DA SILVA DO NASCIMENTO": "2126581", "GABRIEL PINTO GONCALVES": "1921712", "GERMANO AZIZ DE MOURA JUNIOR": "2027474", "GIOVANA ELISEU SANTOS SILVA": "2126582", "GISELLE MARIA PEREIRA": "2194275", "GUILHERME MATEUS LISBOA SOARES": "2027315", "HELLEN SANTOS COSTA DA SILVA": "2140779", "HEVELYN SILVA DOS SANTOS": "1789862", "INGRID CRISTINA MENDONCA FERNANDES": "2109426", "JENIFER TELES DA SILVA": "2139922", "JOICE VITORIA MARTINS FERNANDES": "2027342", "JULIA DA SILVA RIBEIRO": "2210943", "JUSSARA TEIXEIRA PEREIRA": "2125442", "KAYKY DOS SANTOS MEIRELES": "2148530", "LARISSA DANDARA PEDRO DE PAIVA": "2217898", "LARISSA OLIVEIRA DE ALMEIDA": "2126586", "LORRAN ALMEIDA MOURA": "1783093", "LUANA ALMEIDA DE OLIVEIRA GOMES": "2027327", "LUCIANA FERREIRA DA SILVA": "2027371", "LUCIANE OLIVEIRA ARAUJO DE LIRA": "2171471", "MARCOS ELIAS MORAES MUNIZ DE SOUSA": "2226783", "MARCOS VINICIOS SALDANHA DA SILVA": "1805739", "MARIA APARECIDA DA SILVA COSTA": "1493539", "MARISOL DE OLIVEIRA FAUSTINO": "2027351", "MATHEUS CLEMENTE DE SENA": "1921713", "MATHEUS DOS SANTOS LUCIO": "2210941", "MAYARA ROCHA DE LIMA": "2140790", "MYRELLA LEANDRA RODRIGUES DE SOUSA": "2209682", "NATHALIA CORREA DOS SANTOS": "489315", "NATHALIA DO ROSARIO BASTOS OLIVEIRA": "2126588", "PEDRO RICARDO SANTOS DE JESUS": "2126589", "REGEANE DA SILVA": "2132372", "RICARDO LUCAS DA SILVA CARVALHO": "2027358", "ROBERTA DOS SANTOS DE ARAUJO": "2078846", "RONALDO SANTOS REIS": "2027470", "STHEFANY DE ARAUJO BAHIENSE EINECK CORREIA": "2132370", "TAINA DA SILVA PATRICIO": "2027340", "THALIA CHASCO DE SOUZA": "2027318", "THAYS DA CONCEICAO BORGES PACHECO": "2178629", "VANESSA MARTINS PINTO MESSIAS": "2132359", "VICTOR HUGO DE ARAUJO DA SILVA": "2209572", "ANA CAROLINA CANDIDA CORDEIRO DA SILVA": "2234039", "MARCELO DO VALE DE CARVALHO": "2233960", "GENILSON DA SILVA GOUVEIA": "2233212", "MARIANA SANTOS SOUTO MAIOR": "2234041", "SARA OLIVEIRA DA COSTA": "2233493", "JENNIFER OLIVEIRA": "2233347", "JHADE COSMO BENINCAZA": "2170105", "GUSTAVO ALVES": "2242089", "MARIA EDUARDA SANTOS DA SILVA DA CONCEICAO": "2241968", "EDILSON DA SILVA SANTOS": "2079993", "WALLACE DA SILVA BARBOSA": "2370120", "GEOVANNA SANTOS MARTINS": "2370721", "CAIO CESAR BARBOSA SANTOS": "2370481", "ANA BEATRIZ DOS SANTOS SILVA": "2391515", "WALLACE DELFINO SILVEIRA": "2391097", "LUIZ FELIPE ANDRADE MILCK": "2391269", "ANA PAULA ALVES PEREIRA XAVIER": "2391186", "GABRIELLE DIAMANTINO MARQUES": "2391518", "STHEPHANY JESUS DA SILVA SANTANA SANTOS": "2391514", "PATRICIA RODRIGUES SALERNO": "2391329", "NAYARA MACHADO DA SILVA": "2391171", "PATRICK RODRIGUES FARIAS": "2391337", "WELLINGTON MONTEIRO DOS SANTOS": "2391275", "VINICIUS MORAES E SILVA": "2391050", "ULISSES FERREIRA SILVA": "2391424", "CARINA DE SOUSA SANTOS": "2391354", "RENATO JUNIOR MARTINS RIBEIRO": "2391086", "GABRIEL DOS SANTOS CARVALHO": "2391526", "LUIZ FERNANDO LOPES DE ANDRADE SILVA": "2390675", "LUIZ CARLOS CUNHA ALMEIDA DA SILVA": "2391020", "RUAN LUIS MENDES DIONISIO DANTAS": "2390894", "GABRIEL MAGALHAES GOMES": "2391540", "MARCIO HENRIQUE DA FONSECA JOSE CAGNIN": "2391422", "ALESSANDRA DOMINGUES DA COSTA": "2391025", "ESTER DAMIAO VALTER": "2391079", "MARIA EDUARDA NUNES DOS SANTOS": "2391616", "THAMIRIS DOS SANTOS VIANNA": "2390951", "WALLACE PEREIRA GONCALVES": "2391162", "RAQUEL DE NEGREIROS AGUIAR": "2391611", "ANDRESSA SANTANA DA SILVA COSTA": "2390823", "RAYSSA DOS SANTOS FRANCA DE SOUZA": "2391513", "MAX DA SILVA LINS": "2391345", "LENI SANDRA DAS CANDEIAS PAIXAO": "2390838", "ANDRE MENDONCA DA SILVA": "2390664", "MIRIAM EIRAS DOS SANTOS DA SILVA": "2391407", "LARA KATHLEEN RIBEIRO DOS SANTOS": "2391136", "CLARICE GUEDES DA SILVA SANTOS": "2391228", "BARBARA CRISTINA SILVA DO NASCIMENTO": "2391392", "AMANDA OLIVEIRA NOGUEIRA": "2391156", "ARTHUR ANTERIO CONSTANTINO DA SILVA": "2391610", "RONIELE RODRIGUES TEODORO DA SILVA": "2390861", "DAIANE LUIZ FERREIRA": "2391364", "MATHEUS ESTEVAO DE QUEIROZ DE SOUZA": "2390750", "JULIANA EZAQUIEL NICOMEDES": "2428354", "GUILHERME BERNARDINO DE SOUZA": "2428349", "AMABILE BERNARDINO DOS SANTOS": "2428373", "LAIS DA SILVA PIMENTEL": "2428388", "GABRIELA RODRIGUES DA SILVEIRA": "2428375", "SANDRA MARA SANCHES GRAVINO DA SILVA": "2428370", "WALLACE DE BARROS SILVA": "2428353", "ANDRIELY DE JESUS MOROTE GUIMARAES": "2428362", "PAOLA OLIVEIRA SOBRAL": "2427740", "ALESSANDRA DOS SANTOS AGOSTINHO": "2427049", "ALEXANDRA MARQUES DE SOUZA DIAS PASCHOAL": "2428414", "MARIA JULIA ANDRADE FERNANDES": "2426904", "ELIZABETE FERREIRA DE OLIVEIRA": "2426993", "GABRIELY DO ESPIRITO SANTO JUNCAL": "2426916", "EMILLY GABRIELE MONTEIRO DE LIMA RODRIGUES": "2433688", "ENIA REBECCA FERREIRA DIAS": "2433760", "ADRIELLE RODRIGUES SERRINHA": "2438943", "JANAINA BARBOSA ANTONIO": "2445341", "EVANDRO JOSE SILVA CARVALHO": "2446949", "MARIA LUIZA ALVES SOUZA": "2439625", "GUILHERME DA CONCEICAO SANTOS": "2452967", "DAIANE DA SILVA ANDRADE": "2453155", "JOSILENI DOS SANTOS DA SILVA": "2427052", "GRACE EVELYN DA SILVA PEREIRA": "2461182", "LENON AXEL": "2461194", "LIDIANE REGINA ZAINOTE": "2461188", "NATANY RODRIGUES FERREIRA": "2461216", "JUNO GRAMA MIRANDA DA SILVA": "2462317", "DEMETRIUS MARTINS GAMA": "2461250", "MICAELA PAIXAO FAVETTA DA SILVA": "2461228", "PEDRO HENRIQUE CASSANI FERREIRA RIVAS": "2461222", "JAILSON GOMES DE OLIVEIRA": "2461264", "KELVIN DA SILVA ELIDIO": "2461288", "DAVID DA CONCEICAO BARBOSA": "2461324", "ESTELA DA CUNHA LOPES": "2461213", "PAULO DOUGLAS RIBEIRO GOMES": "2461246"};
 
@@ -841,79 +829,3 @@ function tempoPlain(seg){
   const m=Math.floor((seg%3600)/60);
   return `${h}h ${m}min`;
 }
-
-const EXPORT_STORE = {};
-
-function renderExportTray(){
-  const entries = Object.values(EXPORT_STORE);
-  const tray = document.getElementById("export-tray");
-  if(!entries.length){ tray.style.display="none"; return; }
-  tray.style.display="flex";
-  document.getElementById("export-cards").innerHTML = entries.map(e=>`
-    <div class="exp-card">
-      <span class="exp-ico">${e.kind==="xlsx"?"📊":"📄"}</span>
-      <div class="exp-info">
-        <span class="exp-tab">${e.tab.toUpperCase()} · ${e.kind.toUpperCase()}</span>
-        <span class="exp-fname">${e.filename}</span>
-        <span class="exp-meta">${e.rows} registros · ${e.time}</span>
-      </div>
-      <a href="${e.url}" download="${e.filename}" class="exp-dl">↓ Baixar</a>
-    </div>
-  `).join("");
-}
-
-function clearExportTray(){
-  Object.values(EXPORT_STORE).forEach(e=>URL.revokeObjectURL(e.url));
-  for(const k in EXPORT_STORE) delete EXPORT_STORE[k];
-  renderExportTray();
-}
-
-function exportTab(tab, kind){
-  const data=filteredData(tab);
-  if(!data.length){ alert("Não há dados para exportar neste filtro."); return; }
-  const rows=data.map((r,i)=>({
-    "#": i+1,
-    "Nome": r.nome,
-    "ID Groot": ID_GROOT[(r.nome||"").toUpperCase()] || "",
-    "Prod. Líquida": Math.round(r.liquida),
-    "Utilização %": (r.utilizacao*100).toFixed(1) + "%",
-    "Meta %": (r.percMeta*100).toFixed(1) + "%",
-    "Unidades": Math.round(r.unidades),
-    "Tempo Net": tempoPlain(r.tempo)
-  }));
-  const ws = XLSX.utils.json_to_sheet(rows);
-  const wb = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb, ws, tab.toUpperCase());
-  const date = new Date().toISOString().slice(0,10);
-  const time = new Date().toLocaleTimeString("pt-BR");
-  const name = `produtividade_${tab}_${date}`;
-
-  let blob, filename;
-  if(kind === "xlsx"){
-    const wbout = XLSX.write(wb, {bookType:"xlsx", type:"array"});
-    blob = new Blob([wbout], {type:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
-    filename = name + ".xlsx";
-  } else {
-    const csv = XLSX.utils.sheet_to_csv(ws, {FS:";"});
-    blob = new Blob([csv], {type:"text/csv;charset=utf-8;"});
-    filename = name + ".csv";
-  }
-
-  // Auto-download
-  const dlUrl = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = dlUrl; a.download = filename;
-  document.body.appendChild(a); a.click(); a.remove();
-  setTimeout(()=>URL.revokeObjectURL(dlUrl), 5000);
-
-  // Persist in tray (revoke old if exists)
-  const key = tab + "_" + kind;
-  if(EXPORT_STORE[key]) URL.revokeObjectURL(EXPORT_STORE[key].url);
-  const persistUrl = URL.createObjectURL(blob);
-  EXPORT_STORE[key] = { url: persistUrl, filename, time, tab, kind, rows: data.length };
-  renderExportTray();
-}
-
-</script>
-</body>
-</html>
