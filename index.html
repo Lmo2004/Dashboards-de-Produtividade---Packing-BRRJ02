@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>BRRJ02 · Produtividade Packing</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<title>Packing Dashboard · BRRJ02</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 <style>
 :root{
   --am:#FFE600;--az:#3483FA;--pt:#0A0A0A;
@@ -13,280 +13,907 @@
   --vm:#FF3B3B;--tx:#E0E0E0;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{
-  background:var(--pt);
-  color:var(--tx);
-  font-family:"DM Sans",sans-serif;
-  min-height:100vh;
-  overflow-x:hidden;
-}
-
-/* Scanline sutil */
-body::before{
-  content:"";position:fixed;inset:0;
-  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(255,255,255,.008) 2px,rgba(255,255,255,.008) 4px);
-  pointer-events:none;z-index:999
-}
-
-/* ── HEADER ── */
-header{
-  background:var(--c1);
-  border-bottom:3px solid var(--am);
-  padding:0 48px;
-  display:flex;align-items:center;justify-content:space-between;
-  height:70px;
-  position:sticky;top:0;z-index:200;
-}
-.logo-wrap{display:flex;align-items:center;gap:14px}
-.logo-wrap img{height:46px;border-radius:8px}
-.logo-title{font-size:15px;font-weight:700;color:#F5F5F5;letter-spacing:2px;text-transform:uppercase}
-.logo-sub{font-size:10px;color:#555;letter-spacing:3px;text-transform:uppercase;margin-top:2px}
-.hright{display:flex;align-items:center;gap:10px}
+body{background:var(--pt);color:var(--tx);font-family:"DM Sans",sans-serif;min-height:100vh;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(255,255,255,.012) 2px,rgba(255,255,255,.012) 4px);pointer-events:none;z-index:999}
+header{background:var(--c1);border-bottom:2px solid var(--am);padding:0 40px;display:flex;align-items:center;justify-content:space-between;height:66px;position:sticky;top:0;z-index:200;animation:fadeD .5s ease both}
+.logo-wrap{display:flex;align-items:center;gap:12px}
+.logo-wrap img{height:40px;border-radius:7px;display:block}
+.logo-sub{font-size:10px;color:#555;letter-spacing:3px;text-transform:uppercase}
+.hright{display:flex;align-items:center;gap:14px;animation:fadeD .5s .1s ease both}
 .dot{width:7px;height:7px;background:var(--vd);border-radius:50%;display:inline-block;animation:pulse 2s infinite;margin-right:5px}
-.ts{font-size:11px;color:#555;display:flex;align-items:center}
-#clk{color:var(--am);font-family:"Bebas Neue",sans-serif;font-size:22px;letter-spacing:2px}
-
-/* ── HERO ── */
-.hero{
-  text-align:center;
-  padding:72px 24px 52px;
-}
-.hero-eyebrow{
-  font-size:11px;letter-spacing:4px;text-transform:uppercase;
-  color:#555;margin-bottom:16px;
-}
-.hero h1{
-  font-family:"Bebas Neue",sans-serif;
-  font-size:clamp(46px,8vw,88px);
-  letter-spacing:4px;
-  line-height:1;
-  color:var(--br);
-}
-.hero h1 span{color:var(--am)}
-.hero p{
-  margin-top:18px;
-  font-size:14px;color:#666;
-  max-width:480px;margin-left:auto;margin-right:auto;
-  line-height:1.7;
-}
-.hero-divider{
-  width:60px;height:3px;background:var(--am);
-  margin:32px auto;border-radius:2px;
-}
-
-/* ── CARDS GRID ── */
-.cards{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
-  gap:24px;
-  max-width:920px;
-  margin:0 auto;
-  padding:0 24px 80px;
-}
-
-.card{
-  background:var(--c1);
-  border:1px solid var(--c3);
-  border-radius:20px;
-  overflow:hidden;
-  text-decoration:none;
-  display:block;
-  transition:transform .22s ease, border-color .22s ease, box-shadow .22s ease;
-  position:relative;
-}
-.card:hover{
-  transform:translateY(-5px);
-  border-color:var(--am);
-  box-shadow:0 20px 48px rgba(0,0,0,.5), 0 0 0 1px rgba(255,230,0,.15);
-}
-.card-bar{height:4px;width:100%}
-.card-bar.yellow{background:linear-gradient(90deg,var(--am),#FFA000)}
-.card-bar.blue  {background:linear-gradient(90deg,var(--az),#00C2FF)}
-
-.card-body{padding:28px 28px 24px}
-.card-icon{font-size:36px;margin-bottom:16px;display:block}
-.card-title{
-  font-family:"Bebas Neue",sans-serif;
-  font-size:32px;letter-spacing:2px;
-  color:var(--br);line-height:1;margin-bottom:8px;
-}
-.card-sub{font-size:12px;color:#555;letter-spacing:2px;text-transform:uppercase;margin-bottom:16px}
-.card-desc{font-size:13px;color:#777;line-height:1.65;margin-bottom:24px}
-
-.card-tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
-.tag{
-  font-size:10px;font-weight:600;letter-spacing:.5px;
-  padding:4px 12px;border-radius:20px;
-  text-transform:uppercase;
-}
-.tag-am{background:rgba(255,230,0,.1);color:var(--am);border:1px solid rgba(255,230,0,.2)}
-.tag-vd{background:rgba(0,200,83,.1);color:var(--vd);border:1px solid rgba(0,200,83,.2)}
-.tag-az{background:rgba(52,131,250,.1);color:var(--az);border:1px solid rgba(52,131,250,.2)}
-.tag-or{background:rgba(255,152,0,.1);color:var(--or);border:1px solid rgba(255,152,0,.2)}
-.tag-vm{background:rgba(255,59,59,.1);color:var(--vm);border:1px solid rgba(255,59,59,.2)}
-
-.card-cta{
-  display:inline-flex;align-items:center;gap:8px;
-  background:var(--am);color:#000;
-  font-family:"DM Sans",sans-serif;font-weight:700;font-size:13px;
-  padding:12px 24px;border-radius:10px;
-  transition:background .18s,transform .18s;
-  letter-spacing:.5px;
-}
-.card:hover .card-cta{background:#ffd000;transform:translateX(3px)}
-.card-cta svg{transition:transform .18s}
-.card:hover .card-cta svg{transform:translateX(3px)}
-
-/* Badge "NOVO" */
-.badge-new{
-  position:absolute;top:20px;right:20px;
-  background:var(--vm);color:#fff;
-  font-size:9px;font-weight:700;letter-spacing:1px;
-  padding:4px 9px;border-radius:6px;text-transform:uppercase;
-}
-
-/* ── FOOTER ── */
-footer{
-  text-align:center;padding:24px;
-  color:#252525;font-size:10px;letter-spacing:2px;text-transform:uppercase;
-  border-top:1px solid var(--c2);
-}
-
-/* ── STAT BAR ── */
-.statbar{
-  display:flex;justify-content:center;gap:48px;
-  padding:28px 24px;
-  background:var(--c2);
-  border-top:1px solid var(--c3);
-  border-bottom:1px solid var(--c3);
-  margin-bottom:52px;
-}
-.stat{text-align:center}
-.stat-val{
-  font-family:"Bebas Neue",sans-serif;
-  font-size:34px;letter-spacing:1px;color:var(--am);
-  line-height:1;
-}
-.stat-lbl{font-size:10px;color:#555;letter-spacing:2px;text-transform:uppercase;margin-top:4px}
-
-/* ── ANIMATIONS ── */
+.ts{font-size:11px;color:#555}
+nav{background:var(--c1);border-bottom:1px solid var(--c3);padding:0 40px;display:flex;gap:2px;position:sticky;top:66px;z-index:190}
+.tb{padding:14px 26px;font-family:"DM Sans",sans-serif;font-size:13px;font-weight:600;color:#555;background:none;border:none;border-bottom:3px solid transparent;cursor:pointer;transition:all .2s;letter-spacing:.5px;display:flex;align-items:center;gap:7px;white-space:nowrap}
+.tb:hover{color:#999}.tb.on{color:var(--am);border-bottom-color:var(--am)}
+.tdot{width:7px;height:7px;border-radius:50%;background:currentColor;opacity:.5}
+main{max-width:1280px;margin:0 auto;padding:32px 24px 80px}
+.panel{display:none}.panel.on{display:block}
+.ptitle{margin-bottom:22px;animation:fadeU .5s .1s ease both}
+.ptitle h1{font-family:"Bebas Neue",sans-serif;font-size:clamp(26px,4vw,46px);letter-spacing:3px;color:var(--br);line-height:1}
+.ptitle h1 span{color:var(--am)}
+.ptitle p{font-size:11px;color:#555;margin-top:4px;letter-spacing:2px;text-transform:uppercase}
+.mtag{display:inline-flex;align-items:center;background:rgba(52,131,250,.1);border:1px solid rgba(52,131,250,.25);color:var(--az);font-size:11px;font-weight:600;padding:4px 12px;border-radius:20px;margin-top:8px;letter-spacing:.5px}
+.mtag span{color:var(--br);margin-left:4px}
+.uzone{border:2px dashed var(--c3);border-radius:14px;padding:16px 24px;display:flex;align-items:center;gap:16px;cursor:pointer;transition:all .25s;background:var(--c1);position:relative;margin-bottom:20px;animation:fadeU .5s .15s ease both}
+.uzone:hover,.uzone.drag{border-color:var(--am);background:rgba(255,230,0,.03)}
+.uzone input{position:absolute;inset:0;opacity:0;cursor:pointer;z-index:0}
+.uico{font-size:22px;flex-shrink:0}
+.uinfo{flex:1}
+.uinfo p{font-size:13px;color:#777}
+.uinfo p strong{color:var(--am)}
+.uinfo small{font-size:11px;color:#444}
+.ufname{font-size:12px;color:var(--vd);max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex-shrink:0}
+.ubtn{display:inline-flex;align-items:center;gap:6px;background:var(--am);color:#000;font-family:"DM Sans",sans-serif;font-weight:700;font-size:13px;padding:10px 22px;border-radius:9px;border:none;cursor:pointer;transition:all .2s;white-space:nowrap;flex-shrink:0;position:relative;z-index:10}
+.ubtn:hover{background:#ffd000;transform:translateY(-1px)}
+.kgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}
+.kcard{background:var(--c1);border:1px solid var(--c3);border-radius:14px;padding:20px 18px;position:relative;overflow:hidden;animation:fadeU .5s ease both;transition:transform .2s,border-color .2s}
+.kcard:hover{transform:translateY(-2px);border-color:rgba(255,255,255,.1)}
+.kcard::after{content:"";position:absolute;top:0;left:0;right:0;height:3px;border-radius:14px 14px 0 0}
+.kcard.vd::after{background:var(--vd)}.kcard.or::after{background:var(--or)}
+.kcard.vm::after{background:var(--vm)}.kcard.az::after{background:var(--az)}
+.kcard:nth-child(1){animation-delay:.2s}.kcard:nth-child(2){animation-delay:.28s}
+.kcard:nth-child(3){animation-delay:.36s}.kcard:nth-child(4){animation-delay:.44s}
+.klabel{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#555;margin-bottom:8px}
+.kval{font-family:"Bebas Neue",sans-serif;font-size:48px;line-height:1;letter-spacing:1px}
+.kcard.vd .kval{color:var(--vd)}.kcard.or .kval{color:var(--or)}
+.kcard.vm .kval{color:var(--vm)}.kcard.az .kval{color:var(--am)}
+.kemo{font-size:18px;margin-bottom:6px;display:block}
+.toolbar{display:flex;align-items:center;gap:10px;margin-bottom:14px;animation:fadeU .5s .5s ease both}
+.swrap{position:relative;flex:1}
+.swrap svg{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:#555;pointer-events:none}
+.sbox{width:100%;background:var(--c1);border:1px solid var(--c3);border-radius:10px;padding:10px 14px 10px 40px;color:var(--br);font-family:"DM Sans",sans-serif;font-size:13px;outline:none;transition:border-color .2s}
+.sbox:focus{border-color:var(--am)}
+.fbtn{background:var(--c1);border:1px solid var(--c3);border-radius:10px;padding:9px 16px;color:#666;font-family:"DM Sans",sans-serif;font-size:12px;cursor:pointer;transition:all .2s;white-space:nowrap}
+.fbtn:hover,.fbtn.on{border-color:var(--am);color:var(--am);background:rgba(255,230,0,.07)}
+.twrap{background:var(--c1);border:1px solid var(--c3);border-radius:14px;overflow:hidden;animation:fadeU .5s .55s ease both}
+table{width:100%;border-collapse:collapse}
+thead tr{background:var(--c2);border-bottom:1px solid var(--c3)}
+thead th{padding:13px 18px;text-align:left;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#555;font-weight:500;cursor:pointer;user-select:none;transition:color .2s;white-space:nowrap}
+thead th:hover{color:var(--am)}
+.r{text-align:right}.c{text-align:center}
+tbody tr{border-bottom:1px solid rgba(255,255,255,.04);transition:background .15s}
+tbody tr:last-child{border-bottom:none}
+tbody tr:hover{background:rgba(255,255,255,.03)}
+tbody td{padding:13px 18px;font-size:13px;color:var(--tx)}
+.ncell{display:flex;align-items:center;gap:10px}
+.av{width:32px;height:32px;border-radius:50%;background:var(--c3);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:var(--am);flex-shrink:0}
+.ntext{font-weight:500;font-size:13px}
+.lval{font-family:"Bebas Neue",sans-serif;font-size:20px;letter-spacing:1px;color:var(--br)}
+.uwrap{display:flex;align-items:center;gap:8px}
+.ubar{flex:1;height:4px;background:var(--c3);border-radius:99px;overflow:hidden;min-width:70px}
+.ufill{height:100%;border-radius:99px;background:var(--az);transition:width .8s cubic-bezier(.4,0,.2,1)}
+.upct{font-size:12px;color:#777;min-width:36px;text-align:right}
+.mbadge{display:inline-flex;align-items:center;gap:5px;padding:5px 11px;border-radius:20px;font-size:12px;font-weight:600}
+.mbadge.at{background:rgba(0,200,83,.12);color:var(--vd);border:1px solid rgba(0,200,83,.25)}
+.mbadge.qu{background:rgba(255,152,0,.12);color:var(--or);border:1px solid rgba(255,152,0,.25)}
+.mbadge.ab{background:rgba(255,59,59,.12);color:var(--vm);border:1px solid rgba(255,59,59,.25)}
+.rnum{font-family:"Bebas Neue",sans-serif;font-size:17px;color:#444;min-width:26px;text-align:center}
+.rnum.g{color:#FFD700}.rnum.s{color:#C0C0C0}.rnum.b{color:#CD7F32}
+.tval{font-family:"DM Sans",sans-serif;font-size:13px;color:#aaa;white-space:nowrap}
+.tval span{color:var(--br);font-weight:600}
+.empty{text-align:center;padding:52px 20px;color:#444}
+.empty svg{margin-bottom:14px;opacity:.25}
+.empty p{font-size:13px}
+footer{text-align:center;padding:20px;color:#252525;font-size:10px;letter-spacing:2px;text-transform:uppercase;border-top:1px solid var(--c2)}
+@keyframes fadeU{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeD{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
-@keyframes fadeU{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-
-.cards{animation:fadeU .4s ease}
-
-/* ── RESPONSIVE ── */
-@media(max-width:600px){
-  header{padding:0 16px;height:58px}
-  .hero{padding:48px 16px 32px}
-  .statbar{gap:24px}
-  .cards{padding:0 12px 60px}
+@media(max-width:768px){
+  header{padding:0 16px}nav{padding:0 8px}
+  main{padding:20px 10px 60px}.kgrid{grid-template-columns:repeat(2,1fr)}
+  thead th:nth-child(3),tbody td:nth-child(3){display:none}
+  .fbtn{display:none}
 }
 </style>
+
+<style id="ml-skin-override">
+:root{
+  --am:#FFE600;
+  --az:#3483FA;
+  --pt:#F5F6FA;
+  --c1:#FFFFFF;
+  --c2:#F8FAFC;
+  --c3:#E5E7EB;
+  --br:#111827;
+  --vd:#16A34A;
+  --or:#F59E0B;
+  --vm:#EF4444;
+  --tx:#374151;
+}
+body{
+  background:linear-gradient(180deg,#f8fafc 0%, #eef2ff 100%) !important;
+  color:var(--tx) !important;
+}
+body::before{
+  background:
+    radial-gradient(circle at top left, rgba(255,230,0,.12), transparent 30%),
+    radial-gradient(circle at top right, rgba(52,131,250,.08), transparent 32%),
+    repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(17,24,39,.012) 2px, rgba(17,24,39,.012) 4px) !important;
+  opacity:.85;
+}
+header{
+  background:#fff !important;
+  border-bottom:4px solid var(--am) !important;
+  box-shadow:0 2px 14px rgba(15,23,42,.05) !important;
+}
+nav{
+  background:#fff !important;
+  border-bottom:1px solid #E5E7EB !important;
+}
+.tb{
+  color:#64748B !important;
+}
+.tb.on{
+  color:#111827 !important;
+  border-bottom-color:var(--am) !important;
+  background:linear-gradient(180deg, rgba(255,230,0,.18), rgba(255,230,0,.05)) !important;
+}
+main{
+  max-width:1440px !important;
+}
+.ptitle h1{
+  color:#111827 !important;
+}
+.ptitle h1 span{
+  color:var(--az) !important;
+}
+.ptitle p,.logo-sub,.ts,.klabel,.tval,.empty p{
+  color:#64748B !important;
+}
+.mtag{
+  background:#EFF6FF !important;
+  border-color:#BFDBFE !important;
+  color:#1D4ED8 !important;
+}
+.uzone{
+  background:#fff !important;
+  border-color:#E5E7EB !important;
+  box-shadow:0 10px 24px rgba(15,23,42,.05) !important;
+}
+.uzone:hover,.uzone.drag{
+  border-color:var(--am) !important;
+  background:rgba(255,230,0,.06) !important;
+}
+.uinfo p strong{color:#111827 !important;}
+.ufname{color:#10B981 !important;}
+.ubtn{
+  background:var(--am) !important;
+  color:#111827 !important;
+  box-shadow:0 10px 18px rgba(255,230,0,.18) !important;
+}
+.ubtn:hover{
+  background:#FFD700 !important;
+}
+.kcard{
+  background:#fff !important;
+  border:1px solid #E5E7EB !important;
+  box-shadow:0 8px 18px rgba(15,23,42,.05) !important;
+}
+.kcard:hover{
+  border-color:#D1D5DB !important;
+  transform:translateY(-2px) !important;
+}
+.kcard::after{height:4px !important;border-radius:14px 14px 0 0 !important;}
+.kcard .kval{
+  color:#111827 !important;
+}
+.kcard.vd .kval{color:var(--vd) !important;}
+.kcard.or .kval{color:var(--or) !important;}
+.kcard.vm .kval{color:var(--vm) !important;}
+.kcard.az .kval{color:var(--az) !important;}
+.toolbar{
+  background:transparent !important;
+  flex-wrap:wrap !important;
+}
+.sbox,.fbtn{
+  background:#fff !important;
+  border:1px solid #D8E1EE !important;
+  box-shadow:0 6px 14px rgba(15,23,42,.04) !important;
+}
+.sbox{
+  color:#111827 !important;
+}
+.fbtn{
+  color:#475569 !important;
+}
+.fbtn.on{
+  color:#111827 !important;
+  border-color:var(--am) !important;
+  background:rgba(255,230,0,.12) !important;
+}
+.expbtn{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:9px 14px;
+  border-radius:10px;
+  border:1px solid #D8E1EE;
+  background:#fff;
+  color:#1D4ED8;
+  font-family:"DM Sans",sans-serif;
+  font-size:12px;
+  font-weight:700;
+  cursor:pointer;
+  transition:.2s all;
+  white-space:nowrap;
+  box-shadow:0 6px 14px rgba(15,23,42,.04);
+}
+.expbtn:hover{
+  transform:translateY(-1px);
+  border-color:#BFD2FF;
+}
+.expbtn.csv{
+  color:#0F766E;
+}
+.expbtn.xlsx{
+  color:#1D4ED8;
+  background:linear-gradient(180deg,#FFFFFF,#F8FAFF);
+}
+.twrap{
+  background:#fff !important;
+  border:1px solid #E5E7EB !important;
+  box-shadow:0 10px 24px rgba(15,23,42,.05) !important;
+}
+thead tr{
+  background:linear-gradient(180deg,#F8FAFC,#EEF2F7) !important;
+}
+thead th{
+  color:#64748B !important;
+}
+tbody td{
+  color:#111827 !important;
+  border-bottom:1px solid #EEF2F7 !important;
+}
+tbody tr:hover{
+  background:#FBFDFF !important;
+}
+.ntext{
+  color:#111827 !important;
+}
+.av{
+  background:#FFF7CC !important;
+  color:#111827 !important;
+}
+.lval{
+  color:#111827 !important;
+}
+.uwrap .ubar{
+  background:#E5E7EB !important;
+}
+.ufill{
+  background:linear-gradient(90deg, var(--az), #7AA8FF) !important;
+}
+.mbadge.at{
+  background:#DCFCE7 !important;
+  color:#166534 !important;
+  border-color:#BBF7D0 !important;
+}
+.mbadge.qu{
+  background:#FEF3C7 !important;
+  color:#92400E !important;
+  border-color:#FDE68A !important;
+}
+.mbadge.ab{
+  background:#FEE2E2 !important;
+  color:#B91C1C !important;
+  border-color:#FECACA !important;
+}
+.rnum.g{color:#F59E0B !important;}
+.rnum.s{color:#94A3B8 !important;}
+.rnum.b{color:#B45309 !important;}
+footer{
+  color:#94A3B8 !important;
+  border-top:1px solid #E5E7EB !important;
+  background:rgba(255,255,255,.4) !important;
+  backdrop-filter:blur(6px);
+}
+@media (max-width:768px){
+  .expbtn{flex:1 1 calc(50% - 6px);justify-content:center;}
+  .toolbar{gap:8px;}
+}
+
+/* ── Export Tray ──────────────────────────── */
+#export-tray{
+  position:fixed;bottom:0;left:0;right:0;z-index:500;
+  background:#fff;border-top:2px solid var(--am);
+  box-shadow:0 -4px 24px rgba(15,23,42,.10);
+  padding:10px 24px;
+  display:none;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
+}
+.tray-label{
+  font-size:10px;letter-spacing:2px;text-transform:uppercase;
+  color:#64748B;font-weight:600;white-space:nowrap;flex-shrink:0;
+}
+#export-cards{display:flex;gap:10px;flex-wrap:wrap;flex:1;align-items:center;}
+.exp-card{
+  display:flex;align-items:center;gap:8px;
+  background:#F8FAFC;border:1px solid #E5E7EB;
+  border-radius:10px;padding:7px 12px;
+  animation:fadeU .3s ease both;
+  min-width:220px;
+}
+.exp-ico{font-size:18px;flex-shrink:0;}
+.exp-info{flex:1;min-width:0;}
+.exp-tab{
+  display:inline-block;font-size:9px;font-weight:700;letter-spacing:1.5px;
+  background:var(--am);color:#111827;border-radius:4px;
+  padding:2px 6px;margin-bottom:2px;
+}
+.exp-fname{
+  display:block;font-size:11px;font-weight:600;color:#111827;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:160px;
+}
+.exp-meta{display:block;font-size:10px;color:#94A3B8;}
+.exp-dl{
+  display:inline-flex;align-items:center;gap:4px;
+  background:var(--az);color:#fff;
+  font-size:11px;font-weight:700;
+  padding:6px 12px;border-radius:8px;
+  text-decoration:none;white-space:nowrap;
+  transition:background .2s;flex-shrink:0;
+}
+.exp-dl:hover{background:#1d6bf0;}
+.tray-close{
+  background:none;border:none;color:#94A3B8;
+  font-size:18px;cursor:pointer;padding:4px;
+  margin-left:4px;flex-shrink:0;line-height:1;
+}
+.tray-close:hover{color:#111827;}
+@media(max-width:768px){
+  #export-tray{padding:8px 12px;}
+  .exp-card{min-width:calc(50% - 6px);}
+}
+
+body { padding-bottom: 80px; }
+</style>
+
 </head>
 <body>
 
 <header>
   <div class="logo-wrap">
-    <!-- Logo MercadoLivre inline (base64) -->
-    <img src="data:image/png;base64,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" alt="ML"/>
-    <div>
-      <div class="logo-title">Produtividade</div>
-      <div class="logo-sub">BRRJ02 &middot; Packing</div>
-    </div>
+    <img src="data:image/jpeg;base64,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" alt="Mercado Livre"/>
+    <div class="logo-sub">BRRJ02 &middot; Packing Operations</div>
   </div>
   <div class="hright">
     <span class="ts"><span class="dot"></span><span id="clk">--:--:--</span></span>
   </div>
 </header>
 
-<!-- HERO -->
-<section class="hero">
-  <p class="hero-eyebrow">BRRJ02 &middot; Centro de Distribuição</p>
-  <h1>PAINEL DE<br/><span>PRODUTIVIDADE</span></h1>
-  <p>Dashboards operacionais do time de Packing. Clique no módulo desejado para acessar os dados em tempo real.</p>
-  <div class="hero-divider"></div>
-</section>
+<nav>
+  <button class="tb on" onclick="swTab(this,'mono')"><span class="tdot"></span>MONO</button>
+  <button class="tb"    onclick="swTab(this,'machine')"><span class="tdot"></span>MACHINE</button>
+  <button class="tb"    onclick="swTab(this,'putwall')"><span class="tdot"></span>PUT WALL</button>
+  <button class="tb"    onclick="swTab(this,'wallin')"><span class="tdot"></span>WALL IN</button>
+</nav>
 
-<!-- STAT BAR -->
-<div class="statbar">
-  <div class="stat">
-    <div class="stat-val">2</div>
-    <div class="stat-lbl">Dashboards</div>
+<main>
+  <div class="panel on" id="p-mono">
+        <div class="ptitle">
+      <h1><span>PACKING</span> &middot; MONO</h1>
+      <p>Performance &middot; Produtividade &middot; Representantes</p>
+      <span class="mtag">Meta Líquida: <span>195</span></span>
+    </div>
+    <div class="uzone" id="dz-mono" ondragover="onDrag(event,this)" ondragleave="offDrag(this)" ondrop="onDrop(event,'mono')">
+      <input type="file" id="fi-mono" accept=".xlsx,.xls,.csv" onchange="onFCh(this,'mono')"/>
+      <span class="uico">&#128193;</span>
+      <div class="uinfo">
+        <p>Arraste o arquivo <strong>MONO SCRIPT.xlsx</strong> aqui</p>
+        <small>.xlsx &middot; .xls &middot; .csv</small>
+      </div>
+      <span class="ufname" id="fn-mono">Nenhum arquivo selecionado</span>
+      <button class="ubtn" onclick="document.getElementById('fi-mono').click();event.stopPropagation()">&#8593; Selecionar arquivo</button>
+    </div>
+    <div class="kgrid">
+      <div class="kcard vd"><span class="kemo">&#9989;</span><div class="klabel">Atingiram Meta</div><div class="kval" id="k-mono-at">&mdash;</div></div>
+      <div class="kcard or"><span class="kemo">&#9888;&#65039;</span><div class="klabel">Quase (80&ndash;99%)</div><div class="kval" id="k-mono-qu">&mdash;</div></div>
+      <div class="kcard vm"><span class="kemo">&#10060;</span><div class="klabel">Abaixo da Meta</div><div class="kval" id="k-mono-ab">&mdash;</div></div>
+      <div class="kcard az"><span class="kemo">&#128101;</span><div class="klabel">Total</div><div class="kval" id="k-mono-tot">&mdash;</div></div>
+    </div>
+    <div class="toolbar">
+      <div class="swrap">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input class="sbox" id="sb-mono" type="text" placeholder="Buscar representante..." oninput="render('mono')"/>
+      </div>
+      <button class="fbtn on"  onclick="setF('mono','all',this)">Todos</button>
+      <button class="fbtn"     onclick="setF('mono','at',this)">&#9989; Atingiram</button>
+      <button class="fbtn"     onclick="setF('mono','qu',this)">&#9888; Quase</button>
+      <button class="fbtn"     onclick="setF('mono','ab',this)">&#10060; Abaixo</button>
+      <button class="expbtn csv" onclick="exportTab('mono','csv')">⬇ CSV</button>
+      <button class="expbtn xlsx" onclick="exportTab('mono','xlsx')">⬆ Excel</button>
+    </div>
+    <div class="twrap">
+      <table>
+        <thead><tr>
+          <th class="c" style="width:44px">#</th>
+          <th onclick="sortT('mono','nome')">Nome do Representante</th>
+          <th class="r" onclick="sortT('mono','liquida')" style="width:145px">Prod. Líquida &#8597;</th>
+          <th onclick="sortT('mono','util')" style="width:200px">% Utilização &#8597;</th>
+          <th class="r" onclick="sortT('mono','meta')" style="width:160px">% Meta &#8597;</th>
+          <th class="r" onclick="sortT('mono','unid')" style="width:130px">Unidades &#8597;</th>
+          <th class="r" onclick="sortT('mono','tempo')" style="width:130px">Tempo Net &#8597;</th>
+        </tr></thead>
+        <tbody id="tb-mono">
+          <tr><td colspan="7"><div class="empty">
+            <svg width="44" height="44" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 17H7A5 5 0 0 1 7 7h2M15 7h2a5 5 0 0 1 0 10h-2M8 12h8"/></svg>
+            <p>Carregue o arquivo MONO SCRIPT.xlsx para visualizar os dados</p>
+          </div></td></tr>
+        </tbody>
+      </table>
+    </div>
   </div>
-  <div class="stat">
-    <div class="stat-val">100%</div>
-    <div class="stat-lbl">Web &amp; Offline</div>
+
+  <div class="panel" id="p-machine">
+        <div class="ptitle">
+      <h1><span>PACKING</span> &middot; MACHINE</h1>
+      <p>Performance &middot; Produtividade &middot; Representantes</p>
+      <span class="mtag">Meta Líquida: <span>450</span></span>
+    </div>
+    <div class="uzone" id="dz-machine" ondragover="onDrag(event,this)" ondragleave="offDrag(this)" ondrop="onDrop(event,'machine')">
+      <input type="file" id="fi-machine" accept=".xlsx,.xls,.csv" onchange="onFCh(this,'machine')"/>
+      <span class="uico">&#128193;</span>
+      <div class="uinfo">
+        <p>Arraste o arquivo <strong>MACHINE.xlsx</strong> aqui</p>
+        <small>.xlsx &middot; .xls &middot; .csv</small>
+      </div>
+      <span class="ufname" id="fn-machine">Nenhum arquivo selecionado</span>
+      <button class="ubtn" onclick="document.getElementById('fi-machine').click();event.stopPropagation()">&#8593; Selecionar arquivo</button>
+    </div>
+    <div class="kgrid">
+      <div class="kcard vd"><span class="kemo">&#9989;</span><div class="klabel">Atingiram Meta</div><div class="kval" id="k-machine-at">&mdash;</div></div>
+      <div class="kcard or"><span class="kemo">&#9888;&#65039;</span><div class="klabel">Quase (80&ndash;99%)</div><div class="kval" id="k-machine-qu">&mdash;</div></div>
+      <div class="kcard vm"><span class="kemo">&#10060;</span><div class="klabel">Abaixo da Meta</div><div class="kval" id="k-machine-ab">&mdash;</div></div>
+      <div class="kcard az"><span class="kemo">&#128101;</span><div class="klabel">Total</div><div class="kval" id="k-machine-tot">&mdash;</div></div>
+    </div>
+    <div class="toolbar">
+      <div class="swrap">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input class="sbox" id="sb-machine" type="text" placeholder="Buscar representante..." oninput="render('machine')"/>
+      </div>
+      <button class="fbtn on"  onclick="setF('machine','all',this)">Todos</button>
+      <button class="fbtn"     onclick="setF('machine','at',this)">&#9989; Atingiram</button>
+      <button class="fbtn"     onclick="setF('machine','qu',this)">&#9888; Quase</button>
+      <button class="fbtn"     onclick="setF('machine','ab',this)">&#10060; Abaixo</button>
+      <button class="expbtn csv" onclick="exportTab('machine','csv')">⬇ CSV</button>
+      <button class="expbtn xlsx" onclick="exportTab('machine','xlsx')">⬆ Excel</button>
+    </div>
+    <div class="twrap">
+      <table>
+        <thead><tr>
+          <th class="c" style="width:44px">#</th>
+          <th onclick="sortT('machine','nome')">Nome do Representante</th>
+          <th class="r" onclick="sortT('machine','liquida')" style="width:145px">Prod. Líquida &#8597;</th>
+          <th onclick="sortT('machine','util')" style="width:200px">% Utilização &#8597;</th>
+          <th class="r" onclick="sortT('machine','meta')" style="width:160px">% Meta &#8597;</th>
+          <th class="r" onclick="sortT('machine','unid')" style="width:130px">Unidades &#8597;</th>
+          <th class="r" onclick="sortT('machine','tempo')" style="width:130px">Tempo Net &#8597;</th>
+        </tr></thead>
+        <tbody id="tb-machine">
+          <tr><td colspan="7"><div class="empty">
+            <svg width="44" height="44" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 17H7A5 5 0 0 1 7 7h2M15 7h2a5 5 0 0 1 0 10h-2M8 12h8"/></svg>
+            <p>Carregue o arquivo MACHINE.xlsx para visualizar os dados</p>
+          </div></td></tr>
+        </tbody>
+      </table>
+    </div>
   </div>
-  <div class="stat">
-    <div class="stat-val">BRRJ02</div>
-    <div class="stat-lbl">Unidade</div>
+
+  <div class="panel" id="p-putwall">
+        <div class="ptitle">
+      <h1><span>PACKING</span> &middot; PUT WALL</h1>
+      <p>Performance &middot; Produtividade &middot; Representantes</p>
+      <span class="mtag">Meta Líquida: <span>280</span></span>
+    </div>
+    <div class="uzone" id="dz-putwall" ondragover="onDrag(event,this)" ondragleave="offDrag(this)" ondrop="onDrop(event,'putwall')">
+      <input type="file" id="fi-putwall" accept=".xlsx,.xls,.csv" onchange="onFCh(this,'putwall')"/>
+      <span class="uico">&#128193;</span>
+      <div class="uinfo">
+        <p>Arraste o arquivo <strong>PUT WALL.xlsx</strong> aqui</p>
+        <small>.xlsx &middot; .xls &middot; .csv</small>
+      </div>
+      <span class="ufname" id="fn-putwall">Nenhum arquivo selecionado</span>
+      <button class="ubtn" onclick="document.getElementById('fi-putwall').click();event.stopPropagation()">&#8593; Selecionar arquivo</button>
+    </div>
+    <div class="kgrid">
+      <div class="kcard vd"><span class="kemo">&#9989;</span><div class="klabel">Atingiram Meta</div><div class="kval" id="k-putwall-at">&mdash;</div></div>
+      <div class="kcard or"><span class="kemo">&#9888;&#65039;</span><div class="klabel">Quase (80&ndash;99%)</div><div class="kval" id="k-putwall-qu">&mdash;</div></div>
+      <div class="kcard vm"><span class="kemo">&#10060;</span><div class="klabel">Abaixo da Meta</div><div class="kval" id="k-putwall-ab">&mdash;</div></div>
+      <div class="kcard az"><span class="kemo">&#128101;</span><div class="klabel">Total</div><div class="kval" id="k-putwall-tot">&mdash;</div></div>
+    </div>
+    <div class="toolbar">
+      <div class="swrap">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input class="sbox" id="sb-putwall" type="text" placeholder="Buscar representante..." oninput="render('putwall')"/>
+      </div>
+      <button class="fbtn on"  onclick="setF('putwall','all',this)">Todos</button>
+      <button class="fbtn"     onclick="setF('putwall','at',this)">&#9989; Atingiram</button>
+      <button class="fbtn"     onclick="setF('putwall','qu',this)">&#9888; Quase</button>
+      <button class="fbtn"     onclick="setF('putwall','ab',this)">&#10060; Abaixo</button>
+      <button class="expbtn csv" onclick="exportTab('putwall','csv')">⬇ CSV</button>
+      <button class="expbtn xlsx" onclick="exportTab('putwall','xlsx')">⬆ Excel</button>
+    </div>
+    <div class="twrap">
+      <table>
+        <thead><tr>
+          <th class="c" style="width:44px">#</th>
+          <th onclick="sortT('putwall','nome')">Nome do Representante</th>
+          <th class="r" onclick="sortT('putwall','liquida')" style="width:145px">Prod. Líquida &#8597;</th>
+          <th onclick="sortT('putwall','util')" style="width:200px">% Utilização &#8597;</th>
+          <th class="r" onclick="sortT('putwall','meta')" style="width:160px">% Meta &#8597;</th>
+          <th class="r" onclick="sortT('putwall','unid')" style="width:130px">Unidades &#8597;</th>
+          <th class="r" onclick="sortT('putwall','tempo')" style="width:130px">Tempo Net &#8597;</th>
+        </tr></thead>
+        <tbody id="tb-putwall">
+          <tr><td colspan="7"><div class="empty">
+            <svg width="44" height="44" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 17H7A5 5 0 0 1 7 7h2M15 7h2a5 5 0 0 1 0 10h-2M8 12h8"/></svg>
+            <p>Carregue o arquivo PUT WALL.xlsx para visualizar os dados</p>
+          </div></td></tr>
+        </tbody>
+      </table>
+    </div>
   </div>
+
+  <div class="panel" id="p-wallin">
+        <div class="ptitle">
+      <h1><span>PACKING</span> &middot; WALL IN</h1>
+      <p>Performance &middot; Produtividade &middot; Representantes</p>
+      <span class="mtag">Meta Líquida: <span>420</span></span>
+    </div>
+    <div class="uzone" id="dz-wallin" ondragover="onDrag(event,this)" ondragleave="offDrag(this)" ondrop="onDrop(event,'wallin')">
+      <input type="file" id="fi-wallin" accept=".xlsx,.xls,.csv" onchange="onFCh(this,'wallin')"/>
+      <span class="uico">&#128193;</span>
+      <div class="uinfo">
+        <p>Arraste o arquivo <strong>WALL IN.xlsx</strong> aqui</p>
+        <small>.xlsx &middot; .xls &middot; .csv</small>
+      </div>
+      <span class="ufname" id="fn-wallin">Nenhum arquivo selecionado</span>
+      <button class="ubtn" onclick="document.getElementById('fi-wallin').click();event.stopPropagation()">&#8593; Selecionar arquivo</button>
+    </div>
+    <div class="kgrid">
+      <div class="kcard vd"><span class="kemo">&#9989;</span><div class="klabel">Atingiram Meta</div><div class="kval" id="k-wallin-at">&mdash;</div></div>
+      <div class="kcard or"><span class="kemo">&#9888;&#65039;</span><div class="klabel">Quase (80&ndash;99%)</div><div class="kval" id="k-wallin-qu">&mdash;</div></div>
+      <div class="kcard vm"><span class="kemo">&#10060;</span><div class="klabel">Abaixo da Meta</div><div class="kval" id="k-wallin-ab">&mdash;</div></div>
+      <div class="kcard az"><span class="kemo">&#128101;</span><div class="klabel">Total</div><div class="kval" id="k-wallin-tot">&mdash;</div></div>
+    </div>
+    <div class="toolbar">
+      <div class="swrap">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input class="sbox" id="sb-wallin" type="text" placeholder="Buscar representante..." oninput="render('wallin')"/>
+      </div>
+      <button class="fbtn on"  onclick="setF('wallin','all',this)">Todos</button>
+      <button class="fbtn"     onclick="setF('wallin','at',this)">&#9989; Atingiram</button>
+      <button class="fbtn"     onclick="setF('wallin','qu',this)">&#9888; Quase</button>
+      <button class="fbtn"     onclick="setF('wallin','ab',this)">&#10060; Abaixo</button>
+      <button class="expbtn csv" onclick="exportTab('wallin','csv')">⬇ CSV</button>
+      <button class="expbtn xlsx" onclick="exportTab('wallin','xlsx')">⬆ Excel</button>
+    </div>
+    <div class="twrap">
+      <table>
+        <thead><tr>
+          <th class="c" style="width:44px">#</th>
+          <th onclick="sortT('wallin','nome')">Nome do Representante</th>
+          <th class="r" onclick="sortT('wallin','liquida')" style="width:145px">Prod. Líquida &#8597;</th>
+          <th onclick="sortT('wallin','util')" style="width:200px">% Utilização &#8597;</th>
+          <th class="r" onclick="sortT('wallin','meta')" style="width:160px">% Meta &#8597;</th>
+          <th class="r" onclick="sortT('wallin','unid')" style="width:130px">Unidades &#8597;</th>
+          <th class="r" onclick="sortT('wallin','tempo')" style="width:130px">Tempo Net &#8597;</th>
+        </tr></thead>
+        <tbody id="tb-wallin">
+          <tr><td colspan="7"><div class="empty">
+            <svg width="44" height="44" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 17H7A5 5 0 0 1 7 7h2M15 7h2a5 5 0 0 1 0 10h-2M8 12h8"/></svg>
+            <p>Carregue o arquivo WALL IN.xlsx para visualizar os dados</p>
+          </div></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+<!-- Export Tray -->
+<div id="export-tray">
+  <span class="tray-label">📥 Exportações</span>
+  <div id="export-cards"></div>
+  <button class="tray-close" onclick="clearExportTray()" title="Fechar">✕</button>
 </div>
 
-<!-- CARDS -->
-<div class="cards">
+</main>
 
-  <!-- TIME MANAGEMENT -->
-  <a class="card" href="tm_dashboard.html">
-    <div class="card-bar yellow"></div>
-    <div class="card-body">
-      <span class="card-icon">⚡</span>
-      <div class="card-title">Time Management</div>
-      <div class="card-sub">Fast Start &amp; Strong Finish</div>
-      <p class="card-desc">
-        Monitore o tempo do 1º bip após abertura do turno e do último bip antes do encerramento. Filtre por processo, turno e Team Leader com ranking de aderência.
-      </p>
-      <div class="card-tags">
-        <span class="tag tag-vd">Fast Start ≤10min</span>
-        <span class="tag tag-or">Strong Finish ≤5min</span>
-        <span class="tag tag-am">Dashboard TL</span>
-      </div>
-      <span class="card-cta">
-        Abrir dashboard
-        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </span>
-    </div>
-  </a>
+<footer>Mercado Livre &nbsp;&middot;&nbsp; BRRJ02 &nbsp;&middot;&nbsp; Packing Dashboard &nbsp;&middot;&nbsp; v5.0</footer>
 
-  <!-- FALTAS -->
-  <a class="card" href="faltas_dashboard.html">
-    <div class="card-bar blue"></div>
-    <div class="card-body">
-      <span class="card-icon">📋</span>
-      <div class="card-title">Faltas</div>
-      <div class="card-sub">Ausências Injustificadas</div>
-      <p class="card-desc">
-        Acompanhe o controle de faltas e ausências injustificadas do time. Visualize tendências, identifique padrões e estratifique por colaborador, TL ou período.
-      </p>
-      <div class="card-tags">
-        <span class="tag tag-vm">Ausências</span>
-        <span class="tag tag-az">Análise por TL</span>
-        <span class="tag tag-am">Tendências</span>
-      </div>
-      <span class="card-cta">
-        Abrir dashboard
-        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </span>
-    </div>
-  </a>
-
-</div>
-
-<footer>
-  ⚡ Mercado Livre &nbsp;&middot;&nbsp; BRRJ02 &nbsp;&middot;&nbsp; Produtividade Packing &nbsp;&middot;&nbsp; v1.0
-</footer>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script>
-function _tick(){
-  const d=new Date();
-  const h=String(d.getHours()).padStart(2,'0');
-  const m=String(d.getMinutes()).padStart(2,'0');
-  const s=String(d.getSeconds()).padStart(2,'0');
-  document.getElementById("clk").textContent=h+':'+m+':'+s;
+const ID_GROOT = {"ADRIANA DE SOUZA FERREIRA": "2132392", "ALESSANDRA COUTINHO DE FIGUEIREDO": "2148553", "ALEXSANDRE THOMPSOM DE OLIVEIRA": "436179", "ALEXY FERNANDES DOS SANTOS": "441931", "ALICE SANTOS DE AZEVEDO": "2253081", "ALINE SILVA DE OLIVEIRA": "2194257", "ALLAN DOS SANTOS SILVA TELES": "2109387", "ANA BEATRIZ DA SILVA SOUSA DE OLIVEIRA": "1921690", "ANA LUCIA SOARES PENA CARNEIRO": "2132386", "ANA PAULA DE SOUZA LIMA": "2027354", "ANNY GABRIELLE MARTINS SANTOS": "436756", "ANTHONY ALEIXO VIEGAS DA ROCHA": "2027462", "BEATRIZ DA SILVA FERNANDES": "2132402", "BEATRIZ MOREIRA DA SILVA": "2109397", "BIANCA PEREIRA GUIMARAES": "2148514", "BRUNIELI FAGUNDES DA SILVA": "2132439", "CARLA ANEZIA FERREIRA DOS SANTOS": "1762361", "CARLA DE LIMA BASTOS": "556233", "CESAR DE FARIAS FIRMINO": "548992", "CID SANDERSON INACIO DE ALMEIDA": "2027485", "CLEIDE DIAS DA SILVA": "2027343", "CRISTIANO GAIAO BREDA": "2027348", "DANIEL BORGES DA SILVA": "2126576", "DANIELLE DA ROCHA SILVARES": "2109403", "DAVI GALVAO MARQUES": "2194272", "ERIKA DOS SANTOS VIEIRA": "2125422", "ESTEVAO COSTA DOS SANTOS": "2194273", "EVELYN DAS NEVES DE OLIVEIRA": "2134248", "FABIO RIBAMAR FEQUES": "2027509", "FABRICIO BARRADAS SANTOS": "2148524", "FELIPE DE LIMA SALLES": "2140774", "FELIPE ROCHA VIDAL": "2060448", "GABRIEL FEIJO DA SILVA DO NASCIMENTO": "2126581", "GABRIEL PINTO GONCALVES": "1921712", "GERMANO AZIZ DE MOURA JUNIOR": "2027474", "GIOVANA ELISEU SANTOS SILVA": "2126582", "GISELLE MARIA PEREIRA": "2194275", "GUILHERME MATEUS LISBOA SOARES": "2027315", "HELLEN SANTOS COSTA DA SILVA": "2140779", "HEVELYN SILVA DOS SANTOS": "1789862", "INGRID CRISTINA MENDONCA FERNANDES": "2109426", "JENIFER TELES DA SILVA": "2139922", "JOICE VITORIA MARTINS FERNANDES": "2027342", "JULIA DA SILVA RIBEIRO": "2210943", "JUSSARA TEIXEIRA PEREIRA": "2125442", "KAYKY DOS SANTOS MEIRELES": "2148530", "LARISSA DANDARA PEDRO DE PAIVA": "2217898", "LARISSA OLIVEIRA DE ALMEIDA": "2126586", "LORRAN ALMEIDA MOURA": "1783093", "LUANA ALMEIDA DE OLIVEIRA GOMES": "2027327", "LUCIANA FERREIRA DA SILVA": "2027371", "LUCIANE OLIVEIRA ARAUJO DE LIRA": "2171471", "MARCOS ELIAS MORAES MUNIZ DE SOUSA": "2226783", "MARCOS VINICIOS SALDANHA DA SILVA": "1805739", "MARIA APARECIDA DA SILVA COSTA": "1493539", "MARISOL DE OLIVEIRA FAUSTINO": "2027351", "MATHEUS CLEMENTE DE SENA": "1921713", "MATHEUS DOS SANTOS LUCIO": "2210941", "MAYARA ROCHA DE LIMA": "2140790", "MYRELLA LEANDRA RODRIGUES DE SOUSA": "2209682", "NATHALIA CORREA DOS SANTOS": "489315", "NATHALIA DO ROSARIO BASTOS OLIVEIRA": "2126588", "PEDRO RICARDO SANTOS DE JESUS": "2126589", "REGEANE DA SILVA": "2132372", "RICARDO LUCAS DA SILVA CARVALHO": "2027358", "ROBERTA DOS SANTOS DE ARAUJO": "2078846", "RONALDO SANTOS REIS": "2027470", "STHEFANY DE ARAUJO BAHIENSE EINECK CORREIA": "2132370", "TAINA DA SILVA PATRICIO": "2027340", "THALIA CHASCO DE SOUZA": "2027318", "THAYS DA CONCEICAO BORGES PACHECO": "2178629", "VANESSA MARTINS PINTO MESSIAS": "2132359", "VICTOR HUGO DE ARAUJO DA SILVA": "2209572", "ANA CAROLINA CANDIDA CORDEIRO DA SILVA": "2234039", "MARCELO DO VALE DE CARVALHO": "2233960", "GENILSON DA SILVA GOUVEIA": "2233212", "MARIANA SANTOS SOUTO MAIOR": "2234041", "SARA OLIVEIRA DA COSTA": "2233493", "JENNIFER OLIVEIRA": "2233347", "JHADE COSMO BENINCAZA": "2170105", "GUSTAVO ALVES": "2242089", "MARIA EDUARDA SANTOS DA SILVA DA CONCEICAO": "2241968", "EDILSON DA SILVA SANTOS": "2079993", "WALLACE DA SILVA BARBOSA": "2370120", "GEOVANNA SANTOS MARTINS": "2370721", "CAIO CESAR BARBOSA SANTOS": "2370481", "ANA BEATRIZ DOS SANTOS SILVA": "2391515", "WALLACE DELFINO SILVEIRA": "2391097", "LUIZ FELIPE ANDRADE MILCK": "2391269", "ANA PAULA ALVES PEREIRA XAVIER": "2391186", "GABRIELLE DIAMANTINO MARQUES": "2391518", "STHEPHANY JESUS DA SILVA SANTANA SANTOS": "2391514", "PATRICIA RODRIGUES SALERNO": "2391329", "NAYARA MACHADO DA SILVA": "2391171", "PATRICK RODRIGUES FARIAS": "2391337", "WELLINGTON MONTEIRO DOS SANTOS": "2391275", "VINICIUS MORAES E SILVA": "2391050", "ULISSES FERREIRA SILVA": "2391424", "CARINA DE SOUSA SANTOS": "2391354", "RENATO JUNIOR MARTINS RIBEIRO": "2391086", "GABRIEL DOS SANTOS CARVALHO": "2391526", "LUIZ FERNANDO LOPES DE ANDRADE SILVA": "2390675", "LUIZ CARLOS CUNHA ALMEIDA DA SILVA": "2391020", "RUAN LUIS MENDES DIONISIO DANTAS": "2390894", "GABRIEL MAGALHAES GOMES": "2391540", "MARCIO HENRIQUE DA FONSECA JOSE CAGNIN": "2391422", "ALESSANDRA DOMINGUES DA COSTA": "2391025", "ESTER DAMIAO VALTER": "2391079", "MARIA EDUARDA NUNES DOS SANTOS": "2391616", "THAMIRIS DOS SANTOS VIANNA": "2390951", "WALLACE PEREIRA GONCALVES": "2391162", "RAQUEL DE NEGREIROS AGUIAR": "2391611", "ANDRESSA SANTANA DA SILVA COSTA": "2390823", "RAYSSA DOS SANTOS FRANCA DE SOUZA": "2391513", "MAX DA SILVA LINS": "2391345", "LENI SANDRA DAS CANDEIAS PAIXAO": "2390838", "ANDRE MENDONCA DA SILVA": "2390664", "MIRIAM EIRAS DOS SANTOS DA SILVA": "2391407", "LARA KATHLEEN RIBEIRO DOS SANTOS": "2391136", "CLARICE GUEDES DA SILVA SANTOS": "2391228", "BARBARA CRISTINA SILVA DO NASCIMENTO": "2391392", "AMANDA OLIVEIRA NOGUEIRA": "2391156", "ARTHUR ANTERIO CONSTANTINO DA SILVA": "2391610", "RONIELE RODRIGUES TEODORO DA SILVA": "2390861", "DAIANE LUIZ FERREIRA": "2391364", "MATHEUS ESTEVAO DE QUEIROZ DE SOUZA": "2390750", "JULIANA EZAQUIEL NICOMEDES": "2428354", "GUILHERME BERNARDINO DE SOUZA": "2428349", "AMABILE BERNARDINO DOS SANTOS": "2428373", "LAIS DA SILVA PIMENTEL": "2428388", "GABRIELA RODRIGUES DA SILVEIRA": "2428375", "SANDRA MARA SANCHES GRAVINO DA SILVA": "2428370", "WALLACE DE BARROS SILVA": "2428353", "ANDRIELY DE JESUS MOROTE GUIMARAES": "2428362", "PAOLA OLIVEIRA SOBRAL": "2427740", "ALESSANDRA DOS SANTOS AGOSTINHO": "2427049", "ALEXANDRA MARQUES DE SOUZA DIAS PASCHOAL": "2428414", "MARIA JULIA ANDRADE FERNANDES": "2426904", "ELIZABETE FERREIRA DE OLIVEIRA": "2426993", "GABRIELY DO ESPIRITO SANTO JUNCAL": "2426916", "EMILLY GABRIELE MONTEIRO DE LIMA RODRIGUES": "2433688", "ENIA REBECCA FERREIRA DIAS": "2433760", "ADRIELLE RODRIGUES SERRINHA": "2438943", "JANAINA BARBOSA ANTONIO": "2445341", "EVANDRO JOSE SILVA CARVALHO": "2446949", "MARIA LUIZA ALVES SOUZA": "2439625", "GUILHERME DA CONCEICAO SANTOS": "2452967", "DAIANE DA SILVA ANDRADE": "2453155", "JOSILENI DOS SANTOS DA SILVA": "2427052", "GRACE EVELYN DA SILVA PEREIRA": "2461182", "LENON AXEL": "2461194", "LIDIANE REGINA ZAINOTE": "2461188", "NATANY RODRIGUES FERREIRA": "2461216", "JUNO GRAMA MIRANDA DA SILVA": "2462317", "DEMETRIUS MARTINS GAMA": "2461250", "MICAELA PAIXAO FAVETTA DA SILVA": "2461228", "PEDRO HENRIQUE CASSANI FERREIRA RIVAS": "2461222", "JAILSON GOMES DE OLIVEIRA": "2461264", "KELVIN DA SILVA ELIDIO": "2461288", "DAVID DA CONCEICAO BARBOSA": "2461324", "ESTELA DA CUNHA LOPES": "2461213", "PAULO DOUGLAS RIBEIRO GOMES": "2461246"};
+
+function nomeParaId(nome) {
+  if (!nome) return nome;
+  const key = nome.trim().toUpperCase()
+    .normalize("NFD").replace(/[̀-ͯ]/g,"");
+  for (const k in ID_GROOT) {
+    const kn = k.normalize("NFD").replace(/[̀-ͯ]/g,"");
+    if (kn === key) return ID_GROOT[k];
+  }
+  for (const k in ID_GROOT) {
+    const kn = k.normalize("NFD").replace(/[̀-ͯ]/g,"");
+    if (kn.includes(key) || key.includes(kn)) return ID_GROOT[k];
+  }
+  return nome;
 }
-setInterval(_tick,1000);
-_tick();
+
+const METAS={mono:195,machine:450,putwall:280,wallin:420};
+const ST={
+  mono:   {data:[],sort:"liquida",asc:false,filter:"all"},
+  machine:{data:[],sort:"liquida",asc:false,filter:"all"},
+  putwall:{data:[],sort:"liquida",asc:false,filter:"all"},
+  wallin: {data:[],sort:"liquida",asc:false,filter:"all"},
+};
+
+setInterval(()=>document.getElementById("clk").textContent=new Date().toLocaleTimeString("pt-BR"),1000);
+document.getElementById("clk").textContent=new Date().toLocaleTimeString("pt-BR");
+
+function swTab(btn,tab){
+  document.querySelectorAll(".panel").forEach(p=>p.classList.remove("on"));
+  document.querySelectorAll(".tb").forEach(b=>b.classList.remove("on"));
+  document.getElementById("p-"+tab).classList.add("on");
+  btn.classList.add("on");
+}
+
+function onDrag(e,el){e.preventDefault();el.classList.add("drag")}
+function offDrag(el){el.classList.remove("drag")}
+function onDrop(e,tab){e.preventDefault();document.getElementById("dz-"+tab).classList.remove("drag");const f=e.dataTransfer.files[0];if(f)procFile(f,tab)}
+function onFCh(el,tab){if(el.files[0])procFile(el.files[0],tab)}
+
+function procFile(f,tab){
+  document.getElementById("fn-"+tab).textContent=f.name;
+  const r=new FileReader();
+  if(f.name.toLowerCase().endsWith(".csv")){r.onload=e=>parseCSV(e.target.result,tab);r.readAsText(f,"UTF-8")}
+  else{r.onload=e=>parseXLSX(e.target.result,tab);r.readAsArrayBuffer(f)}
+}
+function parseXLSX(buf,tab){
+  const wb=XLSX.read(buf,{type:"array"});
+  const ws=wb.Sheets[wb.SheetNames[0]];
+  procRows(XLSX.utils.sheet_to_json(ws,{header:1,defval:""}),tab);
+}
+function parseCSV(txt,tab){
+  procRows(txt.split("\n").map(l=>l.split(",").map(c=>c.replace(/"/g,"").trim())),tab);
+}
+function procRows(rows,tab){
+  try{
+    if(!rows||rows.length<2){alert("Arquivo sem dados.");return;}
+    const hdr=rows[0].map(h=>String(h).trim());
+    const iN=fCol(hdr,["nome"]);
+    const iL=fCol(hdr,["liquida","líquida"]);
+    const iU=fCol(hdr,["utiliza"]);
+    const iT=fCol(hdr,["temponet","tempo net"]);
+    const iUn=fCol(hdr,["unidades processadas","unidades"]);
+    const cN=iN>=0?iN:5;
+    const cL=iL>=0?iL:15;
+    const cU=iU>=0?iU:14;
+    const cT=iT>=0?iT:12;
+    const cUn=iUn>=0?iUn:13;
+    const mp={};
+    for(let i=1;i<rows.length;i++){
+      const row=rows[i];
+      const nomeRaw=String(row[cN]||"").trim();
+      const nome=nomeParaId(nomeRaw);
+      if(!nome)continue;
+      const liq=pN(row[cL]);
+      const util=pP(row[cU]);
+      const tempo=pSeg(row[cT]);
+      const unid=pN(row[cUn]);
+      if(!mp[nome])mp[nome]={lt:0,ut:0,tt:0,un:0,cnt:0};
+      mp[nome].lt+=liq;
+      mp[nome].ut+=util;
+      mp[nome].tt+=tempo;
+      mp[nome].un+=unid;
+      mp[nome].cnt++;
+    }
+    const meta=METAS[tab];
+    ST[tab].data=Object.entries(mp).map(([nome,v])=>{
+      const ml=v.cnt>0?v.lt/v.cnt:0;
+      const mu=v.cnt>0?v.ut/v.cnt:0;
+      return{nome,liquida:ml,utilizacao:mu,percMeta:meta>0?ml/meta:0,tempo:v.tt,unidades:v.un};
+    }).sort((a,b)=>b.liquida-a.liquida);
+    render(tab);
+  }catch(e){
+    alert("Erro ao processar: "+e.message);
+    console.error(e);
+  }
+}
+
+function render(tab){
+  const s=ST[tab];
+  const q=(document.getElementById("sb-"+tab).value||"").toLowerCase();
+  let d=[...s.data];
+  if(s.filter==="at") d=d.filter(r=>r.percMeta>=1);
+  else if(s.filter==="qu") d=d.filter(r=>r.percMeta>=.8&&r.percMeta<1);
+  else if(s.filter==="ab") d=d.filter(r=>r.percMeta<.8);
+  if(q) d=d.filter(r=>r.nome.toLowerCase().includes(q));
+  d.sort((a,b)=>{
+    const k=s.sort;
+    const va=k==="nome"?a.nome:k==="liquida"?a.liquida:k==="util"?a.utilizacao:k==="tempo"?a.tempo:k==="unid"?a.unidades:a.percMeta;
+    const vb=k==="nome"?b.nome:k==="liquida"?b.liquida:k==="util"?b.utilizacao:k==="tempo"?b.tempo:k==="unid"?b.unidades:b.percMeta;
+    return s.asc?(va<vb?-1:va>vb?1:0):(va>vb?-1:va<vb?1:0);
+  });
+  const all=s.data;
+  const at=all.filter(r=>r.percMeta>=1).length;
+  const qu=all.filter(r=>r.percMeta>=.8&&r.percMeta<1).length;
+  const ab=all.filter(r=>r.percMeta<.8).length;
+  document.getElementById("k-"+tab+"-at").textContent=at;
+  document.getElementById("k-"+tab+"-qu").textContent=qu;
+  document.getElementById("k-"+tab+"-ab").textContent=ab;
+  document.getElementById("k-"+tab+"-tot").textContent=all.length;
+  const rm={};
+  [...s.data].sort((a,b)=>b.liquida-a.liquida).forEach((r,i)=>rm[r.nome]=i+1);
+  const tb=document.getElementById("tb-"+tab);
+  if(!d.length){tb.innerHTML='<tr><td colspan="7"><div class="empty"><p>Nenhum representante encontrado.</p></div></td></tr>';return}
+  tb.innerHTML=d.map(r=>{
+    const pos=rm[r.nome];
+    const pc=pos===1?"g":pos===2?"s":pos===3?"b":"";
+    const pl=pos===1?"🥇":pos===2?"🥈":pos===3?"🥉":pos;
+    const ini=r.nome.split(" ").filter(w=>w).slice(0,2).map(w=>w[0].toUpperCase()).join("");
+    const up=Math.min(r.utilizacao*100,100).toFixed(1);
+    const mp=(r.percMeta*100).toFixed(1);
+    const bc=r.percMeta>=1?"at":r.percMeta>=.8?"qu":"ab";
+    const bi=r.percMeta>=1?"✅":r.percMeta>=.8?"⚠️":"❌";
+    return `<tr>
+      <td class="c"><span class="rnum ${pc}">${pl}</span></td>
+      <td><div class="ncell"><div class="av">${ini}</div><span class="ntext">${r.nome}</span></div></td>
+      <td class="r"><span class="lval">${Math.round(r.liquida)}</span></td>
+      <td><div class="uwrap"><div class="ubar"><div class="ufill" style="width:${up}%"></div></div><span class="upct">${up}%</span></div></td>
+      <td class="r"><span class="mbadge ${bc}">${bi} ${mp}%</span></td>
+      <td class="r"><span class="lval" style="font-size:16px">${Math.round(r.unidades).toLocaleString("pt-BR")}</span></td>
+      <td class="r"><span class="tval">${fTempo(r.tempo)}</span></td>
+    </tr>`;
+  }).join("");
+}
+
+function sortT(tab,f){const s=ST[tab];s.asc=s.sort===f?!s.asc:false;s.sort=f;render(tab)}
+function setF(tab,f,btn){
+  ST[tab].filter=f;
+  btn.closest(".toolbar").querySelectorAll(".fbtn").forEach(b=>b.classList.remove("on"));
+  btn.classList.add("on");render(tab);
+}
+function fCol(hdr,terms){
+  for(let i=0;i<hdr.length;i++){
+    const h=hdr[i].normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
+    for(const t of terms){
+      const tn=t.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
+      if(h.includes(tn))return i;
+    }
+  }
+  return -1;
+}
+function pSeg(v){
+  // TempoNet vem como "202.391" (string com ponto de milhar = segundos)
+  if(v===""||v==null)return 0;
+  if(typeof v==="number")return v;
+  const s=String(v).trim();
+  // Remove ponto de milhar → inteiro de segundos
+  const seg=parseInt(s.replace(/\./g,"").replace(",",""))||0;
+  return seg;
+}
+function fTempo(seg){
+  // Converte segundos para exibição "56h 13min"
+  if(!seg||seg===0)return "<span>—</span>";
+  const h=Math.floor(seg/3600);
+  const m=Math.floor((seg%3600)/60);
+  return `<span>${h}h</span> ${m}min`;
+}
+function pN(v){
+  if(v===""||v==null)return 0;
+  if(typeof v==="number")return v;
+  const s=String(v).replace("%","").trim();
+  if(s.includes(",")&&s.includes("."))return parseFloat(s.replace(/\./g,"").replace(",","."))||0;
+  if(s.includes(","))return parseFloat(s.replace(",","."))||0;
+  return parseFloat(s)||0;
+}
+function pP(v){
+  if(v===""||v==null)return 0;
+  if(typeof v==="number")return v>1?v/100:v;
+  const s=String(v).replace("%","").replace("+","").trim();
+  const n=s.includes(",")?parseFloat(s.replace(",",".")):parseFloat(s);
+  if(isNaN(n))return 0;
+  return n>1?n/100:n;
+}
+
+function filteredData(tab){
+  const s=ST[tab];
+  const q=(document.getElementById("sb-"+tab).value||"").toLowerCase();
+  let d=[...s.data];
+  if(s.filter==="at") d=d.filter(r=>r.percMeta>=1);
+  else if(s.filter==="qu") d=d.filter(r=>r.percMeta>=.8&&r.percMeta<1);
+  else if(s.filter==="ab") d=d.filter(r=>r.percMeta<.8);
+  if(q) d=d.filter(r=>r.nome.toLowerCase().includes(q));
+  d.sort((a,b)=>{
+    const k=s.sort;
+    const va=k==="nome"?a.nome:k==="liquida"?a.liquida:k==="util"?a.utilizacao:k==="tempo"?a.tempo:k==="unid"?a.unidades:a.percMeta;
+    const vb=k==="nome"?b.nome:k==="liquida"?b.liquida:k==="util"?b.utilizacao:k==="tempo"?b.tempo:k==="unid"?b.unidades:b.percMeta;
+    return s.asc?(va<vb?-1:va>vb?1:0):(va>vb?-1:va<vb?1:0);
+  });
+  return d;
+}
+function tempoPlain(seg){
+  if(!seg||seg===0) return "—";
+  const h=Math.floor(seg/3600);
+  const m=Math.floor((seg%3600)/60);
+  return `${h}h ${m}min`;
+}
+
+const EXPORT_STORE = {};
+
+function renderExportTray(){
+  const entries = Object.values(EXPORT_STORE);
+  const tray = document.getElementById("export-tray");
+  if(!entries.length){ tray.style.display="none"; return; }
+  tray.style.display="flex";
+  document.getElementById("export-cards").innerHTML = entries.map(e=>`
+    <div class="exp-card">
+      <span class="exp-ico">${e.kind==="xlsx"?"📊":"📄"}</span>
+      <div class="exp-info">
+        <span class="exp-tab">${e.tab.toUpperCase()} · ${e.kind.toUpperCase()}</span>
+        <span class="exp-fname">${e.filename}</span>
+        <span class="exp-meta">${e.rows} registros · ${e.time}</span>
+      </div>
+      <a href="${e.url}" download="${e.filename}" class="exp-dl">↓ Baixar</a>
+    </div>
+  `).join("");
+}
+
+function clearExportTray(){
+  Object.values(EXPORT_STORE).forEach(e=>URL.revokeObjectURL(e.url));
+  for(const k in EXPORT_STORE) delete EXPORT_STORE[k];
+  renderExportTray();
+}
+
+function exportTab(tab, kind){
+  const data=filteredData(tab);
+  if(!data.length){ alert("Não há dados para exportar neste filtro."); return; }
+  const rows=data.map((r,i)=>({
+    "#": i+1,
+    "Nome": r.nome,
+    "ID Groot": ID_GROOT[(r.nome||"").toUpperCase()] || "",
+    "Prod. Líquida": Math.round(r.liquida),
+    "Utilização %": (r.utilizacao*100).toFixed(1) + "%",
+    "Meta %": (r.percMeta*100).toFixed(1) + "%",
+    "Unidades": Math.round(r.unidades),
+    "Tempo Net": tempoPlain(r.tempo)
+  }));
+  const ws = XLSX.utils.json_to_sheet(rows);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, tab.toUpperCase());
+  const date = new Date().toISOString().slice(0,10);
+  const time = new Date().toLocaleTimeString("pt-BR");
+  const name = `produtividade_${tab}_${date}`;
+
+  let blob, filename;
+  if(kind === "xlsx"){
+    const wbout = XLSX.write(wb, {bookType:"xlsx", type:"array"});
+    blob = new Blob([wbout], {type:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
+    filename = name + ".xlsx";
+  } else {
+    const csv = XLSX.utils.sheet_to_csv(ws, {FS:";"});
+    blob = new Blob([csv], {type:"text/csv;charset=utf-8;"});
+    filename = name + ".csv";
+  }
+
+  // Auto-download
+  const dlUrl = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = dlUrl; a.download = filename;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(dlUrl), 5000);
+
+  // Persist in tray (revoke old if exists)
+  const key = tab + "_" + kind;
+  if(EXPORT_STORE[key]) URL.revokeObjectURL(EXPORT_STORE[key].url);
+  const persistUrl = URL.createObjectURL(blob);
+  EXPORT_STORE[key] = { url: persistUrl, filename, time, tab, kind, rows: data.length };
+  renderExportTray();
+}
+
 </script>
 </body>
 </html>
