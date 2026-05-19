@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Time Management – Fast Start & Strong Finish</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --am:#FFE600;--az:#3483FA;--pt:#0A0A0A;
+  --c1:#141414;--c2:#1C1C1C;--c3:#2A2A2A;
+  --br:#F5F5F5;--vd:#00C853;--or:#FF9800;
+  --vm:#FF3B3B;--tx:#E0E0E0;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--pt);color:var(--tx);font-family:"DM Sans",sans-serif;min-height:100vh;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(255,255,255,.012) 2px,rgba(255,255,255,.012) 4px);pointer-events:none;z-index:999}
+header{background:var(--c1);border-bottom:3px solid var(--am);padding:0 40px;display:flex;align-items:center;justify-content:space-between;height:66px;position:sticky;top:0;z-index:200}
+.logo-wrap{display:flex;align-items:center;gap:14px}
+.logo-wrap img{height:44px;border-radius:8px}
+.logo-title{font-size:15px;font-weight:700;color:#F5F5F5;letter-spacing:2px;text-transform:uppercase;font-family:"DM Sans",sans-serif}
+.logo-sub{font-size:10px;color:#555;letter-spacing:3px;text-transform:uppercase;margin-top:2px}
+.hright{display:flex;align-items:center;gap:14px}
+.dot{width:7px;height:7px;background:var(--vd);border-radius:50%;display:inline-block;animation:pulse 2s infinite;margin-right:5px}
+.ts{font-size:11px;color:#555;display:flex;align-items:center}
+#clk{color:var(--am);font-family:"Bebas Neue",sans-serif;font-size:20px;letter-spacing:2px}
+nav{background:var(--c1);border-bottom:1px solid var(--c3);padding:0 40px;display:flex;gap:2px;position:sticky;top:66px;z-index:190}
+.tb{padding:14px 26px;font-family:"DM Sans",sans-serif;font-size:13px;font-weight:600;color:#555;background:none;border:none;border-bottom:3px solid transparent;cursor:pointer;transition:all .2s;letter-spacing:.5px;display:flex;align-items:center;gap:7px;white-space:nowrap}
+.tb:hover{color:#999}.tb.on{color:var(--am);border-bottom-color:var(--am);background:rgba(255,230,0,.04)}
+.tdot{width:7px;height:7px;border-radius:50%;background:currentColor;opacity:.5}
+main{max-width:1280px;margin:0 auto;padding:32px 24px 80px}
+.panel{display:none}.panel.on{display:block;animation:fadeU .25s ease}
+.ptitle{margin-bottom:22px}
+.ptitle h1{font-family:"Bebas Neue",sans-serif;font-size:clamp(26px,4vw,46px);letter-spacing:3px;color:var(--br);line-height:1}
+.ptitle h1 span.fs{color:var(--vd)}.ptitle h1 span.sf{color:var(--or)}
+.ptitle p{font-size:11px;color:#555;margin-top:4px;letter-spacing:2px;text-transform:uppercase}
+.mtag{display:inline-flex;align-items:center;background:rgba(52,131,250,.1);border:1px solid rgba(52,131,250,.25);color:var(--az);font-size:11px;font-weight:600;padding:4px 12px;border-radius:20px;margin-top:8px;letter-spacing:.5px}
+.mtag span{color:var(--br);margin-left:4px}
+.uzone{border:2px dashed var(--c3);border-radius:14px;padding:16px 24px;display:flex;align-items:center;gap:16px;cursor:pointer;transition:all .25s;background:var(--c1);position:relative;margin-bottom:20px}
+.uzone:hover,.uzone.drag{border-color:var(--am);background:rgba(255,230,0,.03)}
+.uzone input{position:absolute;inset:0;opacity:0;cursor:pointer;z-index:0}
+.uico{font-size:22px;flex-shrink:0}
+.uinfo p{font-size:13px;color:#777}.uinfo p strong{color:var(--am)}
+.uinfo small{font-size:11px;color:#444}
+.ufname{font-size:12px;color:var(--vd);max-width:240px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex-shrink:0}
+.ubtn{display:inline-flex;align-items:center;gap:6px;background:var(--am);color:#000;font-family:"DM Sans",sans-serif;font-weight:700;font-size:13px;padding:10px 22px;border-radius:9px;border:none;cursor:pointer;transition:all .2s;white-space:nowrap;flex-shrink:0;position:relative;z-index:10}
+.ubtn:hover{background:#ffd000;transform:translateY(-1px)}
+.kgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:24px}
+.kcard{background:var(--c1);border:1px solid var(--c3);border-radius:14px;padding:20px 18px;position:relative;overflow:hidden;transition:transform .2s,border-color .2s}
+.kcard:hover{transform:translateY(-2px);border-color:rgba(255,255,255,.1)}
+.kcard::after{content:"";position:absolute;top:0;left:0;right:0;height:3px;border-radius:14px 14px 0 0}
+.kcard.vd::after{background:var(--vd)}.kcard.vm::after{background:var(--vm)}
+.kcard.gr::after{background:#555}.kcard.az::after{background:var(--az)}
+.kcard.am::after{background:var(--am)}
+.klabel{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#555;margin-bottom:8px}
+.kval{font-family:"Bebas Neue",sans-serif;font-size:48px;line-height:1;letter-spacing:1px}
+.kcard.vd .kval{color:var(--vd)}.kcard.vm .kval{color:var(--vm)}
+.kcard.gr .kval{color:#777}.kcard.az .kval{color:var(--am)}.kcard.am .kval{color:var(--am)}
+.kemo{font-size:18px;margin-bottom:6px;display:block}
+.toolbar{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+.swrap{position:relative;flex:1;min-width:200px}
+.swrap svg{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:#555;pointer-events:none}
+.sbox{width:100%;background:var(--c1);border:1px solid var(--c3);border-radius:10px;padding:10px 14px 10px 40px;color:var(--br);font-family:"DM Sans",sans-serif;font-size:13px;outline:none;transition:border-color .2s}
+.sbox:focus{border-color:var(--am)}
+.fsel{background:var(--c1);border:1px solid var(--c3);border-radius:10px;padding:9px 12px;color:#888;font-family:"DM Sans",sans-serif;font-size:12px;cursor:pointer;outline:none;transition:all .2s}
+.fsel:focus,.fsel:hover{border-color:var(--am);color:var(--br)}
+.fbtn{background:var(--c1);border:1px solid var(--c3);border-radius:10px;padding:9px 16px;color:#666;font-family:"DM Sans",sans-serif;font-size:12px;cursor:pointer;transition:all .2s;white-space:nowrap}
+.fbtn:hover,.fbtn.on{border-color:var(--am);color:var(--am);background:rgba(255,230,0,.07)}
+.twrap{background:var(--c1);border:1px solid var(--c3);border-radius:14px;overflow:hidden}
+table{width:100%;border-collapse:collapse}
+thead tr{background:var(--c2);border-bottom:1px solid var(--c3)}
+thead th{padding:13px 18px;text-align:left;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#555;font-weight:500;cursor:pointer;user-select:none;transition:color .2s;white-space:nowrap}
+thead th:hover{color:var(--am)}
+.r{text-align:right}.c{text-align:center}
+tbody tr{border-bottom:1px solid rgba(255,255,255,.04);transition:background .15s}
+tbody tr:last-child{border-bottom:none}
+tbody tr:hover{background:rgba(255,255,255,.03)}
+tbody td{padding:12px 18px;font-size:13px;color:var(--tx)}
+.ncell{display:flex;align-items:center;gap:10px}
+.av{width:32px;height:32px;border-radius:50%;background:var(--c3);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:var(--am);flex-shrink:0}
+.ntext{font-weight:500;font-size:13px}
+.nid{font-size:10px;color:#444;margin-top:1px}
+.tbadge{display:inline-flex;align-items:center;gap:5px;padding:5px 13px;border-radius:20px;font-size:12px;font-weight:600}
+.tbadge.ok {background:rgba(0,200,83,.12);color:var(--vd);border:1px solid rgba(0,200,83,.25)}
+.tbadge.nok{background:rgba(255,59,59,.12);color:var(--vm);border:1px solid rgba(255,59,59,.25)}
+.tbadge.na {background:rgba(80,80,80,.15);color:#666;border:1px solid rgba(80,80,80,.2)}
+.tval{font-family:"Bebas Neue",sans-serif;font-size:20px;letter-spacing:1px;color:var(--br)}
+.tval.over{color:var(--vm)}.tval.ok{color:var(--vd)}.tval.na{color:#444}
+.rnum{font-family:"Bebas Neue",sans-serif;font-size:17px;color:#444;min-width:26px;text-align:center}
+.rnum.g{color:#FFD700}.rnum.s{color:#C0C0C0}.rnum.b{color:#CD7F32}
+.procbadge{display:inline-block;font-size:10px;font-weight:600;padding:2px 8px;border-radius:4px;letter-spacing:.5px;text-transform:uppercase}
+.proc-picking   {background:rgba(52,131,250,.15);color:#6EB3FF}
+.proc-packing   {background:rgba(255,230,0,.1);color:#FFE600}
+.proc-packing-vol{background:rgba(255,152,0,.12);color:#FF9800}
+.proc-put-to-wall{background:rgba(0,200,83,.1);color:#00C853}
+.empty{text-align:center;padding:52px 20px;color:#444}
+.empty svg{margin-bottom:14px;opacity:.25}
+.empty p{font-size:13px}
+footer{text-align:center;padding:20px;color:#252525;font-size:10px;letter-spacing:2px;text-transform:uppercase;border-top:1px solid var(--c2)}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+@keyframes fadeU{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+/* ===== MULTI-SELECT ===== */
+.msel{position:relative;display:inline-block}
+.msel-btn{background:var(--c1);border:1px solid var(--c3);border-radius:10px;padding:9px 28px 9px 12px;color:#888;font-family:"DM Sans",sans-serif;font-size:12px;cursor:pointer;outline:none;transition:all .2s;white-space:nowrap;min-width:148px;text-align:left;position:relative;display:block;width:100%}
+.msel-btn::after{content:"▾";position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:10px;color:#555;transition:transform .2s}
+.msel.open .msel-btn::after{transform:translateY(-50%) rotate(180deg)}
+.msel-btn:hover,.msel.open .msel-btn{border-color:var(--am);color:var(--br)}
+.msel-drop{position:absolute;top:calc(100% + 4px);left:0;background:var(--c2);border:1px solid var(--c3);border-radius:10px;padding:6px;z-index:500;min-width:190px;display:none;box-shadow:0 10px 36px rgba(0,0,0,.6);max-height:220px;overflow-y:auto}
+.msel.open .msel-drop{display:block;animation:fadeU .15s ease}
+.msel-item{display:flex;align-items:center;gap:8px;padding:7px 10px;cursor:pointer;border-radius:6px;transition:background .12s;font-size:12px;color:#777;user-select:none}
+.msel-item:hover{background:rgba(255,230,0,.06);color:var(--br)}
+.msel-item.ck{color:var(--am)}
+.msel-item input[type=checkbox]{accent-color:var(--am);width:13px;height:13px;cursor:pointer;flex-shrink:0;pointer-events:none}
+@media(max-width:768px){
+  header{padding:0 16px;height:58px}nav{padding:0 8px;top:58px}
+  main{padding:20px 12px 60px}.kgrid{grid-template-columns:repeat(2,1fr)}
+  .tb{padding:12px 16px;font-size:11px}
+  .kval{font-size:40px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo-wrap">
+    <img src="data:image/png;base64,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" alt="ML"/>
+    <div>
+      <div class="logo-title">TIME MANAGEMENT</div>
+      <div class="logo-sub">BRRJ02 &middot; Fast Start &amp; Strong Finish</div>
+    </div>
+  </div>
+  <div class="hright">
+    <span class="ts"><span class="dot"></span><span id="clk">--:--:--</span></span>
+  </div>
+</header>
+
+<nav>
+  <button class="tb on" onclick="swTab(this,'fs')"><span class="tdot"></span>⚡ FAST START</button>
+  <button class="tb"    onclick="swTab(this,'sf')"><span class="tdot"></span>🏁 STRONG FINISH</button>
+  <button class="tb"    onclick="swTab(this,'dash')"><span class="tdot"></span>📊 DASHBOARD</button>
+</nav>
+
+<main>
+
+  <!-- ========== FAST START ========== -->
+  <div class="panel on" id="p-fs">
+    <div class="ptitle">
+      <h1><span class="fs">FAST</span> START</h1>
+      <p>Tempo do 1º Bip após abertura do turno &middot; Representantes</p>
+      <span class="mtag">Meta: <span>≤ 10 min</span></span>
+    </div>
+    <div class="uzone" id="dz-fs" ondragover="onDrag(event,this)" ondragleave="offDrag(this)" ondrop="onDrop(event)">
+      <input type="file" id="fi-fs" accept=".xlsx,.xls,.csv" onchange="onFCh(this)" style="position:absolute;inset:0;opacity:0;cursor:pointer;z-index:0"/>
+      <span class="uico">&#128193;</span>
+      <div class="uinfo">
+        <p>Arraste o arquivo <strong>TIME MANAGEMENT.xlsx</strong> aqui</p>
+        <small>.xlsx &middot; .xls &middot; .csv</small>
+      </div>
+      <span class="ufname" id="fn-fs">Nenhum arquivo selecionado</span>
+      <label for="fi-fs" class="ubtn" style="position:relative;z-index:10;cursor:pointer">&#8593; Selecionar</label>
+    </div>
+    <div class="kgrid">
+      <div class="kcard vd"><span class="kemo">&#9989;</span><div class="klabel">OK (≤ 10min)</div><div class="kval" id="k-fs-ok">&mdash;</div></div>
+      <div class="kcard vm"><span class="kemo">&#10060;</span><div class="klabel">NOK (&gt; 10min)</div><div class="kval" id="k-fs-nok">&mdash;</div></div>
+      <div class="kcard gr"><span class="kemo">&#8212;</span><div class="klabel">N/A</div><div class="kval" id="k-fs-na">&mdash;</div></div>
+      <div class="kcard az"><span class="kemo">&#128101;</span><div class="klabel">Total</div><div class="kval" id="k-fs-tot">&mdash;</div></div>
+      <div class="kcard am"><span class="kemo">&#127919;</span><div class="klabel">Aderência</div><div class="kval" id="k-fs-pct">&mdash;</div></div>
+    </div>
+    <div class="toolbar">
+      <div class="swrap">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input class="sbox" id="sb-fs" type="text" placeholder="Buscar por nome ou ID..." oninput="render('fs')"/>
+      </div>
+      <div class="msel" id="ms-fs-proc" data-ph="Todos os processos">
+        <button class="msel-btn" type="button" onclick="toggleMsel('ms-fs-proc')"><span class="msel-lbl">Todos os processos</span></button>
+        <div class="msel-drop" id="msd-fs-proc">
+        <label class="msel-item"><input type="checkbox" value="PICKING"><span>PICKING</span></label>
+        <label class="msel-item"><input type="checkbox" value="PACKING"><span>PACKING</span></label>
+        <label class="msel-item"><input type="checkbox" value="PACKING VOL."><span>PACKING VOL.</span></label>
+        <label class="msel-item"><input type="checkbox" value="PUT TO WALL"><span>PUT TO WALL</span></label>
+        </div>
+      </div>
+      <div class="msel" id="ms-fs-turno" data-ph="Todos os turnos">
+        <button class="msel-btn" type="button" onclick="toggleMsel('ms-fs-turno')"><span class="msel-lbl">Todos os turnos</span></button>
+        <div class="msel-drop" id="msd-fs-turno">
+        </div>
+      </div>
+      <div class="msel" id="ms-fs-tl" data-ph="Todos os TLs">
+        <button class="msel-btn" type="button" onclick="toggleMsel('ms-fs-tl')"><span class="msel-lbl">Todos os TLs</span></button>
+        <div class="msel-drop" id="msd-fs-tl">
+        </div>
+      </div>
+      <button class="fbtn on"  onclick="setF('fs','all',this)">Todos</button>
+      <button class="fbtn"     onclick="setF('fs','ok',this)">&#9989; OK</button>
+      <button class="fbtn"     onclick="setF('fs','nok',this)">&#10060; NOK</button>
+      <button class="fbtn"     onclick="setF('fs','na',this)">&#8212; N/A</button>
+    </div>
+    <div class="twrap">
+      <table>
+        <thead><tr>
+          <th class="c" style="width:44px">#</th>
+          <th onclick="sortT('fs','nome')">Nome / ID &#8597;</th>
+          <th onclick="sortT('fs','tl')">Team Leader &#8597;</th>
+          <th onclick="sortT('fs','proc')">Processo &#8597;</th>
+          <th onclick="sortT('fs','turno')">Turno &#8597;</th>
+          <th class="r" onclick="sortT('fs','tempo')" style="width:140px">Tempo &#8597;</th>
+          <th class="c" onclick="sortT('fs','status')" style="width:130px">Status &#8597;</th>
+        </tr></thead>
+        <tbody id="tb-fs">
+          <tr><td colspan="7"><div class="empty">
+            <svg width="44" height="44" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+            <p>Carregue o arquivo TIME MANAGEMENT.xlsx para visualizar os dados</p>
+          </div></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ========== STRONG FINISH ========== -->
+  <div class="panel" id="p-sf">
+    <div class="ptitle">
+      <h1><span class="sf">STRONG</span> FINISH</h1>
+      <p>Tempo do Último Bip antes do encerramento &middot; Representantes</p>
+      <span class="mtag">Meta: <span>≤ 5 min</span></span>
+    </div>
+    <div class="uzone" id="dz-sf" style="display:none"></div>
+    <div class="kgrid">
+      <div class="kcard vd"><span class="kemo">&#9989;</span><div class="klabel">OK (≤ 5min)</div><div class="kval" id="k-sf-ok">&mdash;</div></div>
+      <div class="kcard vm"><span class="kemo">&#10060;</span><div class="klabel">NOK (&gt; 5min)</div><div class="kval" id="k-sf-nok">&mdash;</div></div>
+      <div class="kcard gr"><span class="kemo">&#8212;</span><div class="klabel">N/A</div><div class="kval" id="k-sf-na">&mdash;</div></div>
+      <div class="kcard az"><span class="kemo">&#128101;</span><div class="klabel">Total</div><div class="kval" id="k-sf-tot">&mdash;</div></div>
+      <div class="kcard am"><span class="kemo">&#127919;</span><div class="klabel">Aderência</div><div class="kval" id="k-sf-pct">&mdash;</div></div>
+    </div>
+    <div class="toolbar">
+      <div class="swrap">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input class="sbox" id="sb-sf" type="text" placeholder="Buscar por nome ou ID..." oninput="render('sf')"/>
+      </div>
+      <div class="msel" id="ms-sf-proc" data-ph="Todos os processos">
+        <button class="msel-btn" type="button" onclick="toggleMsel('ms-sf-proc')"><span class="msel-lbl">Todos os processos</span></button>
+        <div class="msel-drop" id="msd-sf-proc">
+        <label class="msel-item"><input type="checkbox" value="PICKING"><span>PICKING</span></label>
+        <label class="msel-item"><input type="checkbox" value="PACKING"><span>PACKING</span></label>
+        <label class="msel-item"><input type="checkbox" value="PACKING VOL."><span>PACKING VOL.</span></label>
+        <label class="msel-item"><input type="checkbox" value="PUT TO WALL"><span>PUT TO WALL</span></label>
+        </div>
+      </div>
+      <div class="msel" id="ms-sf-turno" data-ph="Todos os turnos">
+        <button class="msel-btn" type="button" onclick="toggleMsel('ms-sf-turno')"><span class="msel-lbl">Todos os turnos</span></button>
+        <div class="msel-drop" id="msd-sf-turno">
+        </div>
+      </div>
+      <div class="msel" id="ms-sf-tl" data-ph="Todos os TLs">
+        <button class="msel-btn" type="button" onclick="toggleMsel('ms-sf-tl')"><span class="msel-lbl">Todos os TLs</span></button>
+        <div class="msel-drop" id="msd-sf-tl">
+        </div>
+      </div>
+      <button class="fbtn on"  onclick="setF('sf','all',this)">Todos</button>
+      <button class="fbtn"     onclick="setF('sf','ok',this)">&#9989; OK</button>
+      <button class="fbtn"     onclick="setF('sf','nok',this)">&#10060; NOK</button>
+      <button class="fbtn"     onclick="setF('sf','na',this)">&#8212; N/A</button>
+    </div>
+    <div class="twrap">
+      <table>
+        <thead><tr>
+          <th class="c" style="width:44px">#</th>
+          <th onclick="sortT('sf','nome')">Nome / ID &#8597;</th>
+          <th onclick="sortT('sf','tl')">Team Leader &#8597;</th>
+          <th onclick="sortT('sf','proc')">Processo &#8597;</th>
+          <th onclick="sortT('sf','turno')">Turno &#8597;</th>
+          <th class="r" onclick="sortT('sf','tempo')" style="width:140px">Tempo &#8597;</th>
+          <th class="c" onclick="sortT('sf','status')" style="width:130px">Status &#8597;</th>
+        </tr></thead>
+        <tbody id="tb-sf">
+          <tr><td colspan="7"><div class="empty">
+            <svg width="44" height="44" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+            <p>Carregue o arquivo TIME MANAGEMENT.xlsx para visualizar os dados</p>
+          </div></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ========== DASHBOARD ========== -->
+  <div class="panel" id="p-dash">
+    <div class="ptitle">
+      <h1>📊 DASHBOARD</h1>
+      <p>Estratificação por Team Leader &middot; Maiores Ofensores</p>
+    </div>
+
+    <!-- FILTRO DE TURNO DO DASHBOARD -->
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:28px;flex-wrap:wrap">
+      <span style="font-size:11px;color:#555;letter-spacing:2px;text-transform:uppercase;font-weight:600">Filtrar por turno:</span>
+      <div class="msel" id="ms-dash-turno" data-ph="Todos os turnos">
+        <button class="msel-btn" type="button" onclick="toggleMsel('ms-dash-turno')"><span class="msel-lbl">Todos os turnos</span></button>
+        <div class="msel-drop" id="msd-dash-turno">
+        </div>
+      </div>
+      <div class="msel" id="ms-dash-proc" data-ph="Todos os processos">
+        <button class="msel-btn" type="button" onclick="toggleMsel('ms-dash-proc')"><span class="msel-lbl">Todos os processos</span></button>
+        <div class="msel-drop" id="msd-dash-proc">
+        <label class="msel-item"><input type="checkbox" value="PICKING"><span>PICKING</span></label>
+        <label class="msel-item"><input type="checkbox" value="PACKING"><span>PACKING</span></label>
+        <label class="msel-item"><input type="checkbox" value="PACKING VOL."><span>PACKING VOL.</span></label>
+        <label class="msel-item"><input type="checkbox" value="PUT TO WALL"><span>PUT TO WALL</span></label>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAST START section -->
+    <div class="dash-section" id="ds-fs">
+      <div class="dash-title"><span class="fs">⚡</span> <span>FAST START</span> — Aderência por TL</div>
+      <div class="dash-sub">Meta ≤ 10 min &nbsp;·&nbsp; Ordenado pelos maiores ofensores</div>
+      <div id="dash-empty-fs" class="dash-empty" style="display:none">
+        <svg width="44" height="44" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        <p>Carregue o arquivo TIME MANAGEMENT.xlsx para visualizar os dados</p>
+      </div>
+      <div id="dash-content-fs">
+        <div class="chart-wrap">
+          <canvas id="chart-fs"></canvas>
+        </div>
+        <div class="dtable-wrap">
+          <table>
+            <thead><tr>
+              <th>Team Leader</th>
+              <th class="c">Total</th>
+              <th class="c">✅ OK</th>
+              <th class="c">❌ NOK</th>
+              <th class="c">➖ N/A</th>
+              <th class="r">% Aderência</th>
+              <th class="r">% NOK</th>
+            </tr></thead>
+            <tbody id="dtb-fs"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- STRONG FINISH section -->
+    <div class="dash-section" id="ds-sf">
+      <div class="dash-title"><span class="sf">🏁</span> <span>STRONG FINISH</span> — Aderência por TL</div>
+      <div class="dash-sub">Meta ≤ 5 min &nbsp;·&nbsp; Ordenado pelos maiores ofensores</div>
+      <div id="dash-empty-sf" class="dash-empty" style="display:none">
+        <svg width="44" height="44" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        <p>Carregue o arquivo TIME MANAGEMENT.xlsx para visualizar os dados</p>
+      </div>
+      <div id="dash-content-sf">
+        <div class="chart-wrap">
+          <canvas id="chart-sf"></canvas>
+        </div>
+        <div class="dtable-wrap">
+          <table>
+            <thead><tr>
+              <th>Team Leader</th>
+              <th class="c">Total</th>
+              <th class="c">✅ OK</th>
+              <th class="c">❌ NOK</th>
+              <th class="c">➖ N/A</th>
+              <th class="r">% Aderência</th>
+              <th class="r">% NOK</th>
+            </tr></thead>
+            <tbody id="dtb-sf"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div id="dash-placeholder" class="dash-empty">
+      <svg width="54" height="54" fill="none" stroke="currentColor" stroke-width="1.2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      <p>Carregue o arquivo TIME MANAGEMENT.xlsx para visualizar o dashboard</p>
+    </div>
+  </div>
+
+
+</main>
+
+<footer>⚡ Mercado Livre &nbsp;&middot;&nbsp; BRRJ02 &nbsp;&middot;&nbsp; Time Management &nbsp;&middot;&nbsp; Fast Start &amp; Strong Finish &nbsp;&middot;&nbsp; v2.0</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script>
+// ======================================================
+//  CONFIGURAÇÕES
+// ======================================================
+const TARGET_FS = 600;   // 10 min em segundos
+const TARGET_SF = 300;   //  5 min em segundos
+
+// Índices das colunas (0-based)
+const C = {
+  PERIODO:   0, TL: 1, ID: 2, NOME: 3, TURNO: 4, PROC: 5,
+  TEMPO_FS: 11, STATUS_FS: 13,
+  TEMPO_SF: 15, STATUS_SF: 21,
+};
+
+// ======================================================
+//  ESTADO
+// ======================================================
+const ST = {
+  fs: { data:[], sort:"status", asc:true,  filter:"all" },
+  sf: { data:[], sort:"status", asc:true,  filter:"all" },
+};
+
+// ======================================================
+//  META — relações para filtros em cascata
+// ======================================================
+const META = {
+  procTurnos: new Map(),   // proc  → Set<turno>
+  turnoTLs:   new Map(),   // turno → Set<tl>
+  procTLs:    new Map(),   // proc  → Set<tl>
+  allTurnos:  [],
+  allTLs:     [],
+};
+function _metaAdd(map, key, val){
+  if(!key||!val) return;
+  if(!map.has(key)) map.set(key, new Set());
+  map.get(key).add(val);
+}
+
+// ======================================================
+//  CLOCK
+// ======================================================
+function _tick(){
+  const d=new Date();
+  const hh=String(d.getHours()).padStart(2,'0');
+  const mm=String(d.getMinutes()).padStart(2,'0');
+  const ss=String(d.getSeconds()).padStart(2,'0');
+  document.getElementById("clk").textContent=hh+':'+mm+':'+ss;
+}
+setInterval(_tick,1000);
+_tick();
+
+// ======================================================
+//  NAVEGAÇÃO
+// ======================================================
+function swTab(btn,tab){
+  document.querySelectorAll(".panel").forEach(p=>p.classList.remove("on"));
+  document.querySelectorAll(".tb").forEach(b=>b.classList.remove("on"));
+  document.getElementById("p-"+tab).classList.add("on");
+  btn.classList.add("on");
+}
+
+// ======================================================
+//  UPLOAD
+// ======================================================
+function onDrag(e,el){e.preventDefault();el.classList.add("drag")}
+function offDrag(el){el.classList.remove("drag")}
+function onDrop(e){
+  e.preventDefault();
+  document.getElementById("dz-fs").classList.remove("drag");
+  const f=e.dataTransfer.files[0];
+  if(f) procFile(f);
+}
+function onFCh(el){if(el.files[0])procFile(el.files[0])}
+
+function procFile(f){
+  document.getElementById("fn-fs").textContent = f.name;
+  const r = new FileReader();
+  if(f.name.toLowerCase().endsWith(".csv")){
+    r.onload = e => parseCSV(e.target.result);
+    r.readAsText(f,"UTF-8");
+  } else {
+    r.onload = e => parseXLSX(e.target.result);
+    r.readAsArrayBuffer(f);
+  }
+}
+
+function parseXLSX(buf){
+  const wb = XLSX.read(buf,{type:"array"});
+  const ws = wb.Sheets[wb.SheetNames[0]];
+  procRows(XLSX.utils.sheet_to_json(ws,{header:1,defval:""}));
+}
+
+function parseCSV(txt){
+  procRows(txt.split("\n").map(l=>l.split(",").map(c=>c.replace(/"/g,"").trim())));
+}
+
+// ======================================================
+//  PROCESSAR LINHAS
+// ======================================================
+function procRows(rows){
+  try {
+    if(!rows||rows.length<2){alert("Arquivo sem dados.");return;}
+
+    // Detectar índice das colunas pelo cabeçalho
+    const hdr = rows[0].map(h=>String(h).trim().toUpperCase());
+
+    const idx = {
+      PERIODO:   fCol(hdr,["PERIODO","PERÍODO"]),
+      TL:        fCol(hdr,["TL"]),
+      ID:        fCol(hdr,["OPERADOR ID","OPERADOR_ID","ID"]),
+      NOME:      fCol(hdr,["NOME"]),
+      TURNO:     fCol(hdr,["TURNO"]),
+      PROC:      fCol(hdr,["PROCESSO_HC","PROCESSO HC","PROCESSO"]),
+      TEMPO_FS:  fCol(hdr,["TEMPO DE BIP ENTRADA","TEMPO BIP ENTRADA"]),
+      STATUS_FS: fCol(hdr,["OK FIRST BIP","OK FIRST BIP 2.0"]),
+      TEMPO_SF:  fCol(hdr,["TEMPO DE BIP SAIDA","TEMPO BIP SAIDA"]),
+      STATUS_SF: fCol(hdr,["OK LAST BIP","OK LAST BIP 2.0"]),
+    };
+
+    // Fallback para índices fixos
+    const g = (k,fb) => idx[k] >= 0 ? idx[k] : fb;
+    const iP  = g("PERIODO",C.PERIODO), iTL = g("TL",C.TL);
+    const iId = g("ID",C.ID),           iN  = g("NOME",C.NOME);
+    const iT  = g("TURNO",C.TURNO),     iPr = g("PROC",C.PROC);
+
+    const iTFS= g("TEMPO_FS",C.TEMPO_FS), iSFS = g("STATUS_FS",C.STATUS_FS);
+    const iTSF= g("TEMPO_SF",C.TEMPO_SF), iSSF = g("STATUS_SF",C.STATUS_SF);
+
+    const turnos = new Set();
+    const tls    = new Set();
+    const fsData = [], sfData = [];
+
+    for(let i=1;i<rows.length;i++){
+      const r    = rows[i];
+      const nome = cap(String(r[iN]||"").trim());
+      const id   = String(r[iId]||"").trim();
+      if(!nome && !id) continue;
+
+      const tl    = cap(String(r[iTL]||"").trim());
+      const turno = String(r[iT]||"").trim();
+      const proc  = String(r[iPr]||"").trim().toUpperCase();
+      const periodo = String(r[iP]||"").trim();
+      if(turno) turnos.add(turno);
+      if(tl)    tls.add(tl);
+
+      // Fast Start
+      const tempoFS  = pSeg(r[iTFS]);
+      const statusFS = pStatus(r[iSFS]);
+      fsData.push({nome, id, tl, turno, proc, periodo, tempo:tempoFS, status:statusFS});
+
+      // Strong Finish
+      const tempoSF  = pSeg(r[iTSF]);
+      const statusSF = pStatus(r[iSSF]);
+      sfData.push({nome, id, tl, turno, proc, periodo, tempo:tempoSF, status:statusSF});
+    }
+
+    ST.fs.data = fsData;
+    ST.sf.data = sfData;
+
+    // Construir META de relações para filtros em cascata
+    META.procTurnos.clear(); META.turnoTLs.clear(); META.procTLs.clear();
+    fsData.forEach(row=>{
+      _metaAdd(META.procTurnos, row.proc,  row.turno);
+      _metaAdd(META.turnoTLs,   row.turno, row.tl);
+      _metaAdd(META.procTLs,    row.proc,  row.tl);
+    });
+    META.allTurnos = [...turnos].sort();
+    META.allTLs    = [...tls].sort();
+
+    // Preencher filtros dinâmicos com callbacks em cascata
+    ["fs","sf"].forEach(tab=>{
+      clearMselDrop("msd-"+tab+"-turno");
+      META.allTurnos.forEach(t=> addMselOpt("msd-"+tab+"-turno", t, t, ()=>cascadeFromTurno(tab)));
+      clearMselDrop("msd-"+tab+"-tl");
+      META.allTLs.forEach(tl=> addMselOpt("msd-"+tab+"-tl", tl, tl, ()=>render(tab)));
+    });
+
+    // Turno do dashboard (sem filtro de TL no dash)
+    clearMselDrop("msd-dash-turno");
+    META.allTurnos.forEach(t=> addMselOpt("msd-dash-turno", t, t, ()=>renderDash()));
+
+    render("fs");
+    render("sf");
+    renderDash();
+
+  } catch(e){
+    alert("Erro ao processar: "+e.message);
+    console.error(e);
+  }
+}
+
+// ======================================================
+//  RENDER
+// ======================================================
+function render(tab){
+  const s   = ST[tab];
+  const q   = (document.getElementById("sb-"+tab).value||"").toLowerCase();
+  const fP  = getMsel("ms-"+tab+"-proc");
+  const fT  = getMsel("ms-"+tab+"-turno");
+  const fTL = getMsel("ms-"+tab+"-tl");
+  const tgt = tab==="fs" ? TARGET_FS : TARGET_SF;
+
+  let d = [...s.data];
+
+  // Filtros
+  if(s.filter==="ok")  d = d.filter(r=>r.status==="OK");
+  else if(s.filter==="nok") d = d.filter(r=>r.status==="NOK");
+  else if(s.filter==="na")  d = d.filter(r=>r.status==="N/A");
+  if(fP.length)  d = d.filter(r=>fP.includes(r.proc));
+  if(fT.length)  d = d.filter(r=>fT.includes(r.turno));
+  if(fTL.length) d = d.filter(r=>fTL.includes(r.tl));
+  if(q)    d = d.filter(r=>r.nome.toLowerCase().includes(q)||r.id.includes(q)||r.tl.toLowerCase().includes(q));
+
+  // Ordenar
+  d.sort((a,b)=>{
+    const k = s.sort;
+    const va = k==="nome"?a.nome:k==="tl"?a.tl:k==="proc"?a.proc:k==="turno"?a.turno:k==="tempo"?a.tempo:statusOrd(a.status);
+    const vb = k==="nome"?b.nome:k==="tl"?b.tl:k==="proc"?b.proc:k==="turno"?b.turno:k==="tempo"?b.tempo:statusOrd(b.status);
+    return s.asc ? (va<vb?-1:va>vb?1:0) : (va>vb?-1:va<vb?1:0);
+  });
+
+  // KPIs (sobre dados originais filtrados por processo/turno/TL, sem busca)
+  let base = [...s.data];
+  if(fP.length)  base = base.filter(r=>fP.includes(r.proc));
+  if(fT.length)  base = base.filter(r=>fT.includes(r.turno));
+  if(fTL.length) base = base.filter(r=>fTL.includes(r.tl));
+  const ok  = base.filter(r=>r.status==="OK").length;
+  const nok = base.filter(r=>r.status==="NOK").length;
+  const na  = base.filter(r=>r.status==="N/A").length;
+  const tot = base.length;
+  const pct = (ok+nok)>0 ? ((ok/(ok+nok))*100).toFixed(1)+"%" : "—";
+
+  document.getElementById("k-"+tab+"-ok").textContent  = ok;
+  document.getElementById("k-"+tab+"-nok").textContent = nok;
+  document.getElementById("k-"+tab+"-na").textContent  = na;
+  document.getElementById("k-"+tab+"-tot").textContent = tot;
+  document.getElementById("k-"+tab+"-pct").textContent = pct;
+
+  const tb = document.getElementById("tb-"+tab);
+  if(!d.length){
+    tb.innerHTML='<tr><td colspan="7"><div class="empty"><p>Nenhum registro encontrado.</p></div></td></tr>';
+    return;
+  }
+
+  tb.innerHTML = d.map((r,i)=>{
+    const pos  = i+1;
+    const pc   = pos===1?"g":pos===2?"s":pos===3?"b":"";
+    const pl   = pos===1?"🥇":pos===2?"🥈":pos===3?"🥉":pos;
+    const ini  = r.nome.split(" ").filter(w=>w).slice(0,2).map(w=>w[0].toUpperCase()).join("");
+    const tCls = r.status==="OK"?"ok":r.status==="NOK"?"over":"na";
+    const sCls = r.status==="OK"?"ok":r.status==="NOK"?"nok":"na";
+    const sLbl = r.status==="OK"?"✅ OK":r.status==="NOK"?"❌ NOK":"➖ N/A";
+    const pCls = procCls(r.proc);
+
+    return `<tr>
+      <td class="c"><span class="rnum ${pc}">${pl}</span></td>
+      <td>
+        <div class="ncell">
+          <div class="av">${ini}</div>
+          <div>
+            <div class="ntext">${r.nome}</div>
+            <div class="nid">${r.id}</div>
+          </div>
+        </div>
+      </td>
+      <td style="font-size:12px;color:#999">${r.tl}</td>
+      <td><span class="procbadge ${pCls}">${r.proc}</span></td>
+      <td style="font-size:12px;color:#777">${r.turno}</td>
+      <td class="r"><span class="tval ${tCls}">${fmtTempo(r.tempo)}</span></td>
+      <td class="c"><span class="tbadge ${sCls}">${sLbl}</span></td>
+    </tr>`;
+  }).join("");
+}
+
+// ======================================================
+//  HELPERS
+// ======================================================
+function statusOrd(s){ return s==="OK"?0:s==="NOK"?1:2; }
+
+function sortT(tab,f){
+  const s=ST[tab];
+  s.asc = s.sort===f?!s.asc:true;
+  s.sort=f;
+  render(tab);
+}
+
+function setF(tab,f,btn){
+  ST[tab].filter=f;
+  btn.closest(".toolbar").querySelectorAll(".fbtn").forEach(b=>b.classList.remove("on"));
+  btn.classList.add("on");
+  render(tab);
+}
+
+function fCol(hdr,terms){
+  for(let i=0;i<hdr.length;i++){
+    const h=hdr[i].normalize("NFD").replace(/[̀-ͯ]/g,"").toUpperCase();
+    for(const t of terms){
+      const tn=t.normalize("NFD").replace(/[̀-ͯ]/g,"").toUpperCase();
+      if(h.includes(tn)) return i;
+    }
+  }
+  return -1;
+}
+
+function pSeg(v){
+  if(v===""||v==null||v==="-") return 0;
+  if(typeof v==="number") return v>0?Math.round(v):0;
+  const n=parseFloat(String(v).replace(",","."));
+  return isNaN(n)||n<0?0:Math.round(n);
+}
+
+function pStatus(v){
+  if(!v) return "N/A";
+  const s=String(v).trim().toUpperCase();
+  if(s==="OK")  return "OK";
+  if(s==="NOK") return "NOK";
+  return "N/A";
+}
+
+function fmtTempo(seg){
+  if(!seg||seg<=0) return "—";
+  const m=Math.floor(seg/60);
+  const s=seg%60;
+  return m+"min "+s+"s";
+}
+
+function cap(str){
+  if(!str) return "";
+  return str.split(" ").map(w=>w.length>0?w[0].toUpperCase()+w.slice(1).toLowerCase():w).join(" ");
+}
+
+function procCls(proc){
+  const p=(proc||"").toUpperCase();
+  if(p.includes("PICKING"))     return "proc-picking";
+  if(p.includes("VOL"))         return "proc-packing-vol";
+  if(p.includes("PUT"))         return "proc-put-to-wall";
+  if(p.includes("PACKING"))     return "proc-packing";
+  return "";
+}
+
+
+// ======================================================
+//  DASHBOARD
+// ======================================================
+let chartFS = null, chartSF = null;
+
+function buildTLStats(data){
+  // returns array [{tl, ok, nok, na, total, pctOK, pctNOK}] sorted by pctNOK desc
+  const map = {};
+  data.forEach(r=>{
+    const tl = r.tl || "Sem TL";
+    if(!map[tl]) map[tl]={tl,ok:0,nok:0,na:0};
+    if(r.status==="OK")  map[tl].ok++;
+    else if(r.status==="NOK") map[tl].nok++;
+    else map[tl].na++;
+  });
+  return Object.values(map).map(m=>{
+    const total = m.ok+m.nok+m.na;
+    const valid = m.ok+m.nok;
+    const pctOK  = valid>0 ? (m.ok/valid*100) : 0;
+    const pctNOK = valid>0 ? (m.nok/valid*100) : 0;
+    return {...m, total, pctOK, pctNOK};
+  }).sort((a,b)=>b.pctNOK-a.pctNOK||b.nok-a.nok);
+}
+
+function pctClass(pct){
+  if(pct>=80) return "pct-ok";
+  if(pct>=50) return "pct-warn";
+  return "pct-bad";
+}
+
+function renderDash(){
+  const hasData = ST.fs.data.length>0 || ST.sf.data.length>0;
+
+  const placeholder = document.getElementById("dash-placeholder");
+  if(placeholder) placeholder.style.display = hasData ? "none" : "flex";
+
+  const fDashT = getMsel("ms-dash-turno");
+  const fDashP = getMsel("ms-dash-proc");
+
+  ["fs","sf"].forEach(tab=>{
+    let filtered = [...ST[tab].data];
+    if(fDashT.length) filtered = filtered.filter(r=>fDashT.includes(r.turno));
+    if(fDashP.length) filtered = filtered.filter(r=>fDashP.includes(r.proc));
+    const stats = buildTLStats(filtered);
+    const contentEl = document.getElementById("dash-content-"+tab);
+    const emptyEl   = document.getElementById("dash-empty-"+tab);
+
+    if(!stats.length){
+      if(contentEl) contentEl.style.display="none";
+      if(emptyEl)   emptyEl.style.display="flex";
+      return;
+    }
+    if(contentEl) contentEl.style.display="block";
+    if(emptyEl)   emptyEl.style.display="none";
+
+    // Chart
+    const labels   = stats.map(s=>s.tl);
+    const pctNOKs  = stats.map(s=>parseFloat(s.pctNOK.toFixed(1)));
+    const pctOKs   = stats.map(s=>parseFloat(s.pctOK.toFixed(1)));
+
+    const barH = Math.max(280, stats.length * 40);
+    const canv = document.getElementById("chart-"+tab);
+    canv.style.maxHeight = barH+"px";
+    canv.height = barH;
+
+    // Destroy previous
+    if(tab==="fs"&&chartFS){ chartFS.destroy(); chartFS=null; }
+    if(tab==="sf"&&chartSF){ chartSF.destroy(); chartSF=null; }
+
+    const chartColor = tab==="fs" ? "#00C853" : "#FF9800";
+    const nokColor   = "#FF3B3B";
+
+    // Plugin inline para exibir % de aderência nas barras
+    const labelPlugin = {
+      id:"barLabels",
+      afterDraw(ch){
+        const ctx2=ch.ctx;
+        ch.data.datasets.forEach((ds,di)=>{
+          const meta=ch.getDatasetMeta(di);
+          if(meta.hidden) return;
+          meta.data.forEach((bar,j)=>{
+            const val=ds.data[j];
+            if(!val||val<=0) return;
+            const cp=bar.getCenterPoint();
+            ctx2.save();
+            // Labels dentro da barra de aderência (verde) — texto branco
+            // Labels fora da barra de NOK (vermelha) — valor à direita
+            const isOK = di===1;
+            ctx2.font = isOK?"bold 12px 'DM Sans',sans-serif":"bold 11px 'DM Sans',sans-serif";
+            ctx2.fillStyle = isOK ? "#FFFFFF" : "#FFE600";
+            ctx2.textAlign = "center";
+            ctx2.textBaseline = "middle";
+            if(isOK){
+              // Dentro da barra verde, centralizado
+              ctx2.fillText(val.toFixed(1)+"%", cp.x, cp.y);
+            } else {
+              // À direita da barra vermelha, se couber
+              const xEnd = bar.x;
+              ctx2.textAlign = "left";
+              ctx2.fillText(val.toFixed(1)+"%", xEnd+5, cp.y);
+            }
+            ctx2.restore();
+          });
+        });
+      }
+    };
+
+    const chart = new Chart(canv, {
+      type:"bar",
+      plugins:[labelPlugin],
+      data:{
+        labels,
+        datasets:[
+          {
+            label:"% NOK (Ofensores)",
+            data: pctNOKs,
+            backgroundColor: stats.map(s=>s.pctNOK>=50?"rgba(255,71,87,0.85)":s.pctNOK>=20?"rgba(255,165,2,0.82)":"rgba(255,118,125,0.65)"),
+            borderColor:     stats.map(s=>s.pctNOK>=50?"#FF4757":s.pctNOK>=20?"#FFA502":"#FF767C"),
+            borderWidth:1,
+            borderRadius:5,
+          },
+          {
+            label:"% Aderência (OK)",
+            data: pctOKs,
+            backgroundColor:"rgba(46,213,115,0.45)",
+            borderColor:"#2ed573",
+            borderWidth:1,
+            borderRadius:5,
+          }
+        ]
+      },
+      options:{
+        indexAxis:"y",
+        responsive:true,
+        maintainAspectRatio:false,
+        layout:{ padding:{ right:52 } },
+        plugins:{
+          legend:{
+            labels:{color:"#aaa",font:{family:"DM Sans",size:11},boxWidth:12,padding:16}
+          },
+          tooltip:{
+            callbacks:{
+              label:ctx=>` ${ctx.dataset.label}: ${ctx.parsed.x.toFixed(1)}%`
+            }
+          }
+        },
+        scales:{
+          x:{
+            max:100,
+            ticks:{color:"#666",callback:v=>v+"%",font:{size:11}},
+            grid:{color:"rgba(255,255,255,.06)"},
+            border:{color:"rgba(255,255,255,.08)"}
+          },
+          y:{
+            ticks:{color:"#ccc",font:{family:"DM Sans",size:12}},
+            grid:{color:"rgba(255,255,255,.04)"},
+            border:{color:"rgba(255,255,255,.08)"}
+          }
+        }
+      }
+    });
+    if(tab==="fs") chartFS=chart; else chartSF=chart;
+
+    // Table
+    const tbody = document.getElementById("dtb-"+tab);
+    tbody.innerHTML = stats.map((s,i)=>{
+      const cls = pctClass(s.pctOK);
+      const rank = i===0?"🔴":i===1?"🟠":i===2?"🟡":"";
+      return `<tr>
+        <td><span class="tl-name">${rank} ${s.tl}</span></td>
+        <td class="c" style="color:#666">${s.total}</td>
+        <td class="c" style="color:var(--vd)">${s.ok}</td>
+        <td class="c" style="color:var(--vm)">${s.nok}</td>
+        <td class="c" style="color:#555">${s.na}</td>
+        <td class="r"><span class="pct-cell ${cls}">${s.pctOK.toFixed(1)}%</span></td>
+        <td class="r" style="font-family:'Bebas Neue';font-size:18px;color:${s.pctNOK>=50?'var(--vm)':s.pctNOK>=20?'var(--or)':'#555'}">${s.pctNOK.toFixed(1)}%</td>
+      </tr>`;
+    }).join("");
+  });
+}
+
+
+// ======================================================
+//  MULTI-SELECT HELPERS
+// ======================================================
+function toggleMsel(id){
+  const m = document.getElementById(id);
+  const isOpen = m.classList.contains("open");
+  document.querySelectorAll(".msel.open").forEach(x=>x.classList.remove("open"));
+  if(!isOpen) m.classList.add("open");
+}
+document.addEventListener("click", e=>{
+  if(!e.target.closest(".msel"))
+    document.querySelectorAll(".msel.open").forEach(x=>x.classList.remove("open"));
+});
+function getMsel(id){
+  const el = document.getElementById(id);
+  if(!el) return [];
+  return [...el.querySelectorAll("input[type=checkbox]:checked")].map(cb=>cb.value);
+}
+function updMselLabel(msId){
+  const ms = document.getElementById(msId);
+  if(!ms) return;
+  const checked = [...ms.querySelectorAll("input[type=checkbox]:checked")];
+  const lbl = ms.querySelector(".msel-lbl");
+  const ph  = ms.dataset.ph || "Todos";
+  if(!checked.length) lbl.textContent = ph;
+  else if(checked.length===1){
+    const sp = checked[0].closest(".msel-item").querySelector("span");
+    lbl.textContent = sp ? sp.textContent : checked[0].value;
+  } else lbl.textContent = checked.length+" selecionados";
+}
+function addMselOpt(dropId, value, label, onChange){
+  const drop = document.getElementById(dropId);
+  if(!drop) return;
+  const item = document.createElement("label");
+  item.className = "msel-item";
+  const cb = document.createElement("input");
+  cb.type = "checkbox"; cb.value = value;
+  cb.addEventListener("change", ()=>{
+    item.classList.toggle("ck", cb.checked);
+    updMselLabel(dropId.replace("msd-","ms-"));
+    onChange();
+  });
+  const sp = document.createElement("span");
+  sp.textContent = label || value;
+  item.appendChild(cb); item.appendChild(sp);
+  drop.appendChild(item);
+}
+function clearMselDrop(dropId){
+  const el = document.getElementById(dropId);
+  if(el) el.innerHTML = "";
+}
+// ======================================================
+//  FILTROS EM CASCATA
+// ======================================================
+// Re-marca checkboxes existentes cujos valores estejam em `values`
+function recheckMsel(dropId, values){
+  const set = new Set(values);
+  const drop = document.getElementById(dropId);
+  if(!drop) return;
+  drop.querySelectorAll("input[type=checkbox]").forEach(cb=>{
+    if(set.has(cb.value)){
+      cb.checked = true;
+      cb.closest(".msel-item").classList.add("ck");
+    }
+  });
+  updMselLabel(dropId.replace("msd-","ms-"));
+}
+
+// Reconstrói dropdown de Turno com base nos Processos selecionados
+function rebuildTurnos(tab){
+  const fP    = getMsel("ms-"+tab+"-proc");
+  const prevT = getMsel("ms-"+tab+"-turno");
+  let valid;
+  if(!fP.length){
+    valid = META.allTurnos;
+  } else {
+    const s = new Set();
+    fP.forEach(p=>{ (META.procTurnos.get(p)||new Set()).forEach(t=>s.add(t)); });
+    valid = [...s].sort();
+  }
+  const cb = tab==="dash" ? ()=>renderDash() : ()=>cascadeFromTurno(tab);
+  clearMselDrop("msd-"+tab+"-turno");
+  valid.forEach(t=> addMselOpt("msd-"+tab+"-turno", t, t, cb));
+  recheckMsel("msd-"+tab+"-turno", prevT.filter(t=>valid.includes(t)));
+}
+
+// Reconstrói dropdown de TL com base nos Processos + Turnos selecionados
+function rebuildTLs(tab){
+  if(tab==="dash") return; // dashboard não tem filtro de TL
+  const fP    = getMsel("ms-"+tab+"-proc");
+  const fT    = getMsel("ms-"+tab+"-turno");
+  const prevTL = getMsel("ms-"+tab+"-tl");
+  let valid;
+  if(!fP.length && !fT.length){
+    valid = META.allTLs;
+  } else {
+    let byT = null, byP = null;
+    if(fT.length){
+      const s = new Set();
+      fT.forEach(t=>{ (META.turnoTLs.get(t)||new Set()).forEach(tl=>s.add(tl)); });
+      byT = s;
+    }
+    if(fP.length){
+      const s = new Set();
+      fP.forEach(p=>{ (META.procTLs.get(p)||new Set()).forEach(tl=>s.add(tl)); });
+      byP = s;
+    }
+    if(byT && byP) valid = [...byT].filter(tl=>byP.has(tl)).sort();
+    else            valid = [...(byT||byP)].sort();
+  }
+  clearMselDrop("msd-"+tab+"-tl");
+  valid.forEach(tl=> addMselOpt("msd-"+tab+"-tl", tl, tl, ()=>render(tab)));
+  recheckMsel("msd-"+tab+"-tl", prevTL.filter(tl=>valid.includes(tl)));
+}
+
+// Processo mudou → recalcula Turno → recalcula TL → renderiza
+function cascadeFromProc(tab){
+  rebuildTurnos(tab);
+  rebuildTLs(tab);
+  if(tab==="dash") renderDash(); else render(tab);
+}
+
+// Turno mudou → recalcula TL → renderiza
+function cascadeFromTurno(tab){
+  rebuildTLs(tab);
+  if(tab==="dash") renderDash(); else render(tab);
+}
+
+// Wira os checkboxes fixos de processo ao carregar (com cascata)
+["fs","sf","dash"].forEach(tab=>{
+  const dropId = "msd-"+tab+"-proc";
+  const drop = document.getElementById(dropId);
+  if(!drop) return;
+  drop.querySelectorAll("input[type=checkbox]").forEach(cb=>{
+    cb.addEventListener("change",()=>{
+      cb.closest(".msel-item").classList.toggle("ck",cb.checked);
+      updMselLabel(dropId.replace("msd-","ms-"));
+      cascadeFromProc(tab);
+    });
+  });
+});
+
+</script>
+</body>
+</html>
