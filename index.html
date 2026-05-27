@@ -1,490 +1,813 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0"/>
-<title>Packing Dashboard &middot; BRRJ02</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Dashboard Produtividade — Mercado Livre</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--am:#FFE600;--az:#3483FA;--c1:#fff;--c3:#E5E7EB;--br:#111827;--vd:#16A34A;--or:#F59E0B;--vm:#EF4444;--tx:#374151;}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{background:linear-gradient(160deg,#f8fafc,#eef2ff);color:var(--tx);font-family:"DM Sans",sans-serif;min-height:100vh;overflow-x:hidden}
-header{background:#fff;border-bottom:3px solid var(--am);padding:0 28px;display:flex;align-items:center;justify-content:space-between;height:58px;position:sticky;top:0;z-index:200;box-shadow:0 2px 10px rgba(15,23,42,.07)}
-.logo-wrap{display:flex;align-items:center;gap:10px}
-.logo-wrap img{height:34px;border-radius:5px}
-.logo-sub{font-size:10px;color:#94A3B8;letter-spacing:2px;text-transform:uppercase}
-.hright{display:flex;align-items:center;gap:10px}
-.dot{width:7px;height:7px;background:var(--vd);border-radius:50%;display:inline-block;animation:pulse 2s infinite;margin-right:4px}
-.ts{font-size:11px;color:#94A3B8}
-.savebtn{display:inline-flex;align-items:center;gap:6px;background:var(--am);color:#111827;font-family:"DM Sans",sans-serif;font-weight:700;font-size:12px;padding:8px 14px;border-radius:8px;border:none;cursor:pointer;transition:all .2s;box-shadow:0 3px 10px rgba(255,230,0,.28)}
-.savebtn:hover{background:#FFD700;transform:translateY(-1px)}
-nav{background:#fff;border-bottom:1px solid var(--c3);padding:0 28px;display:flex;gap:2px;position:sticky;top:58px;z-index:190;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
-nav::-webkit-scrollbar{display:none}
-.tb{padding:12px 20px;font-family:"DM Sans",sans-serif;font-size:12px;font-weight:600;color:#64748B;background:none;border:none;border-bottom:3px solid transparent;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:6px;white-space:nowrap;flex-shrink:0}
-.tb.on{color:#111827;border-bottom-color:var(--am);background:linear-gradient(180deg,rgba(255,230,0,.12),transparent)}
-.tdot{width:6px;height:6px;border-radius:50%;background:currentColor;opacity:.5}
-main{max-width:1440px;margin:0 auto;padding:24px 22px 50px}
-.panel{display:none}.panel.on{display:block}
-.ptitle{margin-bottom:18px}
-.ptitle h1{font-family:"Bebas Neue",sans-serif;font-size:clamp(22px,4vw,42px);letter-spacing:3px;color:#111827}
-.ptitle h1 span{color:var(--az)}
-.ptitle p{font-size:11px;color:#64748B;margin-top:3px;letter-spacing:2px;text-transform:uppercase}
-.mtag{display:inline-flex;align-items:center;background:#EFF6FF;border:1px solid #BFDBFE;color:#1D4ED8;font-size:11px;font-weight:600;padding:3px 11px;border-radius:20px;margin-top:7px}
-.mtag span{color:#111827;margin-left:4px}
-.uzone{border:2px dashed var(--c3);border-radius:12px;padding:14px 18px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:all .2s;background:#fff;position:relative;margin-bottom:16px;box-shadow:0 3px 10px rgba(15,23,42,.04)}
-.uzone:hover,.uzone.drag{border-color:var(--am);background:rgba(255,230,0,.04)}
-.uzone input{position:absolute;inset:0;opacity:0;cursor:pointer;z-index:0}
-.uico{font-size:18px;flex-shrink:0}
-.uinfo{flex:1;min-width:0}
-.uinfo p{font-size:13px;color:#64748B}
-.uinfo p strong{color:#111827}
-.uinfo small{font-size:11px;color:#94A3B8}
-.ufname{font-size:12px;color:var(--vd);max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex-shrink:0}
-.ubtn{display:inline-flex;align-items:center;gap:5px;background:var(--am);color:#111827;font-family:"DM Sans",sans-serif;font-weight:700;font-size:12px;padding:8px 16px;border-radius:8px;border:none;cursor:pointer;transition:all .2s;white-space:nowrap;flex-shrink:0;position:relative;z-index:10}
-.ubtn:hover{background:#FFD700;transform:translateY(-1px)}
-.kgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
-.kcard{background:#fff;border:1px solid var(--c3);border-radius:12px;padding:16px 14px;position:relative;overflow:hidden;transition:transform .2s,box-shadow .2s;box-shadow:0 3px 10px rgba(15,23,42,.04)}
-.kcard:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(15,23,42,.07)}
-.kcard::after{content:"";position:absolute;top:0;left:0;right:0;height:3px;border-radius:12px 12px 0 0}
-.kcard.vd::after{background:var(--vd)}.kcard.or::after{background:var(--or)}
-.kcard.vm::after{background:var(--vm)}.kcard.az::after{background:var(--am)}
-.klabel{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#64748B;margin-bottom:5px}
-.kval{font-family:"Bebas Neue",sans-serif;font-size:40px;line-height:1;color:#111827}
-.kcard.vd .kval{color:var(--vd)}.kcard.or .kval{color:var(--or)}
-.kcard.vm .kval{color:var(--vm)}.kcard.az .kval{color:#1D4ED8}
-.kemo{font-size:15px;margin-bottom:4px;display:block}
-.toolbar{display:flex;align-items:center;gap:9px;margin-bottom:12px;flex-wrap:wrap}
-.swrap{position:relative;flex:1;min-width:160px}
-.swrap svg{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:#94A3B8;pointer-events:none}
-.sbox{width:100%;background:#fff;border:1px solid #D8E1EE;border-radius:9px;padding:9px 13px 9px 36px;color:#111827;font-family:"DM Sans",sans-serif;font-size:13px;outline:none;transition:border-color .2s}
-.sbox:focus{border-color:var(--am)}
-.fbtn-wrap{display:flex;gap:6px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;flex-shrink:0}
-.fbtn-wrap::-webkit-scrollbar{display:none}
-.fbtn{background:#fff;border:1px solid #D8E1EE;border-radius:8px;padding:7px 13px;color:#475569;font-family:"DM Sans",sans-serif;font-size:12px;cursor:pointer;transition:all .2s;white-space:nowrap;flex-shrink:0}
-.fbtn:hover,.fbtn.on{border-color:var(--am);color:#111827;background:rgba(255,230,0,.10)}
-.twrap{background:#fff;border:1px solid var(--c3);border-radius:12px;overflow:hidden;box-shadow:0 4px 14px rgba(15,23,42,.05)}
-table{width:100%;border-collapse:collapse}
-thead tr{background:linear-gradient(180deg,#F8FAFC,#EEF2F7);border-bottom:1px solid var(--c3)}
-thead th{padding:11px 14px;text-align:left;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#64748B;font-weight:500;cursor:pointer;user-select:none;transition:color .2s;white-space:nowrap}
-thead th:hover{color:#111827}
-.r{text-align:right}.c{text-align:center}
-tbody tr{border-bottom:1px solid #F1F5F9;transition:background .1s}
-tbody tr:last-child{border-bottom:none}
-tbody tr:hover{background:#FAFCFF}
-tbody td{padding:11px 14px;font-size:13px;color:#111827}
-.ncell{display:flex;align-items:center;gap:8px}
-.av{width:28px;height:28px;border-radius:50%;background:#FFF7CC;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#111827;flex-shrink:0}
-.ntext{font-weight:500;font-size:13px}
-.lval{font-family:"Bebas Neue",sans-serif;font-size:18px;letter-spacing:1px;color:#111827}
-.uwrap{display:flex;align-items:center;gap:7px}
-.ubar{flex:1;height:4px;background:#E5E7EB;border-radius:99px;overflow:hidden;min-width:50px}
-.ufill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--az),#7AA8FF);transition:width .7s}
-.upct{font-size:12px;color:#64748B;min-width:32px;text-align:right}
-.mbadge{display:inline-flex;align-items:center;gap:4px;padding:4px 9px;border-radius:20px;font-size:11px;font-weight:600;white-space:nowrap}
-.mbadge.at{background:#DCFCE7;color:#166534;border:1px solid #BBF7D0}
-.mbadge.qu{background:#FEF3C7;color:#92400E;border:1px solid #FDE68A}
-.mbadge.ab{background:#FEE2E2;color:#B91C1C;border:1px solid #FECACA}
-.rnum{font-family:"Bebas Neue",sans-serif;font-size:15px;color:#CBD5E1;min-width:22px;text-align:center}
-.rnum.g{color:#F59E0B}.rnum.s{color:#94A3B8}.rnum.b{color:#B45309}
-.tval{font-size:12px;color:#94A3B8;white-space:nowrap}
-.tval span{color:#111827;font-weight:600}
-.empty{text-align:center;padding:44px 20px;color:#94A3B8}
-.empty svg{margin-bottom:10px;opacity:.18}
-.empty p{font-size:13px}
-footer{text-align:center;padding:16px;color:#CBD5E1;font-size:10px;letter-spacing:2px;text-transform:uppercase;border-top:1px solid var(--c3)}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
-
-@media(max-width:768px){
-  header{padding:0 12px;height:52px}
-  .logo-sub,.ts{display:none}
-  .savebtn{padding:7px 11px;font-size:11px}
-  nav{padding:0 4px;top:52px}
-  .tb{padding:10px 13px;font-size:11px}
-  main{padding:12px 10px 36px}
-  .uzone{flex-wrap:wrap;padding:12px;gap:8px}
-  .uinfo{order:1;flex:none;width:calc(100% - 32px)}
-  .uico{order:0;flex-shrink:0}
-  .ufname{order:2;max-width:100%;width:100%}
-  .ubtn{order:3;width:100%;justify-content:center}
-  .kgrid{grid-template-columns:repeat(2,1fr);gap:8px}
-  .kval{font-size:30px}
-  .kcard{padding:12px 10px}
-  .toolbar{gap:7px}
-  .swrap{width:100%;flex:none;min-width:0}
-  .fbtn-wrap{width:100%}
-  .fbtn{font-size:11px;padding:6px 10px}
-  .twrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
-  table{min-width:320px}
-  .col-hide{display:none}
-  tbody td{padding:9px 10px}
-  thead th{padding:9px 10px}
-  .ntext{font-size:11px}
-  .lval{font-size:14px}
-  .mbadge{font-size:10px;padding:3px 7px}
-  .av{width:24px;height:24px;font-size:9px}
+:root {
+  --ml-yellow:#FFE600; --ml-blue:#3483FA; --ml-blue-dark:#2968C8; --ml-blue-darker:#1A3F7A;
+  --ml-bg:#EDEDED; --ml-white:#fff;
+  --green:#00A650; --green-light:#E8F8EF;
+  --amber:#F7B731; --amber-light:#FEF9E7;
+  --red:#E74C3C; --red-light:#FDEDEC;
+  --g100:#F5F5F5; --g200:#EBEBEB; --g400:#999; --g600:#666; --g800:#333;
+  --shadow:0 2px 12px rgba(0,0,0,.10); --r:10px; --font:'Sora',sans-serif;
 }
-@media(max-width:400px){
-  .kval{font-size:24px}
-  .ptitle h1{font-size:20px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);background:var(--ml-bg);color:var(--g800);min-height:100vh}
+
+/* ── HEADER ── */
+.header{background:var(--ml-yellow);padding:0 16px;height:56px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 8px rgba(0,0,0,.12);position:sticky;top:0;z-index:300}
+.ml-logo{height:34px;width:auto;display:block}
+.date-wrap{display:flex;align-items:center;gap:6px;background:rgba(0,0,0,.09);border-radius:8px;padding:5px 10px}
+.date-lbl{font-size:11px;font-weight:700;color:var(--ml-blue-darker)}
+.date-input{border:none;background:transparent;font-size:12px;font-weight:700;color:var(--ml-blue-darker);cursor:pointer;font-family:var(--font);outline:none;max-width:120px}
+.date-input::-webkit-calendar-picker-indicator{cursor:pointer;opacity:.7}
+
+
+/* ── TABS ── */
+.nav-bar{background:var(--ml-white);border-bottom:2px solid var(--g200);display:flex;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.nav-bar::-webkit-scrollbar{display:none}
+.tab{padding:12px 14px;font-size:12.5px;font-weight:600;color:var(--g600);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;white-space:nowrap;transition:all .2s;flex-shrink:0}
+.tab:hover{color:var(--ml-blue)}
+.tab.active{color:var(--ml-blue);border-bottom-color:var(--ml-blue)}
+
+/* ── MAIN ── */
+.main{padding:14px 12px;max-width:1400px;margin:0 auto}
+.tab-content{display:none}
+.tab-content.active{display:block}
+.section-title{font-size:18px;font-weight:800;margin-bottom:2px}
+.section-meta{font-size:11.5px;color:var(--g400);font-weight:500;margin-bottom:12px}
+
+/* ── FILTER BAR ── */
+.filter-bar{background:var(--ml-white);border-radius:var(--r);padding:14px 14px;box-shadow:var(--shadow);margin-bottom:14px}
+.filter-row{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-start}
+.filter-col{display:flex;flex-direction:column;gap:6px;min-width:0}
+.filter-col.grow{flex:1;min-width:180px}
+.filter-lbl{font-size:10px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:.7px}
+.chips-row{display:flex;flex-wrap:wrap;gap:5px}
+
+/* status chips */
+.chip{display:inline-flex;align-items:center;gap:4px;padding:5px 11px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;border:1.5px solid var(--g200);background:var(--g100);color:var(--g600);transition:all .15s;user-select:none;white-space:nowrap}
+.chip:hover:not(.on){border-color:var(--ml-blue);color:var(--ml-blue)}
+.chip.on.green{background:var(--green);color:#fff;border-color:var(--green)}
+.chip.on.amber{background:var(--amber);color:#fff;border-color:var(--amber)}
+.chip.on.red{background:var(--red);color:#fff;border-color:var(--red)}
+.chip.on.blue{background:var(--ml-blue);color:#fff;border-color:var(--ml-blue)}
+
+/* search + dropdown */
+.search-wrap{position:relative;width:100%}
+.search-input{width:100%;padding:8px 12px 8px 32px;border-radius:8px;border:1.5px solid var(--g200);font-size:13px;font-family:var(--font);outline:none;background:var(--g100)}
+.search-input:focus{border-color:var(--ml-blue);background:#fff}
+.search-icon{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--g400);font-size:14px;pointer-events:none}
+.dropdown{position:absolute;top:calc(100% + 4px);left:0;right:0;background:#fff;border:1.5px solid var(--g200);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.12);z-index:100;max-height:200px;overflow-y:auto;display:none}
+.dropdown.open{display:block}
+.dd-item{display:flex;align-items:center;gap:10px;padding:9px 12px;cursor:pointer;font-size:13px;font-weight:600;transition:background .12s}
+.dd-item:hover{background:var(--g100)}
+.dd-check{width:16px;height:16px;border-radius:4px;border:2px solid var(--g400);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s}
+.dd-check.checked{background:var(--ml-blue);border-color:var(--ml-blue);color:#fff}
+.dd-proc{font-size:10px;color:var(--g400);font-weight:600;margin-left:auto}
+
+/* selected tags */
+.tags-row{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px;min-height:0}
+.tag{display:inline-flex;align-items:center;gap:4px;background:#EAF2FF;color:var(--ml-blue);border-radius:20px;padding:3px 8px;font-size:11px;font-weight:700}
+.tag-x{cursor:pointer;font-size:13px;line-height:1;opacity:.7}
+.tag-x:hover{opacity:1}
+
+.filter-clear{background:none;border:none;font-size:12px;color:var(--g400);cursor:pointer;font-weight:600;padding:4px 8px;border-radius:6px;margin-top:2px;align-self:flex-end}
+.filter-clear:hover{color:var(--red);background:var(--red-light)}
+.filter-divider{width:100%;height:1px;background:var(--g200);margin:10px 0}
+
+/* ── SUMMARY CARDS ── */
+.summary-row{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:14px}
+@media(min-width:640px){.summary-row{grid-template-columns:repeat(4,1fr)}}
+.sc{background:var(--ml-white);border-radius:var(--r);padding:12px 14px;box-shadow:var(--shadow);border-left:4px solid transparent}
+.sc.green{border-left-color:var(--green)} .sc.amber{border-left-color:var(--amber)} .sc.red{border-left-color:var(--red)} .sc.blue{border-left-color:var(--ml-blue)}
+.sc-lbl{font-size:10px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:.6px}
+.sc-val{font-size:22px;font-weight:800;margin-top:2px}
+.sc-sub{font-size:10px;color:var(--g400);margin-top:1px}
+.sc.green .sc-val{color:var(--green)} .sc.amber .sc-val{color:var(--amber)} .sc.red .sc-val{color:var(--red)} .sc.blue .sc-val{color:var(--ml-blue)}
+
+/* ── TABLE ── */
+.table-wrap{background:var(--ml-white);border-radius:var(--r);box-shadow:var(--shadow);overflow:auto;margin-bottom:20px;-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:collapse;font-size:12.5px;min-width:520px}
+thead tr{background:var(--ml-blue);color:#fff}
+thead th{padding:10px 10px;text-align:left;font-weight:700;font-size:10.5px;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap}
+tbody tr{border-bottom:1px solid var(--g200);transition:background .12s}
+tbody tr:last-child{border-bottom:none}
+tbody tr:hover{background:#f0f7ff}
+tbody td{padding:10px 10px;vertical-align:middle}
+.rank{font-weight:800;color:var(--g400);font-size:12px;text-align:center}
+.rank.gold{color:#F7B731} .rank.silver{color:#aaa} .rank.bronze{color:#cd7f32}
+.id-badge{background:var(--ml-blue);color:#fff;border-radius:6px;padding:3px 7px;font-size:11.5px;font-weight:700;display:inline-block}
+.pill{display:inline-flex;align-items:center;font-weight:700;font-size:12.5px;padding:2px 9px;border-radius:20px}
+.pill.green{background:var(--green-light);color:var(--green)}
+.pill.amber{background:var(--amber-light);color:#c77f00}
+.pill.red{background:var(--red-light);color:var(--red)}
+.pill.gray{background:var(--g100);color:var(--g600)}
+.pb-wrap{width:72px}
+.pb-bg{background:var(--g200);border-radius:4px;height:5px;overflow:hidden}
+.pb-fill{height:5px;border-radius:4px}
+.pb-fill.green{background:var(--green)} .pb-fill.amber{background:var(--amber)} .pb-fill.red{background:var(--red)}
+.pb-lbl{font-size:10.5px;font-weight:700;margin-top:2px}
+.pb-lbl.green{color:var(--green)} .pb-lbl.amber{color:#c77f00} .pb-lbl.red{color:var(--red)}
+
+/* ── SCORECARD ── */
+.sc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+.scc{background:var(--ml-white);border-radius:var(--r);padding:14px;box-shadow:var(--shadow);border-top:4px solid transparent}
+.scc.ga{border-top-color:var(--green)} .scc.gb{border-top-color:var(--amber)} .scc.gc{border-top-color:var(--red)}
+.scc-head{display:flex;align-items:flex-start;gap:8px;margin-bottom:12px}
+.scc-id{font-size:20px;font-weight:900;color:var(--ml-blue);line-height:1}
+.scc-proc{font-size:10px;color:var(--g400);font-weight:600;margin-top:3px}
+.grade-badge{padding:3px 9px;border-radius:20px;font-size:11.5px;font-weight:800;margin-left:auto;flex-shrink:0}
+.grade-badge.green{background:var(--green-light);color:var(--green)}
+.grade-badge.amber{background:var(--amber-light);color:#c77f00}
+.grade-badge.red{background:var(--red-light);color:var(--red)}
+.scc-metrics{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.scc-m{background:var(--g100);border-radius:7px;padding:8px 10px}
+.scc-m-lbl{font-size:9.5px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:.5px}
+.scc-m-val{font-size:17px;font-weight:800;margin-top:2px}
+.scc-m-sub{font-size:9.5px;font-weight:600;margin-top:1px}
+.scc-m.green .scc-m-val,.scc-m.green .scc-m-sub{color:var(--green)}
+.scc-m.amber .scc-m-val,.scc-m.amber .scc-m-sub{color:#c77f00}
+.scc-m.red .scc-m-val,.scc-m.red .scc-m-sub{color:var(--red)}
+.scc-m.blue .scc-m-val{color:var(--ml-blue)}
+.scc-status{margin-top:8px;padding:6px 10px;border-radius:7px;font-size:11.5px;font-weight:600}
+.scc-status.green{background:var(--green-light);color:var(--green)}
+.scc-status.amber{background:var(--amber-light);color:#c77f00}
+.scc-status.red{background:var(--red-light);color:var(--red)}
+
+/* ── MELHORIAS ── */
+.mel-card{background:var(--ml-white);border-radius:var(--r);box-shadow:var(--shadow);margin-bottom:10px;overflow:hidden;border-left:5px solid var(--ml-blue)}
+.mel-header{padding:13px 14px;display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none;transition:background .15s}
+.mel-header:hover{background:#f5f9ff}
+.mel-id{font-size:18px;font-weight:900;color:var(--ml-blue)}
+.mel-proc-tag{font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;background:#EAF2FF;color:var(--ml-blue)}
+.mel-status-tag{font-size:10px;font-weight:800;padding:2px 8px;border-radius:20px;text-transform:uppercase;margin-left:auto}
+.mel-status-tag.meta{background:var(--green-light);color:var(--green)}
+.mel-status-tag.parcial{background:var(--amber-light);color:#c77f00}
+.mel-status-tag.critico{background:var(--red-light);color:var(--red)}
+.mel-chevron{font-size:18px;color:var(--g400);margin-left:6px;transition:transform .25s;flex-shrink:0}
+.mel-body{padding:0 14px 14px;display:none}
+.mel-body.open{display:block}
+.mel-summary{font-size:13px;font-weight:700;color:var(--g800);margin-bottom:12px;padding:10px 12px;background:#F0F7FF;border-radius:7px;line-height:1.45}
+.mel-items{display:flex;flex-direction:column;gap:8px}
+.mel-item{display:flex;gap:10px;padding:11px 12px;border-radius:7px;align-items:flex-start}
+.mel-item.ok{background:var(--green-light)} .mel-item.warn{background:var(--amber-light)} .mel-item.tip{background:#FEF3E2} .mel-item.alert{background:var(--red-light)}
+.mel-icon{font-size:16px;flex-shrink:0;margin-top:1px}
+.mel-text{font-size:12.5px;font-weight:500;line-height:1.55}
+.mel-item.ok .mel-text{color:#0d5c2d} .mel-item.warn .mel-text{color:#7a4a00} .mel-item.tip .mel-text{color:#7a5200} .mel-item.alert .mel-text{color:#7a1a0d}
+
+.legend{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
+.leg-item{display:flex;align-items:center;gap:4px;font-size:11px;font-weight:600;color:var(--g600)}
+.leg-dot{width:8px;height:8px;border-radius:50%}
+.leg-dot.green{background:var(--green)} .leg-dot.amber{background:var(--amber)} .leg-dot.red{background:var(--red)}
+.no-results{text-align:center;padding:32px;color:var(--g400);font-size:13px;font-weight:600}
+
+@media(min-width:768px){
+  .header{padding:0 28px;height:64px}
+  .ml-logo{height:40px}
+  .nav-bar{padding:0 28px}
+  .main{padding:24px 28px}
+  .header-date{}
+  table{min-width:auto}
 }
 </style>
 </head>
 <body>
-<header>
+
+<header class="header">
   <div class="logo-wrap">
-    <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAkACQAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCABIAPcDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD7dooor/MI/UwooooAKKK4Xxf8bvBfgi6+x6hrcM2pk7Rp1gpubknsPLjBI/HFdmFweJx1T2WFpynLtFNv8CJTjBXk7HdUV5MPjjq2qru0L4ceI71DyJdQEVghH0kbf/47UD/FX4kB/k+FluU9X8SID+QgNe+uFs12nCMX2lUpRf3SmmY/WIPa79E3+SPYKK8pj+L3iy0G7U/hhqiRAZLaZqFvdkf8BJQn8BVrRv2ivBWo6gmnahe3HhnUnO0Wmv2z2TE9OC4Cnnjrz2rCpw3mtOLmqLkl1g4z/wDSHIft6ezdvW6/M9MopsUqTxrJG6yRsMqyHII9jTq+batozoCiiigAooooAKKKKACiiigAooooAKKKKACiiuI8a/Gbwr4B8T6H4e1a+ZNY1mWOK1tYYy7fO4RWbHCqWOMn0PpXbg8Diswq+wwdOVSdm7RTbsldvTolq2ROcaa5puyO3oooriLCiiigAooooAKKKKACsPxn400jwDoM+sa1dC2s4yFAALPK5+6iKOWY9gK3K4z4N+FG+MvxU1TxtrECzeGPCt4+m6BaycpLeJ/r7sjoSrfIp5wVbuK/Q+B+FJcWZn9XnJxo01zTa3teyS85PRdld62sedjsWsJS5+r2PC/GPxJ1jxDrr2XxJfW/hV4VkZfstk1pJC2oIw4827AwvH/LNcHnknFemfD9Ph1ounKPCcuirCR809pPG8jZ6l2zuJP+1zX2LdWFtqdo9teQRXVvIuySKZA6Op6gg8EV5H4x/ZY+Ed9Z3mpzfDbSr67hieVLe0g8lpWCkhFCEDJIwPrX9S5l4e4HF044bAVpYekre5HWL83s5N9XJs+aw+aunJzqwUn36niHiH47eB/DxaBddttV1HISLTdLcXNxNIThY0Vc5YkgY/OrOkaL8efFsP2zT/AOi+HrNgWjh8Q6qRcuO2ViVtpPocV538CfE3w7+Huq6n4zvPCt3efFG/maDTPBGjaDcRHR0wVSIO8YUuR9+Ut06d8/Qml/Avx38WVbXviZ421rw7NcKGtPDHhG/NpBpykZAkmUFppBxk525BxkV15f4X5BlqaxCdZ95P8AKKe3ncdfPMVVsoPlXkeZah4w8f8Aw73v8Qvhvf6dpqn5tZ0GVdQtoxjO51T51Xg84P0qE/F74X+NdK8q88Q6HeWUi8x6g6qD9Q+DXpMHjXxh+zDqUWn+P7+78ZfDm4l2Wvi9ot13peekd6qD509JQPr6D1q7+FXw48aCLVp/CfhvWTcoJEvm0+CYzKeQd+07h+Nc2YeGWSzqKvhJSoPo4PT8btNepVLO8RFWqWl6nwheeM9B+HerKfhH4ofVr6R8f8IXZpLqFpc8jIjCBjCevzKdvTjFfQvw4+JVv48trq3uLG50HxJpxWPU9Cv12XFm5GRkd1YEFWHBBFfRPhzwZoHg+3MGhaHp2iwHrFp9pHAp9yEAzXi37VXgF7HSY/ip4ehKeKfC0fnXKxcf2jpw5mt3x1wMupPQr715ufeGuBzXLnSpTbxkbuNSVrzf8s7WTT2Un7ydtWtCKGazhW5pJKD6Lp5o0q8++Onxbt/gv4Audflt/ttyZFt7W2LbRJK2cZPYAAk/Su00TWLXxDo1jqllJ5tnewJcQv6oyhh+hr5p/wCCg5/4tX4f/wCw0n/oiav5i4Kyehm/E2DyvHxfJKdprZ2V213V7WfU+oxlZ0sNOrTeqWhxI/af+NnhuxtPF2v+FIG8IXLKcC0MS7G+6Q+4suexYEH8aWT9p/41+JbK88W+HvCcCeD7VmPNoZRsXrufcC2O5UADn0r1v9oXj9ki7AGB/Ztjx/wKKpPgCo/4ZKshgYOlXmR+MtftzzTIP7F/t3+xKHP9Z+rcvvcvJy83Na9ufpzfPyPDdPEOv7D28rcvN53vb7vIm0L9qjSL34Dz/EK9szFcWrm0l06N/v3XGEVj0VshsnoM9cc+Waf8cv2g/FmiP4u0Twnp/wDwjWGlji8nc0kak5IBkDv0PKjnHFeJaXYXN3+yFrE0Ks0Nt4tSSbHZTbIoJ9tzCvWvhf4DvNe+GWl6xZ/H260PT4bVRLYkhBYlRhoyDMCAuOOORgjrX01bhPhvhqli8SqNKTeJlTXtoVasYwUVJQiqabUnfSUtbdzlWLxOJcIXfw30aV331/JHufwQ/aT0r4p/D3Vde1CNdKvdERn1O3U7lVApYSJ3KkA8HkEEehPj2k/tU/FD4q+Kgvgbwmq+HIbtI5p/szTyLGWGS75CqdvOAOKwtH+GvhrwP8FfivqHhfx5D4wS40yOC4W3tjEIT5gIJO45yMjFevfsN26r8A4zGoWSW/uSzDqTkAE/gBXyeZZXwxw7hszz3BYP28PbQpUoVoziqfNTU5Nwkoydm7R5ltZ+vXTq4rEzpUJz5Xyttq2tnZarQ5X4g/tTeMfEvxKuvBPwp0eHULm1Z45LyePeXZOHZQSFVAeNzdfxFR+Bf2o/HXhf4n2Hgn4o6JbWk15IkS3Vumx4y5wjnDFXQnglcY564xXAfsia3p/gP4/+LtO8RXEWm308M9rHLduEBkWdWZMnuwGffbXvvi79obwND8WtN8Ix6EvijWp3hhS+tIoZlidmJC7zz8udxx0z9a7c8yjAZTi5cO4TJFiKMcOp+2V41G3G7q+0b5eVP7NrX8tCKFapWgsROvyy5rW6eljkviX+0P8AEDVvize+Afhno1rc3ViSk13dLu3OoBfBYhVVScZOcmoPhz+0j4/0f4u6f8PviTo1lBeXrKiXFqAroWBKE7WZWU4xxiuTHxC8c/H/AOOniDwpZeNJPAui6Y9wkSW+A7LFJ5fqpZz97rgDPpXDWnhS20D9rzw3pOl+JLvxfcRXUDXWqXMnmu02wlxuBPCjHc4wRnivbwnC+TPL6mU47B0YVYYR1XyqpOqpKN1UlXtGCu/+XaUrPRNoxniayqKrTnJpzt0St2UdX8z1fxZ+1D8QPG/xH1Hwv8KdEtr6HT3dXupo/MaXYdrPksFVM8DueK8b8ceNfEvjD9o3wLL4s0UaF4h0+90+1uLdc7GIuQwdQSeCGHc/Wu2/Ya1mx8FePvGWh6/PFpmruixqLuQIS0bsJEye+SD+FRfHXVrHx7+1/wCDLfw9LHqUltcWEE8tswdd6z735H91evpg17mWYXL+H+JMRkmCy+MaNHCyksR73NK9NOUpSvyuMm2rW0a0fQxrTqVsNGvOo7ykly9N+x3/AMTv2nfGet/E668CfCrSrfUL20LRzXkqCQs6/f2gkKqqflLNnJ/Cs3w1+0/8RPhv8QNO8M/FvR7eC3vmVVvYY1R4wzbRJlCUdQeDjBHP0rlf2Y9csfht+0r420rxNNHpt7d/aLaKe6YIpk88Pt3HpuUZB74HqKn/AG6fFGleNvFPg7w9oNzDqurwmTf9kcSbDKyKiZXPJK5x249a8Ghw9k6zrD8I/wBlwlhalBTeJs/aXdNy9oql7KPNpy7X8rI1lia3sJYv2r51K3L03tax9wghgCDkHkGiqulQSWul2cMzb5Y4UR2PdgoBNWq/jiaUZNJ3PslqgoooqRhRRRQAV8v/ALO9p8SLL4UaHqvg/wCJVxpsV0slxJpGpWEd1aiYysXA6MgLZJ5PJPrX1BXy98GfE6/DX4l+J/hRq0n2YJey32h+ZgCSCU7/AC19cdR6neOwFfr/AANmWZZfgMyllMrVoqnNqyd4Qc1PRp7OcWzzMVRo1q1JV1eOq+btb8j2bQ/2n/iP4Gdo/iD4Fh1zTY/v6z4QkaR0A6lrZ/mI6klSMY6V2Fp+3F8J7/ypF1TUk0xsLJq0ulXC2UDkZ8uSUphW7Y9eKxXXzAcHAPevL9E8S63+z/pdroGu2Gj6/wDCebWnubu+ktnku7COWQygyRj5WVZdvz8kccen7xwR4g087qPB5vywq6crTtzPtrdX/M8XMsn+rxVShdrr5H0/8OPjr8PPivLc/wDCL+ILW/ntcGWOSJ4JVB4DBZFUlT6jjtXpCOGHysG+hrwEeDPgl+1fLJ4qgt7TxT/ZLSaR9rt2kgVHwkh5XbuKhwVbkDccc1znwA+I3iz4WWOh+AviR4b1XTVnkuLfRtdu7pLoXCrukjt5CpLCQRAhck7tuK/cXSjOLlTumuj3+Xc+XPoD4gaxpHh/wdq+o69ZvfaNBAzXkEdqbkvEeGzGAdwwTkYPGa+dLG31P9nizt/Fvw1kfxz8F7/dd3eg204ll0pWOWnsm5LRjktD2wcYycd945+NV/oOn6T8QNEa18VfC6WLy9WWzjzdWOGwble7KvKyRkblxkd68Hk+JLaX8WLuz/Z/8TadqXh/WbOS+1a0ureSbS9MuCRslhKldryZOYwcEqSR0xhVxFLAYeeIxckqcdW3tp+T7GkKUqzUIK7Z6Dq37ZGo+M7Z1+FPge88QxsSi67rLfY9PQ+qj/WS4OchcYx1rjddsvix4+0m8PjP4lnRNLeJzc6b4Xs1hUR4O4Gd8vgrkEcdTzWz8LvAafDbwXaaFHcm9aJ5JZbgrt8yR3LMQvYZPArz79pj4lf2H4bHgzRW+1eLfEgFlb2sed0cbnaXOOmc7R9Se1fzZU49zjPs6/s7JLQpc3xWu+Rbybeytrsj7KOUYfCYX2uK1lb8e2h6B+zPLJN8BvBbSklvsCjJ9AxA/Ssj9qW08AXPgOyf4hXV5b6XDfK9uliT5sk2xwFAxz8pY/hXo3gLwsngjwVoegRsJBp1nFbF16OyqAzficn8a+b/APgoZ/yIHhb/ALCbf+imr8q4Wpwzzjql7KrKnGrWnJSg7SSfNLR20bWm3U6cS/YYF8yvZLf5HefGfx18N9L+H2keE/Ft3f22k61ZQtbC3jZpDEmwrlgDg/dr0rwr8OtJ8HeA4vCNh5/9kxwSW6+a+6Ta+7d82OvzGvlH9qrxPZ6BZfDFLnw5pWuNLpKFZNR8/dHxHwvlyIPzzXpOv/tC+J/Bv7TFh4E1m109PDWoSxi3ulidZikqkRncXxxKNp47Gvo8RwpmOLyLCRyqc/fWIxEoznHlk6MlHmpxWvOouzvq+mhzRxdKFebqpacsU0v5tbPyPSvAHwH8J/DzwdqvheytJL7RtTlaW6t9QYShyyKhHQcYUfjXmWo/sG/Du81BriC61mxgZt32SG5UoPYFkLY/Gpf2jv2jfEHw18d+HfCXhOxsr/VNRVWlF2jP80kmyJFCsvJIJ59RWJ8W/wBq7xFpXjYeB/AOiw694htwIry48l5FM4GXSONSDhecknggjtmtMjy7xBqzp4/L8VKDxkZVJSdRJcsGoupUvpFapRe7Wwq9XL1enUhfkdtur1sj2a3+BfhLT/hnfeBbCxaw0S9TbcGB/wB9Kcgl2c5Jb5RyewxWp8MPhnpHwl8Kx+H9Ea4axSV5gbl977mOTzgV4F44/ak8V/DjwP4W0y/0aO6+JWrRNJPZyxFVt1MjJHmNTks2OBnsfauWvP2kfjd8KprLUvHnhaB9DuZAp3W4hYZ52q6MQrYzwwNc8OCOMM2wlSlUxUJRrVJSjGVZXrzheLnBPWe2kna6s9mU8dg6M01F3SSbS+FPWz7HufxT/ZY8DfFjWX1jUra5sNVkAEt3p8ojMuBgFgQQTgYzjNWfhN+zR4L+D1++o6RbT3eqspQX1/IJJEU9QuAAufUDNeheFvEtj4x8OabremyebY38CXELHrtYZwfcdD7itSvzivxPxFTwcskr4uoqMfddNydklpyvrZbcu3Sx6UcNh3P28YK71v8AqeIfEL9kDwL8Q/E9zr832/StQun8y4OnTKiyuerEFTgnuR1PNbvwq/Zs8E/CG/bUdHspbjVShQX99J5kiKeoXgBc+oGffmvUqKVbjDiGvgP7Mq42o6FuXl5nblX2X1a8noCweHjU9qoLm72PG/iZ+yf4C+J+tzaxe211puqTnM1zp8uzzT03MpBGfcDmr3wp/Zm8E/CDUjqekWk91qu0ot7fS+Y6KeoUAADPrjNerUVM+Ls/qZf/AGXPG1HQty8nM7cv8v8Ah6W2tpYawmHVT2vIubvY8q+LP7NPgr4w6gmo6vaz2uqqgjN9YyCOR1HQNkENjsSM1Q+GH7KHgT4W63HrNjbXOpapD/qbjUZBJ5J/vKoAAPvjI7V7JRRDi7P6eX/2VDG1Fh7W5OZ25f5fTy28geEw7qe1cFzd7BRRRXyJ1hRRRQAUUUUAFeJftLfAFvi3pVrq+hyJZeMNJG6zuCdvnKDuEbN1GDyp7En1Ne20V7WTZxjMhx1PMMDLlqQ+aaejTXVNaNdjGtRhXg6c1oz4u+Gf7XN94YvD4X+KllPp+oWr+U2pGAqw5PM0Y59PmUHPp3r6a8P+JdG8Y6f9q0jUbTVbNxgtbyK4II6Ef0NR/E/4I+EPi7aLH4h0tJbmNSsV9D+7uIx6Bx1Hscj2r5b8TfsM+MfCWpnUfAXisS7TujDyPZ3MfoA6Ehvr8v0r9rU+CuMX7d1v7OxT+KMk3Rk+8ZL4f+3rW89zzYVcdgfd5faw/FL9T3Txd8A9F16TUL3RLu98K6rdqpeTSrhoreWROY2lgB2SAEA4IqXxZD8ZvHbeHJtR8R+GdMuPDdyt9ZGx06RxeXKoUEk4diAMFjhAOWJ7DHzykn7UXgdTFJbahq0Kn5WEUN4T+K5c/jUZ+Mf7RwIjPg3VSw43f8I7P19c7cV+h5bgeKsFR9jluc4arTWzdSLt6XvY8+vVwFaXNVoyi/JNHtenfA/xHqtx4lk8ReMZdM0/xDci41DQPCiG00+4O0ByyvuYF8ZbaRn19PTFh0HwHooRBZaHpluvJJWGMYAGSTjJwBz1NfJw139qDxgBFbaTqGloerNZxWv6y4P5c07TP2Mfid8QtRS78deK1toz95p7h72cD0VchR/31+FeJnOWSx8lPivP6MYR15KclN/KENfwOihXpUYWwWHlfu9PxZ2PxS/bK0jSnfSfAkR8Q6xITCl0I2MCP0G0dZDnpjjpya2/2a/2ftatvEEvxJ+IjyXfim7HmWltctua2DDG9x0DbcBV/hHoeB6L8Jf2ZvA/welW70uwa91cLt/tK/IklX12DACfgM+9er1+bZ1xblWAwNTJuFKLhTmrVK0/4lRfyr+WD69WtGkr37KdCvXmq2Leq2itl5+bCvlH/goZ/wAiB4W/7Cbf+imr6urhfiz8G/D/AMZtKstP8Qfafs9nOZ4/ssvlncVK8nB4wa+T4IznDcP8Q4TNMZf2dNtuyu9YtaLTub42jLEYedKG7PkX9s//AFHwp/7BC/yjr0f9vDwpLb6V4X8d2MeL3R7tYJJVHIRjvjJ9g6kf8D969c+Iv7OfhP4nroS6z9txo0AtrbyJ9nyDH3uOT8ortPHPgzTPiH4U1Hw7rEbS6dfxiOUIcMMEMrA9iCAQfUV+kYbj/BYGWQzoqT+qSrqqmtHCtNXS119y+jtrY8uWX1Kn1hS+2o29Uv8AM+P/AIKXv/DQP7WGoeNTC7aTpECzQiUcKQgjiHsS29wPb2pf2R0W5/aj+IE0o8yVba9ZXbkgm7iBP5V9O/CL4JeG/grp+oWvh5Lgi+lWWeW6kDu20YUZAHAyeP8AaNVfh/8AAHwv8NvGmr+KNI+2f2nqaSRz+fNvTDyLI2Bjj5lFdua8f5RiIZpg8HGUaE8PSoYdW15YO75tdLtvvfS5FLL60XSnNpyUnKXz7Hyp+1Xplzp/7VOiXl3qknh+0vI7OS31gJ5gtgrFDIASB8rDJGe+e9dl8TPhmt14bS38Z/tCrdaPcyKyRT2qSK7DlSAkhP419I/E34SeGPi5o6af4ksBcrES0E8bbJoSepVh0z3HQ15VoH7DXw50bVI7y4Op6tHGwZbW8uB5RwehCqCR7ZrtyvxByqeWZfHE4ieHrYSHJaFCjVc+X4ZQnUTdOXfpfVdyauX1VUqOEVJTd9ZSVu90tz0r4FeGLTwd8JvDuk6fq39u2MMLvBqHkmITI8jyKQpJIGHA98Z713lMt7eK0gjggjSGGNQiRxqFVVAwAAOgFPr+dMwxc8wxlbGVG3KpKUm3a7cm272SV9eiS7JI+ipwVOEYLorBRRRXAaBRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAf/Z" alt="ML"/>
-    <div class="logo-sub">BRRJ02 &middot; Packing</div>
+    <img src="data:image/jpeg;base64,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" alt="Mercado Livre" class="ml-logo">
   </div>
-  <div class="hright">
-    <span class="ts"><span class="dot"></span><span id="clk">--:--:--</span></span>
-    <button class="savebtn" onclick="savePage()" title="Baixar HTML com dados embutidos">&#128190; Salvar p&aacute;gina</button>
+  <div class="date-wrap">
+    <span class="date-lbl">📅</span>
+    <input type="date" id="datePicker" class="date-input" onchange="updateDate()">
   </div>
 </header>
-<nav>
-  <button class="tb on" onclick="swTab(this,'mono')"><span class="tdot"></span>MONO</button>
-  <button class="tb"    onclick="swTab(this,'machine')"><span class="tdot"></span>MACHINE</button>
-  <button class="tb"    onclick="swTab(this,'putwall')"><span class="tdot"></span>PUT WALL</button>
-  <button class="tb"    onclick="swTab(this,'wallin')"><span class="tdot"></span>WALL IN</button>
+
+<nav class="nav-bar" id="navBar">
+  <div class="tab active" data-tab="packing">📦 Packing</div>
+  <div class="tab" data-tab="machine">⚙️ Machine</div>
+  <div class="tab" data-tab="wallin">🧱 Wall In</div>
+  <div class="tab" data-tab="scorecard">🏆 Scorecard</div>
+  <div class="tab" data-tab="melhorias">💡 Orientações</div>
 </nav>
-<main>
-  <div class="panel on" id="p-mono">
-    <div class="ptitle">
-      <h1><span>PACKING</span> &middot; MONO</h1>
-      <p>Performance &middot; Produtividade &middot; Representantes</p>
-      <span class="mtag">Meta Liq: <span>195</span></span>
-    </div>
-    <div class="uzone" id="dz-mono" ondragover="onDrag(event,this)" ondragleave="offDrag(this)" ondrop="onDrop(event,'mono')">
-      <input type="file" id="fi-mono" accept=".xlsx,.xls,.csv" onchange="onFCh(this,'mono')"/>
-      <span class="uico">&#128193;</span>
-      <div class="uinfo"><p>Arraste <strong>MONO SCRIPT.xlsx</strong> aqui</p><small>.xlsx &middot; .xls &middot; .csv</small></div>
-      <span class="ufname" id="fn-mono">Nenhum arquivo</span>
-      <button class="ubtn" onclick="document.getElementById('fi-mono').click();event.stopPropagation()">&#8593; Selecionar</button>
-    </div>
-    <div class="kgrid">
-      <div class="kcard vd"><span class="kemo">&#9989;</span><div class="klabel">Atingiram Meta</div><div class="kval" id="k-mono-at">&mdash;</div></div>
-      <div class="kcard or"><span class="kemo">&#9888;&#65039;</span><div class="klabel">Quase 80-99%</div><div class="kval" id="k-mono-qu">&mdash;</div></div>
-      <div class="kcard vm"><span class="kemo">&#10060;</span><div class="klabel">Abaixo da Meta</div><div class="kval" id="k-mono-ab">&mdash;</div></div>
-      <div class="kcard az"><span class="kemo">&#128101;</span><div class="klabel">Total</div><div class="kval" id="k-mono-tot">&mdash;</div></div>
-    </div>
-    <div class="toolbar">
-      <div class="swrap">
-        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-        <input class="sbox" id="sb-mono" type="text" placeholder="Buscar representante..." oninput="render('mono')"/>
-      </div>
-      <div class="fbtn-wrap">
-        <button class="fbtn on"  onclick="setF('mono','all',this)">Todos</button>
-        <button class="fbtn"     onclick="setF('mono','at',this)">&#9989; Atingiram</button>
-        <button class="fbtn"     onclick="setF('mono','qu',this)">&#9888; Quase</button>
-        <button class="fbtn"     onclick="setF('mono','ab',this)">&#10060; Abaixo</button>
-      </div>
-    </div>
-    <div class="twrap"><table>
-      <thead><tr>
-        <th class="c" style="width:40px">#</th>
-        <th onclick="sortT('mono','nome')">Nome</th>
-        <th class="r" onclick="sortT('mono','liquida')" style="width:110px">Liq &#8597;</th>
-        <th class="r" onclick="sortT('mono','meta')" style="width:110px">Meta% &#8597;</th>
-        <th class="col-hide" onclick="sortT('mono','util')" style="width:160px">Util% &#8597;</th>
-        <th class="r col-hide" onclick="sortT('mono','unid')" style="width:100px">Unid &#8597;</th>
-        <th class="r col-hide" onclick="sortT('mono','tempo')" style="width:100px">Tempo &#8597;</th>
-      </tr></thead>
-      <tbody id="tb-mono">
-        <tr><td colspan="7"><div class="empty">
-          <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 17H7A5 5 0 0 1 7 7h2M15 7h2a5 5 0 0 1 0 10h-2M8 12h8"/></svg>
-          <p>Carregue MONO SCRIPT.xlsx para visualizar</p>
-        </div></td></tr>
-      </tbody>
-    </table></div>
-  </div>
-  <div class="panel" id="p-machine">
-    <div class="ptitle">
-      <h1><span>PACKING</span> &middot; MACHINE</h1>
-      <p>Performance &middot; Produtividade &middot; Representantes</p>
-      <span class="mtag">Meta Liq: <span>450</span></span>
-    </div>
-    <div class="uzone" id="dz-machine" ondragover="onDrag(event,this)" ondragleave="offDrag(this)" ondrop="onDrop(event,'machine')">
-      <input type="file" id="fi-machine" accept=".xlsx,.xls,.csv" onchange="onFCh(this,'machine')"/>
-      <span class="uico">&#128193;</span>
-      <div class="uinfo"><p>Arraste <strong>MACHINE.xlsx</strong> aqui</p><small>.xlsx &middot; .xls &middot; .csv</small></div>
-      <span class="ufname" id="fn-machine">Nenhum arquivo</span>
-      <button class="ubtn" onclick="document.getElementById('fi-machine').click();event.stopPropagation()">&#8593; Selecionar</button>
-    </div>
-    <div class="kgrid">
-      <div class="kcard vd"><span class="kemo">&#9989;</span><div class="klabel">Atingiram Meta</div><div class="kval" id="k-machine-at">&mdash;</div></div>
-      <div class="kcard or"><span class="kemo">&#9888;&#65039;</span><div class="klabel">Quase 80-99%</div><div class="kval" id="k-machine-qu">&mdash;</div></div>
-      <div class="kcard vm"><span class="kemo">&#10060;</span><div class="klabel">Abaixo da Meta</div><div class="kval" id="k-machine-ab">&mdash;</div></div>
-      <div class="kcard az"><span class="kemo">&#128101;</span><div class="klabel">Total</div><div class="kval" id="k-machine-tot">&mdash;</div></div>
-    </div>
-    <div class="toolbar">
-      <div class="swrap">
-        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-        <input class="sbox" id="sb-machine" type="text" placeholder="Buscar representante..." oninput="render('machine')"/>
-      </div>
-      <div class="fbtn-wrap">
-        <button class="fbtn on"  onclick="setF('machine','all',this)">Todos</button>
-        <button class="fbtn"     onclick="setF('machine','at',this)">&#9989; Atingiram</button>
-        <button class="fbtn"     onclick="setF('machine','qu',this)">&#9888; Quase</button>
-        <button class="fbtn"     onclick="setF('machine','ab',this)">&#10060; Abaixo</button>
-      </div>
-    </div>
-    <div class="twrap"><table>
-      <thead><tr>
-        <th class="c" style="width:40px">#</th>
-        <th onclick="sortT('machine','nome')">Nome</th>
-        <th class="r" onclick="sortT('machine','liquida')" style="width:110px">Liq &#8597;</th>
-        <th class="r" onclick="sortT('machine','meta')" style="width:110px">Meta% &#8597;</th>
-        <th class="col-hide" onclick="sortT('machine','util')" style="width:160px">Util% &#8597;</th>
-        <th class="r col-hide" onclick="sortT('machine','unid')" style="width:100px">Unid &#8597;</th>
-        <th class="r col-hide" onclick="sortT('machine','tempo')" style="width:100px">Tempo &#8597;</th>
-      </tr></thead>
-      <tbody id="tb-machine">
-        <tr><td colspan="7"><div class="empty">
-          <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 17H7A5 5 0 0 1 7 7h2M15 7h2a5 5 0 0 1 0 10h-2M8 12h8"/></svg>
-          <p>Carregue MACHINE.xlsx para visualizar</p>
-        </div></td></tr>
-      </tbody>
-    </table></div>
-  </div>
-  <div class="panel" id="p-putwall">
-    <div class="ptitle">
-      <h1><span>PACKING</span> &middot; PUT WALL</h1>
-      <p>Performance &middot; Produtividade &middot; Representantes</p>
-      <span class="mtag">Meta Liq: <span>280</span></span>
-    </div>
-    <div class="uzone" id="dz-putwall" ondragover="onDrag(event,this)" ondragleave="offDrag(this)" ondrop="onDrop(event,'putwall')">
-      <input type="file" id="fi-putwall" accept=".xlsx,.xls,.csv" onchange="onFCh(this,'putwall')"/>
-      <span class="uico">&#128193;</span>
-      <div class="uinfo"><p>Arraste <strong>PUT WALL.xlsx</strong> aqui</p><small>.xlsx &middot; .xls &middot; .csv</small></div>
-      <span class="ufname" id="fn-putwall">Nenhum arquivo</span>
-      <button class="ubtn" onclick="document.getElementById('fi-putwall').click();event.stopPropagation()">&#8593; Selecionar</button>
-    </div>
-    <div class="kgrid">
-      <div class="kcard vd"><span class="kemo">&#9989;</span><div class="klabel">Atingiram Meta</div><div class="kval" id="k-putwall-at">&mdash;</div></div>
-      <div class="kcard or"><span class="kemo">&#9888;&#65039;</span><div class="klabel">Quase 80-99%</div><div class="kval" id="k-putwall-qu">&mdash;</div></div>
-      <div class="kcard vm"><span class="kemo">&#10060;</span><div class="klabel">Abaixo da Meta</div><div class="kval" id="k-putwall-ab">&mdash;</div></div>
-      <div class="kcard az"><span class="kemo">&#128101;</span><div class="klabel">Total</div><div class="kval" id="k-putwall-tot">&mdash;</div></div>
-    </div>
-    <div class="toolbar">
-      <div class="swrap">
-        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-        <input class="sbox" id="sb-putwall" type="text" placeholder="Buscar representante..." oninput="render('putwall')"/>
-      </div>
-      <div class="fbtn-wrap">
-        <button class="fbtn on"  onclick="setF('putwall','all',this)">Todos</button>
-        <button class="fbtn"     onclick="setF('putwall','at',this)">&#9989; Atingiram</button>
-        <button class="fbtn"     onclick="setF('putwall','qu',this)">&#9888; Quase</button>
-        <button class="fbtn"     onclick="setF('putwall','ab',this)">&#10060; Abaixo</button>
-      </div>
-    </div>
-    <div class="twrap"><table>
-      <thead><tr>
-        <th class="c" style="width:40px">#</th>
-        <th onclick="sortT('putwall','nome')">Nome</th>
-        <th class="r" onclick="sortT('putwall','liquida')" style="width:110px">Liq &#8597;</th>
-        <th class="r" onclick="sortT('putwall','meta')" style="width:110px">Meta% &#8597;</th>
-        <th class="col-hide" onclick="sortT('putwall','util')" style="width:160px">Util% &#8597;</th>
-        <th class="r col-hide" onclick="sortT('putwall','unid')" style="width:100px">Unid &#8597;</th>
-        <th class="r col-hide" onclick="sortT('putwall','tempo')" style="width:100px">Tempo &#8597;</th>
-      </tr></thead>
-      <tbody id="tb-putwall">
-        <tr><td colspan="7"><div class="empty">
-          <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 17H7A5 5 0 0 1 7 7h2M15 7h2a5 5 0 0 1 0 10h-2M8 12h8"/></svg>
-          <p>Carregue PUT WALL.xlsx para visualizar</p>
-        </div></td></tr>
-      </tbody>
-    </table></div>
-  </div>
-  <div class="panel" id="p-wallin">
-    <div class="ptitle">
-      <h1><span>PACKING</span> &middot; WALL IN</h1>
-      <p>Performance &middot; Produtividade &middot; Representantes</p>
-      <span class="mtag">Meta Liq: <span>420</span></span>
-    </div>
-    <div class="uzone" id="dz-wallin" ondragover="onDrag(event,this)" ondragleave="offDrag(this)" ondrop="onDrop(event,'wallin')">
-      <input type="file" id="fi-wallin" accept=".xlsx,.xls,.csv" onchange="onFCh(this,'wallin')"/>
-      <span class="uico">&#128193;</span>
-      <div class="uinfo"><p>Arraste <strong>WALL IN.xlsx</strong> aqui</p><small>.xlsx &middot; .xls &middot; .csv</small></div>
-      <span class="ufname" id="fn-wallin">Nenhum arquivo</span>
-      <button class="ubtn" onclick="document.getElementById('fi-wallin').click();event.stopPropagation()">&#8593; Selecionar</button>
-    </div>
-    <div class="kgrid">
-      <div class="kcard vd"><span class="kemo">&#9989;</span><div class="klabel">Atingiram Meta</div><div class="kval" id="k-wallin-at">&mdash;</div></div>
-      <div class="kcard or"><span class="kemo">&#9888;&#65039;</span><div class="klabel">Quase 80-99%</div><div class="kval" id="k-wallin-qu">&mdash;</div></div>
-      <div class="kcard vm"><span class="kemo">&#10060;</span><div class="klabel">Abaixo da Meta</div><div class="kval" id="k-wallin-ab">&mdash;</div></div>
-      <div class="kcard az"><span class="kemo">&#128101;</span><div class="klabel">Total</div><div class="kval" id="k-wallin-tot">&mdash;</div></div>
-    </div>
-    <div class="toolbar">
-      <div class="swrap">
-        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-        <input class="sbox" id="sb-wallin" type="text" placeholder="Buscar representante..." oninput="render('wallin')"/>
-      </div>
-      <div class="fbtn-wrap">
-        <button class="fbtn on"  onclick="setF('wallin','all',this)">Todos</button>
-        <button class="fbtn"     onclick="setF('wallin','at',this)">&#9989; Atingiram</button>
-        <button class="fbtn"     onclick="setF('wallin','qu',this)">&#9888; Quase</button>
-        <button class="fbtn"     onclick="setF('wallin','ab',this)">&#10060; Abaixo</button>
-      </div>
-    </div>
-    <div class="twrap"><table>
-      <thead><tr>
-        <th class="c" style="width:40px">#</th>
-        <th onclick="sortT('wallin','nome')">Nome</th>
-        <th class="r" onclick="sortT('wallin','liquida')" style="width:110px">Liq &#8597;</th>
-        <th class="r" onclick="sortT('wallin','meta')" style="width:110px">Meta% &#8597;</th>
-        <th class="col-hide" onclick="sortT('wallin','util')" style="width:160px">Util% &#8597;</th>
-        <th class="r col-hide" onclick="sortT('wallin','unid')" style="width:100px">Unid &#8597;</th>
-        <th class="r col-hide" onclick="sortT('wallin','tempo')" style="width:100px">Tempo &#8597;</th>
-      </tr></thead>
-      <tbody id="tb-wallin">
-        <tr><td colspan="7"><div class="empty">
-          <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 17H7A5 5 0 0 1 7 7h2M15 7h2a5 5 0 0 1 0 10h-2M8 12h8"/></svg>
-          <p>Carregue WALL IN.xlsx para visualizar</p>
-        </div></td></tr>
-      </tbody>
-    </table></div>
-  </div>
-</main>
-<footer>Mercado Livre &nbsp;&middot;&nbsp; BRRJ02 &nbsp;&middot;&nbsp; Packing Dashboard &nbsp;&middot;&nbsp; v6.0</footer>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+<div class="main">
+
+<!-- PACKING -->
+<div id="tab-packing" class="tab-content active">
+  <div class="section-title">Packing Geral</div>
+  <div class="section-meta">Metas: Líquida ≥200 · Efetiva ≥230 · Utilização ≥85%</div>
+  <div id="f-packing" class="filter-bar"></div>
+  <div id="s-packing" class="summary-row"></div>
+  <div class="legend"><div class="leg-item"><div class="leg-dot green"></div>Meta atingida</div><div class="leg-item"><div class="leg-dot amber"></div>80–99%</div><div class="leg-item"><div class="leg-dot red"></div>Abaixo 80%</div></div>
+  <div class="table-wrap"><table><thead><tr><th>#</th><th>ID</th><th>Prod. Líquida</th><th>Efetiva</th><th>Utilização</th><th>T.Processo</th><th>T.Efetivo</th><th>T.Ocioso</th><th>Unid.</th></tr></thead><tbody id="tb-packing"></tbody></table></div>
+</div>
+
+<!-- MACHINE -->
+<div id="tab-machine" class="tab-content">
+  <div class="section-title">Machine</div>
+  <div class="section-meta">Metas: Líquida ≥450 · Efetiva ≥518 · Utilização ≥85%</div>
+  <div id="f-machine" class="filter-bar"></div>
+  <div id="s-machine" class="summary-row"></div>
+  <div class="legend"><div class="leg-item"><div class="leg-dot green"></div>Meta atingida</div><div class="leg-item"><div class="leg-dot amber"></div>80–99%</div><div class="leg-item"><div class="leg-dot red"></div>Abaixo 80%</div></div>
+  <div class="table-wrap"><table><thead><tr><th>#</th><th>ID</th><th>Prod. Líquida</th><th>Efetiva</th><th>Utilização</th><th>T.Processo</th><th>T.Efetivo</th><th>T.Ocioso</th><th>Unid.</th></tr></thead><tbody id="tb-machine"></tbody></table></div>
+</div>
+
+<!-- WALLIN -->
+<div id="tab-wallin" class="tab-content">
+  <div class="section-title">Wall In</div>
+  <div class="section-meta">Metas: Líquida ≥420 · Efetiva ≥483 · Utilização ≥85%</div>
+  <div id="f-wallin" class="filter-bar"></div>
+  <div id="s-wallin" class="summary-row"></div>
+  <div class="legend"><div class="leg-item"><div class="leg-dot green"></div>Meta atingida</div><div class="leg-item"><div class="leg-dot amber"></div>80–99%</div><div class="leg-item"><div class="leg-dot red"></div>Abaixo 80%</div></div>
+  <div class="table-wrap"><table><thead><tr><th>#</th><th>ID</th><th>Prod. Líquida</th><th>Efetiva</th><th>Utilização</th><th>T.Processo</th><th>T.Efetivo</th><th>T.Ocioso</th><th>Unid.</th></tr></thead><tbody id="tb-wallin"></tbody></table></div>
+</div>
+
+<!-- SCORECARD -->
+<div id="tab-scorecard" class="tab-content">
+  <div class="section-title">Scorecard</div>
+  <div class="section-meta">Classificação por desempenho consolidado · ordenado por líquida</div>
+  <div id="f-scorecard" class="filter-bar"></div>
+  <div id="sc-grid" class="sc-grid"></div>
+</div>
+
+<!-- MELHORIAS -->
+<div id="tab-melhorias" class="tab-content">
+  <div class="section-title">💡 Orientações de Melhorias</div>
+  <div class="section-meta">Análise individualizada — toque no card para expandir</div>
+  <div id="f-melhorias" class="filter-bar"></div>
+  <div id="mel-container"></div>
+</div>
+
+</div>
+
 <script>
+const RAW_DATA = {"packing":[{"ID":1921690,"Representantes":"Ana Beatriz Da Silva Sousa De Oliveira","Prod. liquida sist.":209,"Prod. Efetiva":230,"Utilização":"90.95%","Tempo em processo sistêmico":"01:42:12","Tempo efetivo":"01:32:57","Unidades":357},{"ID":2027327,"Representantes":"Luana Almeida De Oliveira Gomes","Prod. liquida sist.":294,"Prod. Efetiva":377,"Utilização":"77.89%","Tempo em processo sistêmico":"05:24:47","Tempo efetivo":"04:12:58","Unidades":1592},{"ID":2027354,"Representantes":"Ana Paula De Souza Lima","Prod. liquida sist.":187,"Prod. Efetiva":247,"Utilização":"75.65%","Tempo em processo sistêmico":"06:42:12","Tempo efetivo":"05:04:16","Unidades":1255},{"ID":2125422,"Representantes":"Erika Dos Santos Vieira","Prod. liquida sist.":0,"Prod. Efetiva":0,"Utilização":"0%","Tempo em processo sistêmico":"00:00:00","Tempo efetivo":"00:00:00","Unidades":0},{"ID":2140779,"Representantes":"Hellen Santos Costa Da Silva","Prod. liquida sist.":170,"Prod. Efetiva":219,"Utilização":"77.64%","Tempo em processo sistêmico":"05:03:25","Tempo efetivo":"03:55:34","Unidades":862},{"ID":2148514,"Representantes":"Bianca Pereira Guimaraes","Prod. liquida sist.":357,"Prod. Efetiva":401,"Utilização":"88.91%","Tempo em processo sistêmico":"03:45:45","Tempo efetivo":"03:20:43","Unidades":1344},{"ID":2148553,"Representantes":"Alessandra Coutinho De Figueiredo","Prod. liquida sist.":208,"Prod. Efetiva":232,"Utilização":"89.77%","Tempo em processo sistêmico":"07:44:18","Tempo efetivo":"06:56:48","Unidades":1612},{"ID":2171471,"Representantes":"Luciane Oliveira Araujo De Lira","Prod. liquida sist.":208,"Prod. Efetiva":249,"Utilização":"83.79%","Tempo em processo sistêmico":"07:44:07","Tempo efetivo":"06:28:52","Unidades":1616},{"ID":2194257,"Representantes":"Aline Silva De Oliveira","Prod. liquida sist.":0,"Prod. Efetiva":0,"Utilização":"0%","Tempo em processo sistêmico":"00:03:14","Tempo efetivo":"00:00:00","Unidades":0},{"ID":2209682,"Representantes":"Myrella Leandra Rodrigues De Sousa","Prod. liquida sist.":165,"Prod. Efetiva":209,"Utilização":"79.29%","Tempo em processo sistêmico":"04:56:41","Tempo efetivo":"03:55:15","Unidades":820},{"ID":2217898,"Representantes":"Larissa Dandara Pedro De Paiva","Prod. liquida sist.":156,"Prod. Efetiva":198,"Utilização":"78.69%","Tempo em processo sistêmico":"02:21:23","Tempo efetivo":"01:51:15","Unidades":368},{"ID":2226783,"Representantes":"Marcos Elias Moraes Muniz De Sousa","Prod. liquida sist.":128,"Prod. Efetiva":160,"Utilização":"80.1%","Tempo em processo sistêmico":"02:48:27","Tempo efetivo":"02:14:56","Unidades":362},{"ID":2234039,"Representantes":"Ana Carolina Candida Cordeiro Da Silva","Prod. liquida sist.":188,"Prod. Efetiva":225,"Utilização":"83.69%","Tempo em processo sistêmico":"04:00:00","Tempo efetivo":"03:20:51","Unidades":754},{"ID":2234041,"Representantes":"Sara Oliveira Da Costa","Prod. liquida sist.":192,"Prod. Efetiva":246,"Utilização":"78.36%","Tempo em processo sistêmico":"07:44:20","Tempo efetivo":"06:03:50","Unidades":1492},{"ID":2253081,"Representantes":"Alice Santos De Azevedo","Prod. liquida sist.":0,"Prod. Efetiva":0,"Utilização":"0%","Tempo em processo sistêmico":"00:18:16","Tempo efetivo":"00:00:00","Unidades":0},{"ID":2370120,"Representantes":"Geovanna Santos Martins","Prod. liquida sist.":158,"Prod. Efetiva":187,"Utilização":"84.74%","Tempo em processo sistêmico":"07:41:37","Tempo efetivo":"06:31:10","Unidades":1222},{"ID":2390838,"Representantes":"Miriam Eiras Dos Santos Da Silva","Prod. liquida sist.":164,"Prod. Efetiva":206,"Utilização":"79.88%","Tempo em processo sistêmico":"04:38:56","Tempo efetivo":"03:42:48","Unidades":766},{"ID":2391020,"Representantes":"Gabriel Magalhaes Gomes","Prod. liquida sist.":362,"Prod. Efetiva":402,"Utilização":"89.97%","Tempo em processo sistêmico":"04:32:03","Tempo efetivo":"04:04:46","Unidades":1643},{"ID":2391025,"Representantes":"Maria Eduarda Nunes Dos Santos","Prod. liquida sist.":218,"Prod. Efetiva":248,"Utilização":"87.9%","Tempo em processo sistêmico":"07:44:32","Tempo efetivo":"06:48:19","Unidades":1689},{"ID":2391050,"Representantes":"Carina De Sousa Santos","Prod. liquida sist.":278,"Prod. Efetiva":329,"Utilização":"84.64%","Tempo em processo sistêmico":"04:13:37","Tempo efetivo":"03:34:40","Unidades":1179},{"ID":2391086,"Representantes":"Luiz Fernando Lopes De Andrade Silva","Prod. liquida sist.":349,"Prod. Efetiva":395,"Utilização":"88.28%","Tempo em processo sistêmico":"03:06:16","Tempo efetivo":"02:44:26","Unidades":1084},{"ID":2391228,"Representantes":"Amanda Oliveira Nogueira","Prod. liquida sist.":155,"Prod. Efetiva":202,"Utilização":"76.7%","Tempo em processo sistêmico":"07:36:42","Tempo efetivo":"05:50:17","Unidades":1180},{"ID":2391518,"Representantes":"Sthephany Jesus Da Silva Santana Santos","Prod. liquida sist.":205,"Prod. Efetiva":231,"Utilização":"88.8%","Tempo em processo sistêmico":"06:21:36","Tempo efetivo":"05:38:51","Unidades":1307},{"ID":2391540,"Representantes":"Alessandra Domingues Da Costa","Prod. liquida sist.":205,"Prod. Efetiva":238,"Utilização":"86%","Tempo em processo sistêmico":"05:34:37","Tempo efetivo":"04:47:46","Unidades":1144},{"ID":2391610,"Representantes":"Daiane Luiz Ferreira","Prod. liquida sist.":119,"Prod. Efetiva":170,"Utilização":"70.22%","Tempo em processo sistêmico":"02:21:22","Tempo efetivo":"01:39:16","Unidades":282},{"ID":2427740,"Representantes":"Alexandra Marques De Souza Dias Paschoal","Prod. liquida sist.":186,"Prod. Efetiva":217,"Utilização":"85.6%","Tempo em processo sistêmico":"05:44:37","Tempo efetivo":"04:54:59","Unidades":1069},{"ID":2428370,"Representantes":"Andriely De Jesus Morote Guimaraes","Prod. liquida sist.":179,"Prod. Efetiva":205,"Utilização":"87.33%","Tempo em processo sistêmico":"06:41:35","Tempo efetivo":"05:50:41","Unidades":1201},{"ID":2428373,"Representantes":"Gabriela Rodrigues Da Silveira","Prod. liquida sist.":212,"Prod. Efetiva":282,"Utilização":"75.25%","Tempo em processo sistêmico":"05:25:57","Tempo efetivo":"04:05:17","Unidades":1155},{"ID":2428414,"Representantes":"Elizabete Ferreira De Oliveira","Prod. liquida sist.":163,"Prod. Efetiva":189,"Utilização":"86.29%","Tempo em processo sistêmico":"04:05:04","Tempo efetivo":"03:31:28","Unidades":668},{"ID":2445341,"Representantes":"Maria Luiza Alves Souza","Prod. liquida sist.":194,"Prod. Efetiva":214,"Utilização":"90.7%","Tempo em processo sistêmico":"07:43:15","Tempo efetivo":"07:00:10","Unidades":1502},{"ID":329502,"Representantes":"Joao Vitor Estrela Rego","Prod. liquida sist.":149,"Prod. Efetiva":164,"Utilização":"91.16%","Tempo em processo sistêmico":"00:38:49","Tempo efetivo":"00:35:23","Unidades":97}],"machine":[{"ID":2027340,"Representantes":"Taina Da Silva Patricio","Prod. liquida sist.":220,"Prod. Efetiva":354,"Utilização":"62.22%","Tempo em processo sistêmico":"01:39:45","Tempo efetivo":"01:02:04","Unidades":367},{"ID":2125422,"Representantes":"Erika Dos Santos Vieira","Prod. liquida sist.":448,"Prod. Efetiva":663,"Utilização":"67.61%","Tempo em processo sistêmico":"05:32:08","Tempo efetivo":"03:44:34","Unidades":2484},{"ID":2390838,"Representantes":"Miriam Eiras Dos Santos Da Silva","Prod. liquida sist.":184,"Prod. Efetiva":350,"Utilização":"52.56%","Tempo em processo sistêmico":"03:09:03","Tempo efetivo":"01:39:22","Unidades":580}],"wallin":[{"ID":2027318,"Representantes":"Thalia Chasco De Souza","Prod. liquida sist.":34,"Prod. Efetiva":112,"Utilização":"31.07%","Tempo em processo sistêmico":"00:01:43","Tempo efetivo":"00:00:32","Unidades":1},{"ID":2109426,"Representantes":"Ingrid Cristina Mendonca Fernandes","Prod. liquida sist.":507,"Prod. Efetiva":633,"Utilização":"80.13%","Tempo em processo sistêmico":"05:50:07","Tempo efetivo":"04:40:32","Unidades":2962},{"ID":2226783,"Representantes":"Marcos Elias Moraes Muniz De Sousa","Prod. liquida sist.":408,"Prod. Efetiva":443,"Utilização":"92.07%","Tempo em processo sistêmico":"01:28:16","Tempo efetivo":"01:21:16","Unidades":601},{"ID":2253081,"Representantes":"Alice Santos De Azevedo","Prod. liquida sist.":432,"Prod. Efetiva":506,"Utilização":"85.44%","Tempo em processo sistêmico":"04:16:55","Tempo efetivo":"03:39:31","Unidades":1853},{"ID":2390675,"Representantes":"Ruan Luis Mendes Dionisio Dantas","Prod. liquida sist.":315,"Prod. Efetiva":421,"Utilização":"74.98%","Tempo em processo sistêmico":"04:50:44","Tempo efetivo":"03:38:00","Unidades":1531},{"ID":2391275,"Representantes":"Vinicius Moraes E Silva","Prod. liquida sist.":383,"Prod. Efetiva":485,"Utilização":"78.99%","Tempo em processo sistêmico":"04:30:28","Tempo efetivo":"03:33:38","Unidades":1729}]};
 
-const PRELOADED_DATA = null; /* __PRELOADED_MARKER__ */
+const METAS={packing:{liq:200,util:85},machine:{liq:450,util:85},wallin:{liq:420,util:85}};
+const PROC_LABELS={packing:'📦 Packing',machine:'⚙️ Machine',wallin:'🧱 Wall In'};
+const PROC_COLORS={packing:'#3483FA',machine:'#9B59B6',wallin:'#E67E22'};
+const MIN_PROC_SEC=30*60; // ignore rows with <30min process time
+const validRow=r=>!( (r['Prod. liquida sist.']===0 && r['Prod. Efetiva']===0) || toSec(r['Tempo em processo sistêmico'])<MIN_PROC_SEC );
 
-const ID_GROOT = {"ADRIANA DE SOUZA FERREIRA": "2132392", "ALESSANDRA COUTINHO DE FIGUEIREDO": "2148553", "ALEXSANDRE THOMPSOM DE OLIVEIRA": "436179", "ALEXY FERNANDES DOS SANTOS": "441931", "ALICE SANTOS DE AZEVEDO": "2253081", "ALINE SILVA DE OLIVEIRA": "2194257", "ALLAN DOS SANTOS SILVA TELES": "2109387", "ANA BEATRIZ DA SILVA SOUSA DE OLIVEIRA": "1921690", "ANA LUCIA SOARES PENA CARNEIRO": "2132386", "ANA PAULA DE SOUZA LIMA": "2027354", "ANNY GABRIELLE MARTINS SANTOS": "436756", "ANTHONY ALEIXO VIEGAS DA ROCHA": "2027462", "BEATRIZ DA SILVA FERNANDES": "2132402", "BEATRIZ MOREIRA DA SILVA": "2109397", "BIANCA PEREIRA GUIMARAES": "2148514", "BRUNIELI FAGUNDES DA SILVA": "2132439", "CARLA ANEZIA FERREIRA DOS SANTOS": "1762361", "CARLA DE LIMA BASTOS": "556233", "CESAR DE FARIAS FIRMINO": "548992", "CID SANDERSON INACIO DE ALMEIDA": "2027485", "CLEIDE DIAS DA SILVA": "2027343", "CRISTIANO GAIAO BREDA": "2027348", "DANIEL BORGES DA SILVA": "2126576", "DANIELLE DA ROCHA SILVARES": "2109403", "DAVI GALVAO MARQUES": "2194272", "ERIKA DOS SANTOS VIEIRA": "2125422", "ESTEVAO COSTA DOS SANTOS": "2194273", "EVELYN DAS NEVES DE OLIVEIRA": "2134248", "FABIO RIBAMAR FEQUES": "2027509", "FABRICIO BARRADAS SANTOS": "2148524", "FELIPE DE LIMA SALLES": "2140774", "FELIPE ROCHA VIDAL": "2060448", "GABRIEL FEIJO DA SILVA DO NASCIMENTO": "2126581", "GABRIEL PINTO GONCALVES": "1921712", "GERMANO AZIZ DE MOURA JUNIOR": "2027474", "GIOVANA ELISEU SANTOS SILVA": "2126582", "GISELLE MARIA PEREIRA": "2194275", "GUILHERME MATEUS LISBOA SOARES": "2027315", "HELLEN SANTOS COSTA DA SILVA": "2140779", "HEVELYN SILVA DOS SANTOS": "1789862", "INGRID CRISTINA MENDONCA FERNANDES": "2109426", "JENIFER TELES DA SILVA": "2139922", "JOICE VITORIA MARTINS FERNANDES": "2027342", "JULIA DA SILVA RIBEIRO": "2210943", "JUSSARA TEIXEIRA PEREIRA": "2125442", "KAYKY DOS SANTOS MEIRELES": "2148530", "LARISSA DANDARA PEDRO DE PAIVA": "2217898", "LARISSA OLIVEIRA DE ALMEIDA": "2126586", "LORRAN ALMEIDA MOURA": "1783093", "LUANA ALMEIDA DE OLIVEIRA GOMES": "2027327", "LUCIANA FERREIRA DA SILVA": "2027371", "LUCIANE OLIVEIRA ARAUJO DE LIRA": "2171471", "MARCOS ELIAS MORAES MUNIZ DE SOUSA": "2226783", "MARCOS VINICIOS SALDANHA DA SILVA": "1805739", "MARIA APARECIDA DA SILVA COSTA": "1493539", "MARISOL DE OLIVEIRA FAUSTINO": "2027351", "MATHEUS CLEMENTE DE SENA": "1921713", "MATHEUS DOS SANTOS LUCIO": "2210941", "MAYARA ROCHA DE LIMA": "2140790", "MYRELLA LEANDRA RODRIGUES DE SOUSA": "2209682", "NATHALIA CORREA DOS SANTOS": "489315", "NATHALIA DO ROSARIO BASTOS OLIVEIRA": "2126588", "PEDRO RICARDO SANTOS DE JESUS": "2126589", "REGEANE DA SILVA": "2132372", "RICARDO LUCAS DA SILVA CARVALHO": "2027358", "ROBERTA DOS SANTOS DE ARAUJO": "2078846", "RONALDO SANTOS REIS": "2027470", "STHEFANY DE ARAUJO BAHIENSE EINECK CORREIA": "2132370", "TAINA DA SILVA PATRICIO": "2027340", "THALIA CHASCO DE SOUZA": "2027318", "THAYS DA CONCEICAO BORGES PACHECO": "2178629", "VANESSA MARTINS PINTO MESSIAS": "2132359", "VICTOR HUGO DE ARAUJO DA SILVA": "2209572", "ANA CAROLINA CANDIDA CORDEIRO DA SILVA": "2234039", "MARCELO DO VALE DE CARVALHO": "2233960", "GENILSON DA SILVA GOUVEIA": "2233212", "MARIANA SANTOS SOUTO MAIOR": "2234041", "SARA OLIVEIRA DA COSTA": "2233493", "JENNIFER OLIVEIRA": "2233347", "JHADE COSMO BENINCAZA": "2170105", "GUSTAVO ALVES": "2242089", "MARIA EDUARDA SANTOS DA SILVA DA CONCEICAO": "2241968", "EDILSON DA SILVA SANTOS": "2079993", "WALLACE DA SILVA BARBOSA": "2370120", "GEOVANNA SANTOS MARTINS": "2370721", "CAIO CESAR BARBOSA SANTOS": "2370481", "ANA BEATRIZ DOS SANTOS SILVA": "2391515", "WALLACE DELFINO SILVEIRA": "2391097", "LUIZ FELIPE ANDRADE MILCK": "2391269", "ANA PAULA ALVES PEREIRA XAVIER": "2391186", "GABRIELLE DIAMANTINO MARQUES": "2391518", "STHEPHANY JESUS DA SILVA SANTANA SANTOS": "2391514", "PATRICIA RODRIGUES SALERNO": "2391329", "NAYARA MACHADO DA SILVA": "2391171", "PATRICK RODRIGUES FARIAS": "2391337", "WELLINGTON MONTEIRO DOS SANTOS": "2391275", "VINICIUS MORAES E SILVA": "2391050", "ULISSES FERREIRA SILVA": "2391424", "CARINA DE SOUSA SANTOS": "2391354", "RENATO JUNIOR MARTINS RIBEIRO": "2391086", "GABRIEL DOS SANTOS CARVALHO": "2391526", "LUIZ FERNANDO LOPES DE ANDRADE SILVA": "2390675", "LUIZ CARLOS CUNHA ALMEIDA DA SILVA": "2391020", "RUAN LUIS MENDES DIONISIO DANTAS": "2390894", "GABRIEL MAGALHAES GOMES": "2391540", "MARCIO HENRIQUE DA FONSECA JOSE CAGNIN": "2391422", "ALESSANDRA DOMINGUES DA COSTA": "2391025", "ESTER DAMIAO VALTER": "2391079", "MARIA EDUARDA NUNES DOS SANTOS": "2391616", "THAMIRIS DOS SANTOS VIANNA": "2390951", "WALLACE PEREIRA GONCALVES": "2391162", "RAQUEL DE NEGREIROS AGUIAR": "2391611", "ANDRESSA SANTANA DA SILVA COSTA": "2390823", "RAYSSA DOS SANTOS FRANCA DE SOUZA": "2391513", "MAX DA SILVA LINS": "2391345", "LENI SANDRA DAS CANDEIAS PAIXAO": "2390838", "ANDRE MENDONCA DA SILVA": "2390664", "MIRIAM EIRAS DOS SANTOS DA SILVA": "2391407", "LARA KATHLEEN RIBEIRO DOS SANTOS": "2391136", "CLARICE GUEDES DA SILVA SANTOS": "2391228", "BARBARA CRISTINA SILVA DO NASCIMENTO": "2391392", "AMANDA OLIVEIRA NOGUEIRA": "2391156", "ARTHUR ANTERIO CONSTANTINO DA SILVA": "2391610", "RONIELE RODRIGUES TEODORO DA SILVA": "2390861", "DAIANE LUIZ FERREIRA": "2391364", "MATHEUS ESTEVAO DE QUEIROZ DE SOUZA": "2390750", "JULIANA EZAQUIEL NICOMEDES": "2428354", "GUILHERME BERNARDINO DE SOUZA": "2428349", "AMABILE BERNARDINO DOS SANTOS": "2428373", "LAIS DA SILVA PIMENTEL": "2428388", "GABRIELA RODRIGUES DA SILVEIRA": "2428375", "SANDRA MARA SANCHES GRAVINO DA SILVA": "2428370", "WALLACE DE BARROS SILVA": "2428353", "ANDRIELY DE JESUS MOROTE GUIMARAES": "2428362", "PAOLA OLIVEIRA SOBRAL": "2427740", "ALESSANDRA DOS SANTOS AGOSTINHO": "2427049", "ALEXANDRA MARQUES DE SOUZA DIAS PASCHOAL": "2428414", "MARIA JULIA ANDRADE FERNANDES": "2426904", "ELIZABETE FERREIRA DE OLIVEIRA": "2426993", "GABRIELY DO ESPIRITO SANTO JUNCAL": "2426916", "EMILLY GABRIELE MONTEIRO DE LIMA RODRIGUES": "2433688", "ENIA REBECCA FERREIRA DIAS": "2433760", "ADRIELLE RODRIGUES SERRINHA": "2438943", "JANAINA BARBOSA ANTONIO": "2445341", "EVANDRO JOSE SILVA CARVALHO": "2446949", "MARIA LUIZA ALVES SOUZA": "2439625", "GUILHERME DA CONCEICAO SANTOS": "2452967", "DAIANE DA SILVA ANDRADE": "2453155", "JOSILENI DOS SANTOS DA SILVA": "2427052", "GRACE EVELYN DA SILVA PEREIRA": "2461182", "LENON AXEL": "2461194", "LIDIANE REGINA ZAINOTE": "2461188", "NATANY RODRIGUES FERREIRA": "2461216", "JUNO GRAMA MIRANDA DA SILVA": "2462317", "DEMETRIUS MARTINS GAMA": "2461250", "MICAELA PAIXAO FAVETTA DA SILVA": "2461228", "PEDRO HENRIQUE CASSANI FERREIRA RIVAS": "2461222", "JAILSON GOMES DE OLIVEIRA": "2461264", "KELVIN DA SILVA ELIDIO": "2461288", "DAVID DA CONCEICAO BARBOSA": "2461324", "ESTELA DA CUNHA LOPES": "2461213", "PAULO DOUGLAS RIBEIRO GOMES": "2461246"};
-
-function nomeParaId(nome){
-  if(!nome)return nome;
-  const key=nome.trim().toUpperCase().normalize("NFD").replace(/[̀-ͯ]/g,"");
-  for(const k in ID_GROOT){const kn=k.normalize("NFD").replace(/[̀-ͯ]/g,"");if(kn===key)return ID_GROOT[k];}
-  for(const k in ID_GROOT){const kn=k.normalize("NFD").replace(/[̀-ͯ]/g,"");if(kn.includes(key)||key.includes(kn))return ID_GROOT[k];}
-  return nome;
-}
-const METAS={mono:195,machine:450,putwall:280,wallin:420};
-const ST={
-  mono:{data:[],sort:"liquida",asc:false,filter:"all"},
-  machine:{data:[],sort:"liquida",asc:false,filter:"all"},
-  putwall:{data:[],sort:"liquida",asc:false,filter:"all"},
-  wallin:{data:[],sort:"liquida",asc:false,filter:"all"},
+// ── filter state ──
+const FS={
+  packing:{liq:[],efet:[],util:[],ids:[],procs:[]},
+  machine:{liq:[],efet:[],util:[],ids:[],procs:[]},
+  wallin: {liq:[],efet:[],util:[],ids:[],procs:[]},
+  scorecard:{procs:[],grade:[]},
+  melhorias:{ids:[],status:[],procs:[]}
 };
-setInterval(()=>document.getElementById("clk").textContent=new Date().toLocaleTimeString("pt-BR"),1000);
-document.getElementById("clk").textContent=new Date().toLocaleTimeString("pt-BR");
-function swTab(btn,tab){
-  document.querySelectorAll(".panel").forEach(p=>p.classList.remove("on"));
-  document.querySelectorAll(".tb").forEach(b=>b.classList.remove("on"));
-  document.getElementById("p-"+tab).classList.add("on");btn.classList.add("on");
-}
-function onDrag(e,el){e.preventDefault();el.classList.add("drag")}
-function offDrag(el){el.classList.remove("drag")}
-function onDrop(e,tab){e.preventDefault();document.getElementById("dz-"+tab).classList.remove("drag");const f=e.dataTransfer.files[0];if(f)procFile(f,tab)}
-function onFCh(el,tab){if(el.files[0])procFile(el.files[0],tab)}
-function procFile(f,tab){
-  document.getElementById("fn-"+tab).textContent=f.name;
-  const r=new FileReader();
-  if(f.name.toLowerCase().endsWith(".csv")){r.onload=e=>parseCSV(e.target.result,tab);r.readAsText(f,"UTF-8")}
-  else{r.onload=e=>parseXLSX(e.target.result,tab);r.readAsArrayBuffer(f)}
-}
-function parseXLSX(buf,tab){const wb=XLSX.read(buf,{type:"array"});const ws=wb.Sheets[wb.SheetNames[0]];procRows(XLSX.utils.sheet_to_json(ws,{header:1,defval:""}),tab)}
-function parseCSV(txt,tab){procRows(txt.split("\n").map(l=>l.split(",").map(c=>c.replace(/"/g,"").trim())),tab)}
-function fCol(hdr,terms){for(let i=0;i<hdr.length;i++){const h=hdr[i].normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase();for(const t of terms)if(h.includes(t.toLowerCase()))return i;}return -1}
-function pSeg(v){if(v===""||v==null)return 0;if(typeof v==="number")return v;return parseInt(String(v).trim().replace(/\./g,"").replace(",",""))||0}
-function pN(v){if(v===""||v==null)return 0;if(typeof v==="number")return v;const s=String(v).replace("%","").trim();if(s.includes(",")&&s.includes("."))return parseFloat(s.replace(/\./g,"").replace(",","."))||0;if(s.includes(","))return parseFloat(s.replace(",","."))||0;return parseFloat(s)||0}
-function pP(v){if(v===""||v==null)return 0;if(typeof v==="number")return v>1?v/100:v;const s=String(v).replace("%","").replace("+","").trim();const n=s.includes(",")?parseFloat(s.replace(",",".")):parseFloat(s);if(isNaN(n))return 0;return n>1?n/100:n}
-function fTempo(seg){if(!seg||seg===0)return "<span>—</span>";return `<span>${Math.floor(seg/3600)}h</span> ${Math.floor((seg%3600)/60)}min`}
-function procRows(rows,tab){
-  try{
-    if(!rows||rows.length<2){alert("Arquivo sem dados.");return;}
-    const hdr=rows[0].map(h=>String(h).trim());
-    const cN=fCol(hdr,["nome"]);const cL=fCol(hdr,["liquida","\xedquida"]);
-    const cU=fCol(hdr,["utiliza"]);const cT=fCol(hdr,["temponet","tempo net"]);const cUn=fCol(hdr,["unidades processadas","unidades"]);
-    const mp={};
-    for(let i=1;i<rows.length;i++){
-      const row=rows[i];const nomeRaw=String(row[cN>=0?cN:5]||"").trim();const nome=nomeParaId(nomeRaw);if(!nome)continue;
-      const liq=pN(row[cL>=0?cL:15]);const util=pP(row[cU>=0?cU:14]);const tempo=pSeg(row[cT>=0?cT:12]);const unid=pN(row[cUn>=0?cUn:13]);
-      if(!mp[nome])mp[nome]={lt:0,ut:0,tt:0,un:0,cnt:0};
-      mp[nome].lt+=liq;mp[nome].ut+=util;mp[nome].tt+=tempo;mp[nome].un+=unid;mp[nome].cnt++;
-    }
-    const meta=METAS[tab];
-    ST[tab].data=Object.entries(mp).map(([nome,v])=>{
-      const ml=v.cnt>0?v.lt/v.cnt:0;const mu=v.cnt>0?v.ut/v.cnt:0;
-      return{nome,liquida:ml,utilizacao:mu,percMeta:meta>0?ml/meta:0,tempo:v.tt,unidades:v.un};
-    }).sort((a,b)=>b.liquida-a.liquida);
-    render(tab);
-  }catch(e){alert("Erro: "+e.message);console.error(e);}
-}
-function render(tab){
-  const s=ST[tab];const q=(document.getElementById("sb-"+tab).value||"").toLowerCase();
-  let d=[...s.data];
-  if(s.filter==="at")d=d.filter(r=>r.percMeta>=1);
-  else if(s.filter==="qu")d=d.filter(r=>r.percMeta>=.8&&r.percMeta<1);
-  else if(s.filter==="ab")d=d.filter(r=>r.percMeta<.8);
-  if(q)d=d.filter(r=>r.nome.toLowerCase().includes(q));
-  d.sort((a,b)=>{
-    const k=s.sort;
-    const va=k==="nome"?a.nome:k==="liquida"?a.liquida:k==="util"?a.utilizacao:k==="tempo"?a.tempo:k==="unid"?a.unidades:a.percMeta;
-    const vb=k==="nome"?b.nome:k==="liquida"?b.liquida:k==="util"?b.utilizacao:k==="tempo"?b.tempo:k==="unid"?b.unidades:b.percMeta;
-    return s.asc?(va<vb?-1:va>vb?1:0):(va>vb?-1:va<vb?1:0);
-  });
-  const all=s.data;
-  document.getElementById("k-"+tab+"-at").textContent=all.filter(r=>r.percMeta>=1).length;
-  document.getElementById("k-"+tab+"-qu").textContent=all.filter(r=>r.percMeta>=.8&&r.percMeta<1).length;
-  document.getElementById("k-"+tab+"-ab").textContent=all.filter(r=>r.percMeta<.8).length;
-  document.getElementById("k-"+tab+"-tot").textContent=all.length;
-  const rm={};[...s.data].sort((a,b)=>b.liquida-a.liquida).forEach((r,i)=>rm[r.nome]=i+1);
-  const tb=document.getElementById("tb-"+tab);
-  if(!d.length){tb.innerHTML='<tr><td colspan="7"><div class="empty"><p>Nenhum representante encontrado.</p></div></td></tr>';return}
-  tb.innerHTML=d.map(r=>{
-    const pos=rm[r.nome];const pc=pos===1?"g":pos===2?"s":pos===3?"b":"";
-    const pl=pos===1?"🥇":pos===2?"🥈":pos===3?"🥉":pos;
-    const ini=r.nome.split(" ").filter(w=>w).slice(0,2).map(w=>w[0].toUpperCase()).join("");
-    const up=Math.min(r.utilizacao*100,100).toFixed(1);const mp=(r.percMeta*100).toFixed(1);
-    const bc=r.percMeta>=1?"at":r.percMeta>=.8?"qu":"ab";
-    const bi=r.percMeta>=1?"✅":r.percMeta>=.8?"⚠️":"❌";
-    return `<tr>
-      <td class="c"><span class="rnum ${pc}">${pl}</span></td>
-      <td><div class="ncell"><div class="av">${ini}</div><span class="ntext">${r.nome}</span></div></td>
-      <td class="r"><span class="lval">${Math.round(r.liquida)}</span></td>
-      <td class="r"><span class="mbadge ${bc}">${bi} ${mp}%</span></td>
-      <td class="col-hide"><div class="uwrap"><div class="ubar"><div class="ufill" style="width:${up}%"></div></div><span class="upct">${up}%</span></div></td>
-      <td class="r col-hide"><span class="lval" style="font-size:14px">${Math.round(r.unidades).toLocaleString("pt-BR")}</span></td>
-      <td class="r col-hide"><span class="tval">${fTempo(r.tempo)}</span></td>
-    </tr>`;
-  }).join("");
-}
-function sortT(tab,f){const s=ST[tab];s.asc=s.sort===f?!s.asc:false;s.sort=f;render(tab)}
-function setF(tab,f,btn){
-  ST[tab].filter=f;
-  btn.closest(".fbtn-wrap").querySelectorAll(".fbtn").forEach(b=>b.classList.remove("on"));
-  btn.classList.add("on");render(tab);
-}
-function savePage(){
-  const payload={};
-  for(const tab of ["mono","machine","putwall","wallin"]){
-    if(ST[tab].data.length>0)payload[tab]={data:ST[tab].data,filename:document.getElementById("fn-"+tab).textContent||"dados"};
-  }
-  if(!Object.keys(payload).length){alert("Carregue pelo menos um arquivo antes de salvar.");return;}
-  const raw=document.documentElement.outerHTML;
-  const marker="const PRELOADED_DATA = null; /* __PRELOADED_MARKER__ */";
-  if(!raw.includes(marker)){alert("Erro: marcador não encontrado.");return;}
-  const newHtml="<!DOCTYPE html>\n"+raw.replace(marker,"const PRELOADED_DATA = "+JSON.stringify(payload)+"; /* __PRELOADED_MARKER__ */");
-  const blob=new Blob([newHtml],{type:"text/html;charset=utf-8"});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement("a");
-  a.href=url;a.download="packing_"+new Date().toISOString().slice(0,10)+".html";
-  document.body.appendChild(a);a.click();a.remove();
-  setTimeout(()=>URL.revokeObjectURL(url),8000);
-}
-function bootPreloaded(){
-  if(!PRELOADED_DATA)return;
-  for(const [tab,info] of Object.entries(PRELOADED_DATA)){
-    if(!ST[tab])continue;
-    ST[tab].data=info.data;
-    const fn=document.getElementById("fn-"+tab);if(fn)fn.textContent=(info.filename||"dados")+" ✓";
-    const dz=document.getElementById("dz-"+tab);if(dz){dz.style.borderColor="var(--vd)";dz.style.background="rgba(22,163,74,.04)";}
-    render(tab);
-  }
-}
-bootPreloaded();
 
+// ── utils ──
+const parseUtil=s=>parseFloat(String(s).replace('%',''))||0;
+const toSec=s=>{const[h,m,sc]=(s||'0:0:0').split(':').map(Number);return h*3600+m*60+sc};
+const secHMS=s=>{const h=String(Math.floor(s/3600)).padStart(2,'0'),m=String(Math.floor((s%3600)/60)).padStart(2,'0'),sc=String(s%60).padStart(2,'0');return `${h}:${m}:${sc}`};
+const idleT=(p,e)=>secHMS(Math.max(0,toSec(p)-toSec(e)));
+const clsLiq=pct=>pct>=100?'green':pct>=80?'amber':'red';
+const clsUtil=v=>v>=85?'green':'red';
+function toggle(arr,v){const i=arr.indexOf(v);i>=0?arr.splice(i,1):arr.push(v)}
+
+// ── status key helpers ──
+function liqStatus(liq,metaLiq){const p=(liq/metaLiq)*100;return p>=100?'meta':p>=80?'parcial':'abaixo'}
+function efetStatus(efet,metaEfet){const p=(efet/metaEfet)*100;return p>=100?'meta':p>=80?'parcial':'abaixo'}
+function utilStatus(util){return util>=85?'meta':util>=68?'parcial':'abaixo'}
+
+// ── BUILD FILTER: process tabs ──
+function buildProcFilter(proc){
+  const data=RAW_DATA[proc], meta=METAS[proc], metaEfet=Math.round(meta.liq*1.15);
+  const s=FS[proc];
+  const container=document.getElementById('f-'+proc);
+  if(!container)return;
+
+  // sorted IDs by liquida desc (non-zero)
+  const allIds=data.filter(r=>r['Prod. liquida sist.']>0||r['Prod. Efetiva']>0)
+    .sort((a,b)=>b['Prod. liquida sist.']-a['Prod. liquida sist.'])
+    .map(r=>r['ID']);
+
+  const mkChips=(field,opts)=>opts.map(([k,icon,cls])=>`
+    <span class="chip ${s[field].includes(k)?'on '+cls:''}" data-field="${field}" data-val="${k}" data-cls="${cls}" data-scope="${proc}">${icon}</span>
+  `).join('');
+
+  container.innerHTML=`
+    <div class="filter-row">
+      <div class="filter-col">
+        <div class="filter-lbl">Status da Líquida</div>
+        <div class="chips-row">
+          ${mkChips('liq',[['meta','✅ Meta','green'],['parcial','⚠️ Parcial','amber'],['abaixo','❌ Abaixo','red']])}
+        </div>
+      </div>
+      <div class="filter-col">
+        <div class="filter-lbl">Status da Efetiva</div>
+        <div class="chips-row">
+          ${mkChips('efet',[['meta','✅ Meta','green'],['parcial','⚠️ Parcial','amber'],['abaixo','❌ Abaixo','red']])}
+        </div>
+      </div>
+      <div class="filter-col">
+        <div class="filter-lbl">Utilização</div>
+        <div class="chips-row">
+          ${mkChips('util',[['meta','✅ OK','green'],['parcial','⚠️ Parcial','amber'],['abaixo','❌ Baixa','red']])}
+        </div>
+      </div>
+    </div>
+    <div class="filter-divider"></div>
+    <div class="filter-row">
+      <div class="filter-col grow">
+        <div class="filter-lbl">Buscar por ID</div>
+        <div class="search-wrap" id="sw-${proc}">
+          <span class="search-icon">🔍</span>
+          <input type="text" class="search-input" id="si-${proc}" placeholder="Digite um ID..." autocomplete="off"
+            oninput="filterDropdown('${proc}','${proc}')" onfocus="openDD('${proc}')" onblur="closeDD('${proc}')">
+          <div class="dropdown" id="dd-${proc}">
+            ${allIds.map(id=>`<div class="dd-item" data-id="${id}" data-scope="${proc}" onmousedown="pickId(event,'${proc}',${id})">
+              <div class="dd-check ${s.ids.includes(id)?'checked':''}">
+                ${s.ids.includes(id)?'✓':''}
+              </div>
+              <span>${id}</span>
+            </div>`).join('')}
+          </div>
+        </div>
+        <div class="tags-row" id="tags-${proc}">
+          ${s.ids.map(id=>`<span class="tag">${id}<span class="tag-x" onclick="removeId('${proc}',${id})">×</span></span>`).join('')}
+        </div>
+      </div>
+      <button class="filter-clear" onclick="clearFilter('${proc}')">✕ Limpar</button>
+    </div>
+  `;
+  bindChips(proc);
+}
+
+function bindChips(proc){
+  document.querySelectorAll(`[data-scope="${proc}"].chip`).forEach(el=>{
+    el.onclick=()=>{
+      const {field,val,cls}=el.dataset;
+      toggle(FS[proc][field],val);
+      el.classList.toggle('on');
+      if(el.classList.contains('on')) el.classList.add(cls); else el.classList.remove('green','amber','red','blue');
+      rerender(proc);
+    };
+  });
+}
+
+// ── BUILD FILTER: scorecard ──
+function buildSCFilter(){
+  const s=FS.scorecard;
+  const container=document.getElementById('f-scorecard');
+  if(!container)return;
+  container.innerHTML=`
+    <div class="filter-row">
+      <div class="filter-col">
+        <div class="filter-lbl">Processo</div>
+        <div class="chips-row">
+          ${[['packing','📦 Packing'],['machine','⚙️ Machine'],['wallin','🧱 Wall In']].map(([k,l])=>
+            `<span class="chip ${s.procs.includes(k)?'on blue':''}" onclick="toggleSC('procs','${k}',this,'blue')">${l}</span>`).join('')}
+        </div>
+      </div>
+      <div class="filter-col">
+        <div class="filter-lbl">Nota</div>
+        <div class="chips-row">
+          ${[['A','green'],['B','amber'],['C','red']].map(([g,c])=>
+            `<span class="chip ${s.grade.includes(g)?'on '+c:''}" onclick="toggleSC('grade','${g}',this,'${c}')">Nota ${g}</span>`).join('')}
+        </div>
+      </div>
+      <button class="filter-clear" onclick="clearFilter('scorecard')">✕ Limpar</button>
+    </div>
+  `;
+}
+
+function toggleSC(field,val,el,cls){
+  toggle(FS.scorecard[field],val);
+  el.classList.toggle('on');
+  if(el.classList.contains('on')) el.classList.add(cls); else el.classList.remove('green','amber','red','blue');
+  rerender('scorecard');
+}
+
+// ── BUILD FILTER: melhorias ──
+function buildMelFilter(){
+  const s=FS.melhorias;
+  const container=document.getElementById('f-melhorias');
+  if(!container)return;
+
+  const all=[];
+  for(const[proc,rows]of Object.entries(RAW_DATA)){
+    rows.forEach(r=>{if(validRow(r))all.push({id:r['ID'],proc})});
+  }
+  const seen=new Set(); const uniq=all.filter(e=>{const k=`${e.id}-${e.proc}`;return seen.has(k)?false:(seen.add(k),true)});
+  uniq.sort((a,b)=>a.id-b.id);
+
+  const mkChip=(field,k,icon,cls)=>`<span class="chip ${s[field].includes(k)?'on '+cls:''}" data-mel-field="${field}" data-mel-val="${k}" data-mel-cls="${cls}">${icon}</span>`;
+
+  container.innerHTML=`
+    <div class="filter-row">
+      <div class="filter-col">
+        <div class="filter-lbl">Status Geral</div>
+        <div class="chips-row">
+          ${mkChip('status','meta','✅ Meta','green')}
+          ${mkChip('status','parcial','⚠️ Parcial','amber')}
+          ${mkChip('status','critico','❌ Crítico','red')}
+        </div>
+      </div>
+      <div class="filter-col">
+        <div class="filter-lbl">Processo</div>
+        <div class="chips-row">
+          ${mkChip('procs','packing','📦 Packing','blue')}
+          ${mkChip('procs','machine','⚙️ Machine','blue')}
+          ${mkChip('procs','wallin','🧱 Wall In','blue')}
+        </div>
+      </div>
+    </div>
+    <div class="filter-divider"></div>
+    <div class="filter-row">
+      <div class="filter-col grow">
+        <div class="filter-lbl">Buscar por ID</div>
+        <div class="search-wrap" id="sw-mel">
+          <span class="search-icon">🔍</span>
+          <input type="text" class="search-input" id="si-mel" placeholder="Digite um ID..." autocomplete="off"
+            oninput="filterDropdown('mel','melhorias')" onfocus="openDD('mel')" onblur="closeDD('mel')">
+          <div class="dropdown" id="dd-mel">
+            ${uniq.map(e=>{
+              const key=`${e.id}-${e.proc}`;
+              return `<div class="dd-item" data-id="${key}" data-scope="mel" onmousedown="pickMelId(event,'${key}')">
+                <div class="dd-check ${s.ids.includes(key)?'checked':''}">
+                  ${s.ids.includes(key)?'✓':''}
+                </div>
+                <span>${e.id}</span>
+                <span class="dd-proc">${PROC_LABELS[e.proc]}</span>
+              </div>`;
+            }).join('')}
+          </div>
+        </div>
+        <div class="tags-row" id="tags-mel">
+          ${s.ids.map(key=>{const[id,proc]=key.split('-');return `<span class="tag">${id} <span style="opacity:.7">${{packing:'📦',machine:'⚙️',wallin:'🧱'}[proc]}</span><span class="tag-x" onclick="removeMelId('${key}')">×</span></span>`}).join('')}
+        </div>
+      </div>
+      <button class="filter-clear" onclick="clearFilter('melhorias')">✕ Limpar</button>
+    </div>
+  `;
+
+  // bind status/process chips
+  container.querySelectorAll('[data-mel-field]').forEach(el=>{
+    el.onclick=()=>{
+      const field=el.dataset.melField, val=el.dataset.melVal, cls=el.dataset.melCls;
+      toggle(s[field],val);
+      el.classList.toggle('on');
+      if(el.classList.contains('on')) el.classList.add(cls); else el.classList.remove('green','amber','red','blue');
+      rerender('melhorias');
+    };
+  });
+}
+
+// ── DROPDOWN LOGIC ──
+function openDD(id){const el=document.getElementById('dd-'+id);if(el)el.classList.add('open')}
+function closeDD(id){setTimeout(()=>{const el=document.getElementById('dd-'+id);if(el)el.classList.remove('open')},200)}
+function filterDropdown(ddId,scope){
+  const q=(document.getElementById('si-'+ddId).value||'').toLowerCase();
+  const dd=document.getElementById('dd-'+ddId);
+  if(!dd)return;
+  dd.querySelectorAll('.dd-item').forEach(el=>{
+    const txt=el.textContent.toLowerCase();
+    el.style.display=txt.includes(q)?'':'none';
+  });
+  dd.classList.add('open');
+}
+function pickId(e,proc,id){
+  e.preventDefault();
+  toggle(FS[proc].ids,id);
+  rerender(proc);
+  buildProcFilter(proc);
+  document.getElementById('si-'+proc).value='';
+}
+function removeId(proc,id){toggle(FS[proc].ids,id);rerender(proc);buildProcFilter(proc)}
+function pickMelId(e,key){
+  e.preventDefault();
+  toggle(FS.melhorias.ids,key);
+  rerender('melhorias');
+  buildMelFilter();
+  document.getElementById('si-mel').value='';
+}
+function removeMelId(key){toggle(FS.melhorias.ids,key);rerender('melhorias');buildMelFilter()}
+function clearFilter(scope){
+  const s=FS[scope]; Object.keys(s).forEach(k=>s[k]=[]);
+  if(scope==='packing'||scope==='machine'||scope==='wallin'){buildProcFilter(scope);rerender(scope);}
+  else if(scope==='scorecard'){buildSCFilter();rerender('scorecard');}
+  else if(scope==='melhorias'){buildMelFilter();rerender('melhorias');}
+}
+
+// ── RENDER TABLE ──
+function renderTable(proc){
+  const data=RAW_DATA[proc], meta=METAS[proc], metaEfet=Math.round(meta.liq*1.15);
+  const tbody=document.getElementById('tb-'+proc), summEl=document.getElementById('s-'+proc);
+  if(!tbody)return;
+  const s=FS[proc];
+
+  let rows=[...data].filter(validRow).sort((a,b)=>b['Prod. liquida sist.']-a['Prod. liquida sist.']);
+
+  rows=rows.filter(r=>{
+    const liq=r['Prod. liquida sist.'], efet=r['Prod. Efetiva'], util=parseUtil(r['Utilização']);
+    if(s.liq.length && !s.liq.includes(liqStatus(liq,meta.liq))) return false;
+    if(s.efet.length && !s.efet.includes(efetStatus(efet,metaEfet))) return false;
+    if(s.util.length && !s.util.includes(utilStatus(util))) return false;
+    if(s.ids.length && !s.ids.includes(r['ID'])) return false;
+    return true;
+  });
+
+  const all=data.filter(validRow);
+  let cG=0,cA=0,cR=0,units=0;
+  all.forEach(r=>{const p=(r['Prod. liquida sist.']/meta.liq)*100;p>=100?cG++:p>=80?cA++:cR++;units+=r['Unidades']});
+  summEl.innerHTML=`
+    <div class="sc green"><div class="sc-lbl">✅ Meta</div><div class="sc-val">${cG}</div><div class="sc-sub">representantes</div></div>
+    <div class="sc amber"><div class="sc-lbl">⚠️ Parcial</div><div class="sc-val">${cA}</div><div class="sc-sub">representantes</div></div>
+    <div class="sc red"><div class="sc-lbl">❌ Abaixo</div><div class="sc-val">${cR}</div><div class="sc-sub">representantes</div></div>
+    <div class="sc blue"><div class="sc-lbl">📦 Unidades</div><div class="sc-val">${units.toLocaleString('pt-BR')}</div><div class="sc-sub">bipadas</div></div>
+  `;
+
+  if(!rows.length){tbody.innerHTML=`<tr><td colspan="9" class="no-results">Nenhum resultado para os filtros selecionados.</td></tr>`;return}
+
+  tbody.innerHTML=rows.map((r,i)=>{
+    const liq=r['Prod. liquida sist.'],efet=r['Prod. Efetiva'],util=parseUtil(r['Utilização']);
+    const liqP=meta.liq>0?(liq/meta.liq)*100:0, efetP=metaEfet>0?(efet/metaEfet)*100:0;
+    const idle=idleT(r['Tempo em processo sistêmico'],r['Tempo efetivo']);
+    const lC=liq===0?'gray':clsLiq(liqP), eC=efet===0?'gray':clsLiq(efetP), uC=util===0?'gray':clsUtil(util);
+    const rk=i===0?'gold':i===1?'silver':i===2?'bronze':'';
+    return `<tr>
+      <td><span class="rank ${rk}">${i+1}</span></td>
+      <td><span class="id-badge">${r['ID']}</span></td>
+      <td><span class="pill ${lC}">${liq>0?liq:'—'}</span></td>
+      <td><span class="pill ${eC}">${efet>0?efet:'—'}</span></td>
+      <td><div class="pb-wrap"><div class="pb-bg"><div class="pb-fill ${uC}" style="width:${Math.min(100,util)}%"></div></div><div class="pb-lbl ${uC}">${util>0?util.toFixed(1)+'%':'—'}</div></div></td>
+      <td style="font-size:11px;color:var(--g600)">${r['Tempo em processo sistêmico']}</td>
+      <td style="font-size:11px;color:var(--g600)">${r['Tempo efetivo']}</td>
+      <td style="font-size:11px;color:var(--red);font-weight:600">${idle}</td>
+      <td><strong>${r['Unidades'].toLocaleString('pt-BR')}</strong></td>
+    </tr>`;
+  }).join('');
+}
+
+// ── RENDER SCORECARD ──
+function renderScorecard(){
+  const grid=document.getElementById('sc-grid'); if(!grid)return;
+  const s=FS.scorecard;
+  const entries=[];
+  for(const[proc,rows]of Object.entries(RAW_DATA)){
+    const meta=METAS[proc],metaEfet=Math.round(meta.liq*1.15);
+    rows.forEach(r=>{
+      if(!validRow(r))return;
+      const liq=r['Prod. liquida sist.'],efet=r['Prod. Efetiva'],util=parseUtil(r['Utilização']);
+      const lP=(liq/meta.liq)*100,eP=(efet/metaEfet)*100,uOk=util>=meta.util;
+      const pts=(lP>=100?40:lP>=80?25:0)+(eP>=100?40:eP>=80?25:0)+(uOk?20:0);
+      const grade=pts>=80?'A':pts>=50?'B':'C';
+      entries.push({proc,id:r['ID'],liq,efet,util,units:r['Unidades'],metaLiq:meta.liq,metaEfet,metaUtil:meta.util,lP,eP,uOk,pts,grade});
+    });
+  }
+  entries.sort((a,b)=>b.liq-a.liq);
+  const filtered=entries.filter(e=>{
+    if(s.procs.length&&!s.procs.includes(e.proc))return false;
+    if(s.grade.length&&!s.grade.includes(e.grade))return false;
+    return true;
+  });
+  if(!filtered.length){grid.innerHTML=`<div class="no-results" style="grid-column:1/-1">Nenhum resultado.</div>`;return}
+  grid.innerHTML=filtered.map(e=>{
+    const gc=e.grade==='A'?'ga':e.grade==='B'?'gb':'gc';
+    const gp=e.grade==='A'?'green':e.grade==='B'?'amber':'red';
+    const lC=clsLiq(e.lP),eC=clsLiq(e.eP),uC=e.uOk?'green':'red';
+    const st=e.grade==='A'?'✅ Metas atingidas':e.grade==='B'?'⚠️ Desempenho parcial':'❌ Abaixo da meta';
+    return `<div class="scc ${gc}">
+      <div class="scc-head"><div><div class="scc-id">${e.id}</div><div class="scc-proc">${PROC_LABELS[e.proc]}</div></div><div class="grade-badge ${gp}">Nota ${e.grade} · ${e.pts}pts</div></div>
+      <div class="scc-metrics">
+        <div class="scc-m ${lC}"><div class="scc-m-lbl">Líquida</div><div class="scc-m-val">${e.liq}</div><div class="scc-m-sub">meta ${e.metaLiq} · ${e.lP.toFixed(0)}%</div></div>
+        <div class="scc-m ${eC}"><div class="scc-m-lbl">Efetiva</div><div class="scc-m-val">${e.efet}</div><div class="scc-m-sub">meta ${e.metaEfet} · ${e.eP.toFixed(0)}%</div></div>
+        <div class="scc-m ${uC}"><div class="scc-m-lbl">Utilização</div><div class="scc-m-val">${e.util.toFixed(1)}%</div><div class="scc-m-sub">meta ${e.metaUtil}%</div></div>
+        <div class="scc-m blue"><div class="scc-m-lbl">Unidades</div><div class="scc-m-val">${e.units.toLocaleString('pt-BR')}</div><div class="scc-m-sub">bipadas</div></div>
+      </div>
+      <div class="scc-status ${gp}">${st}</div>
+    </div>`;
+  }).join('');
+}
+
+// ── MELHORIAS DICAS ──
+function gerarDicas(r){
+  const{proc,liq,efet,util,metaLiq,metaEfet,metaUtil,liqPct,efetPct,utilOk,units,procTime,efetTime}=r;
+  const idleMin=Math.round(Math.max(0,toSec(procTime)-toSec(efetTime))/60);
+  const items=[];
+
+  // ── LÍQUIDA ──
+  if(proc==='packing'){
+    if(liqPct>=100){
+      items.push({type:'ok',icon:'✅',text:`Líquida de ${liq} — acima da meta de ${metaLiq}. As embalagens estão sendo concluídas corretamente do início ao fim, sem relançamentos nem cancelamentos. A bipagem está fluindo bem e os flyers estão sendo finalizados com consistência. Continue assim!`});
+    } else if(liqPct>=80){
+      const falta=metaLiq-liq;
+      items.push({type:'warn',icon:'⚠️',text:`Líquida de ${liq}, faltam ${falta} unidades para a meta de ${metaLiq} (${liqPct.toFixed(0)}%). O principal ponto de atenção é a velocidade entre bipar e fechar o flyer — pequenas demoras em cada item acumulam e reduzem o resultado líquido. Ações para recuperar a meta: manter o foco total na sequência bip → embalar → próximo item sem interrupções; verificar se o caveirão está sempre abastecido para evitar pausas de busca de insumos; e checar se a esteira está fluindo de forma contínua sem paradas pontuais que quebrem o ritmo.`});
+    } else {
+      items.push({type:'alert',icon:'🚨',text:`Líquida de ${liq} representa apenas ${liqPct.toFixed(0)}% da meta de ${metaLiq}. Há impacto operacional causado pela lentidão entre o bip e o fechamento do flyer, além de distrações durante a execução das atividades, fatores que acabam reduzindo a fluidez do processo e afetando diretamente a produtividade da operação. Ações sugeridas: reforçar o foco na sequência bip → fechar flyer sem pausas intermediárias; verificar se o caveirão está abastecido para evitar deslocamentos; checar se a esteira está fluindo sem paradas; garantir que o scanner esteja com bateria suficiente para não gerar releituras; e alinhar com o supervisor o balanceamento dos totes HV para evitar esperas entre tarefas.`});
+    }
+  } else if(proc==='machine'){
+    if(liqPct>=100){
+      items.push({type:'ok',icon:'✅',text:`Líquida de ${liq} — acima da meta de ${metaLiq}. A máquina está operando com continuidade e os flyers estão sendo selados corretamente sem relançamentos. Bom controle do equipamento e do fluxo de embalagem!`});
+    } else if(liqPct>=80){
+      const falta=metaLiq-liq;
+      items.push({type:'warn',icon:'⚠️',text:`Líquida de ${liq}, faltam ${falta} unidades para a meta de ${metaLiq} (${liqPct.toFixed(0)}%). Possíveis falhas de selagem ou trocas de flyer pouco ágeis estão gerando itens não contabilizados. Ações para recuperar a meta: verificar se a selagem está operando dentro do padrão e corrigir ajustes de pressão ou temperatura se necessário; cronometrar o tempo de troca de flyer e buscar reduzir esse intervalo com prática e padronização do procedimento.`});
+    } else {
+      items.push({type:'alert',icon:'🚨',text:`Líquida de ${liq} representa apenas ${liqPct.toFixed(0)}% da meta de ${metaLiq}. Há impacto operacional causado pela lentidão no processo, falhas de selagem gerando rejeição e trocas de flyer que interrompem a continuidade da máquina. Ações sugeridas: acionar manutenção imediatamente para verificar o sistema de selagem e reduzir rejeições; treinar a troca de flyer para ser feita de forma mais ágil e padronizada, reduzindo o tempo de parada; e registrar os horários e frequência das falhas para facilitar o diagnóstico do equipamento.`});
+    }
+  } else { // wallin
+    if(liqPct>=100){
+      items.push({type:'ok',icon:'✅',text:`Líquida de ${liq} — acima da meta de ${metaLiq}. O fluxo no Wall In está sendo executado com consistência, sem travamentos ou interrupções que causem relançamentos. Ótimo aproveitamento do processo!`});
+    } else if(liqPct>=80){
+      const falta=metaLiq-liq;
+      items.push({type:'warn',icon:'⚠️',text:`Líquida de ${liq}, faltam ${falta} unidades para a meta de ${metaLiq} (${liqPct.toFixed(0)}%). Instabilidades sistêmicas e eventuais ausências de PS para impressão podem estar gerando relançamentos que afetam a contagem líquida. Ações para recuperar a meta: garantir que haja PS disponível para impressão MELI antes de iniciar; registrar os momentos de travamento do sistema e reportar ao supervisor para escalonamento com TI; e manter a cadência de bipagem sem pausas durante os momentos em que o sistema está estável.`});
+    } else {
+      items.push({type:'alert',icon:'🚨',text:`Líquida de ${liq} representa apenas ${liqPct.toFixed(0)}% da meta de ${metaLiq}. Há impacto operacional causado pela lentidão entre o bip e o fechamento do processo, além de instabilidades sistêmicas e distrações durante a execução que reduzem a fluidez do Wall In. Ações sugeridas: reportar imediatamente ao supervisor os travamentos sistêmicos e os momentos de bloqueio operacional; verificar e garantir a disponibilidade de PS para impressão MELI antes de iniciar o turno; e trabalhar a cadência de bipagem — manter foco total na sequência de leitura sem interrupções desnecessárias.`});
+    }
+  }
+
+  // ── EFETIVA ──
+  if(proc==='packing'){
+    if(efetPct>=100){
+      items.push({type:'ok',icon:'✅',text:`Efetiva de ${efet} — supera a meta de ${metaEfet}. O ritmo de bipagem e embalagem está excelente: os flyers estão sendo processados com agilidade, sem demora entre a leitura do scanner e o fechamento do pacote. Isso mostra domínio do processo e boa organização na estação de trabalho.`});
+    } else if(efetPct>=80){
+      const falta=metaEfet-efet;
+      items.push({type:'warn',icon:'⚠️',text:`Efetiva de ${efet}, a ${falta} unidades da meta de ${metaEfet} (${efetPct.toFixed(0)}%). O ritmo está próximo, mas há espaço para fechar essa diferença. Ações para atingir a meta: focar em reduzir o tempo entre o bip e o fechamento do flyer — cada segundo economizado nesse intervalo, multiplicado pelo volume do turno, faz diferença; organizar os insumos na bancada antes de iniciar para não precisar se deslocar durante a operação; e garantir o scanner com carga completa para evitar releituras que quebram a cadência.`});
+    } else {
+      items.push({type:'alert',icon:'🚨',text:`Efetiva de ${efet} está abaixo da meta de ${metaEfet} (${efetPct.toFixed(0)}%). A lentidão entre o bip e o fechamento do flyer e as distrações durante a execução estão comprometendo o ritmo produtivo. Ações sugeridas: trabalhar a consciência de cadência — bipar e embalar em sequência contínua sem pausar entre os itens; organizar a bancada antes de iniciar o turno para que os insumos estejam ao alcance; conferir a carga do scanner antes de começar para evitar falhas de leitura; e solicitar ao supervisor a verificação do fluxo da esteira caso haja paradas recorrentes.`});
+    }
+  } else if(proc==='machine'){
+    if(efetPct>=100){
+      items.push({type:'ok',icon:'✅',text:`Efetiva de ${efet} — supera a meta de ${metaEfet}. A máquina está operando com alto ritmo e as trocas de flyer estão sendo realizadas com agilidade, sem impactar a continuidade do fluxo produtivo. Excelente desempenho operacional!`});
+    } else if(efetPct>=80){
+      const falta=metaEfet-efet;
+      items.push({type:'warn',icon:'⚠️',text:`Efetiva de ${efet}, a ${falta} unidades da meta de ${metaEfet} (${efetPct.toFixed(0)}%). As trocas de flyer e eventuais instabilidades pontuais estão reduzindo o ritmo da máquina. Ações para fechar a diferença: treinar e cronometrar a troca de flyer buscando um tempo padrão mais ágil; verificar se a máquina apresenta travamentos em algum ponto específico do ciclo e reportar ao time de manutenção para ajuste preventivo.`});
+    } else {
+      items.push({type:'alert',icon:'🚨',text:`Efetiva de ${efet} está abaixo da meta de ${metaEfet} (${efetPct.toFixed(0)}%). As paralisações do equipamento, falhas de selagem e trocas de flyer demoradas estão comprometendo a disponibilidade operacional da máquina. Ações sugeridas: acionar manutenção para avaliação preventiva do equipamento com prioridade; padronizar e treinar o procedimento de troca de flyer para minimizar o tempo parado; e registrar cada ocorrência de parada com horário e causa para subsidiar a análise de manutenção.`});
+    }
+  } else { // wallin
+    if(efetPct>=100){
+      items.push({type:'ok',icon:'✅',text:`Efetiva de ${efet} — supera a meta de ${metaEfet}. O ritmo de bipagem no Wall In está excelente, com boa velocidade de leitura e separação dos itens sem interrupções sistêmicas relevantes. Ótimo fluxo!`});
+    } else if(efetPct>=80){
+      const falta=metaEfet-efet;
+      items.push({type:'warn',icon:'⚠️',text:`Efetiva de ${efet}, a ${falta} unidades da meta de ${metaEfet} (${efetPct.toFixed(0)}%). Travamentos pontuais e esperas operacionais estão reduzindo o ritmo de bipagem. Ações para fechar a diferença: registrar horários e frequência dos travamentos para repassar ao TI; verificar a disponibilidade contínua do PS para impressão MELI; e nos intervalos estáveis do sistema, manter ritmo acelerado de bipagem para compensar os períodos de instabilidade.`});
+    } else {
+      items.push({type:'alert',icon:'🚨',text:`Efetiva de ${efet} está abaixo da meta de ${metaEfet} (${efetPct.toFixed(0)}%). A lentidão no ritmo de bipagem, combinada com travamentos sistêmicos e ausência de PS para impressão, está comprometendo severamente o fluxo do Wall In. Ações sugeridas: escalar para o supervisor e TI os travamentos sistêmicos com urgência; verificar e garantir PS disponível para impressão MELI antes de cada turno; nos momentos em que o sistema estiver estável, manter cadência máxima de bipagem sem interrupções para compensar os períodos de instabilidade.`});
+    }
+  }
+
+  // ── UTILIZAÇÃO ──
+  if(proc==='packing'){
+    if(utilOk){
+      items.push({type:'ok',icon:'✅',text:`Utilização de ${util.toFixed(1)}% — dentro da meta de ${metaUtil}%. O tempo disponível está sendo bem aproveitado na linha de embalagem. O abastecimento do caveirão está fluindo, as pausas estão dentro do esperado e o operador está mantendo continuidade no trabalho.`});
+    } else if(util<60){
+      items.push({type:'alert',icon:'🚨',text:`Utilização de ${util.toFixed(1)}% — muito abaixo da meta de ${metaUtil}%${idleMin>0?`, com aproximadamente ${idleMin} minutos sem produção registrada`:''}.  Há janelas expressivas de ociosidade. As causas mais prováveis no Packing são: falta de insumos no caveirão deixando o operador sem material para trabalhar, totes HV sendo abastecidos sequencialmente para o mesmo rep gerando desbalanceamento, ou paradas recorrentes da esteira que interrompem o fluxo por longos períodos. Acione o supervisor para verificar o abastecimento e o balanceamento da linha.`});
+    } else {
+      items.push({type:'tip',icon:'💡',text:`Utilização de ${util.toFixed(1)}%, a ${(metaUtil-util).toFixed(1)} pontos da meta de ${metaUtil}%. Há janelas de ociosidade que podem ser reduzidas. Verifique se o caveirão está com insumos suficientes para manter o fluxo contínuo, se há momentos em que a esteira para e deixa o operador aguardando, ou se o abastecimento de totes está chegando de forma balanceada para evitar esperas desnecessárias entre uma tarefa e outra.`});
+    }
+  } else if(proc==='machine'){
+    if(utilOk){
+      items.push({type:'ok',icon:'✅',text:`Utilização de ${util.toFixed(1)}% — dentro da meta de ${metaUtil}%. A máquina está com boa disponibilidade operacional e o fluxo de embalagem está contínuo. Trocas de flyer sendo feitas com agilidade e sem paradas prolongadas.`});
+    } else if(util<60){
+      items.push({type:'alert',icon:'🚨',text:`Utilização de ${util.toFixed(1)}% — muito abaixo da meta de ${metaUtil}%${idleMin>0?`, com aproximadamente ${idleMin} minutos de equipamento parado ou operador ocioso`:''}.  As paralisações e instabilidades do equipamento estão reduzindo severamente a disponibilidade operacional. Falhas de selagem recorrentes e trocas de flyer demoradas também contribuem para esse resultado. É necessário acionar manutenção para avaliar o estado da máquina e garantir continuidade no fluxo.`});
+    } else {
+      items.push({type:'tip',icon:'💡',text:`Utilização de ${util.toFixed(1)}%, a ${(metaUtil-util).toFixed(1)} pontos da meta de ${metaUtil}%. A máquina pode estar apresentando instabilidades pontuais ou as trocas de flyer estão tomando tempo acima do necessário. Acompanhe a frequência das paradas e verifique se há um padrão — se a máquina para sempre no mesmo ponto do ciclo, pode ser um sinal de manutenção preventiva necessária.`});
+    }
+  } else { // wallin
+    if(utilOk){
+      items.push({type:'ok',icon:'✅',text:`Utilização de ${util.toFixed(1)}% — dentro da meta de ${metaUtil}%. O operador está mantendo bom ritmo no Wall In, com poucas interrupções sistêmicas e PS disponível para impressão. Fluxo bem aproveitado!`});
+    } else if(util<60){
+      items.push({type:'alert',icon:'🚨',text:`Utilização de ${util.toFixed(1)}% — muito abaixo da meta de ${metaUtil}%${idleMin>0?`, com aproximadamente ${idleMin} minutos sem produção registrada`:''}.  No Wall In, esse nível de ociosidade geralmente indica: instabilidades sistêmicas prolongadas travando o processo, operador preso aguardando liberação do sistema por longos períodos, ou ausência total de PS disponível para impressão MELI — sem impressora funcionando, o processo para completamente. Escale para o supervisor e TI imediatamente.`});
+    } else {
+      items.push({type:'tip',icon:'💡',text:`Utilização de ${util.toFixed(1)}%, a ${(metaUtil-util).toFixed(1)} pontos da meta de ${metaUtil}%. Verifique se há momentos em que o operador fica aguardando o sistema liberar a próxima tarefa ou se a impressora MELI está operando normalmente. Instabilidades pontuais no sistema do Wall In costumam gerar essas janelas de espera — registre as ocorrências para acompanhamento com o time de TI.`});
+    }
+  }
+
+  // ── TEMPO OCIOSO ──
+  if(idleMin>20){
+    const nivel=idleMin>60?'alert':idleMin>40?'warn':'tip';
+    const icon=idleMin>60?'🚨':idleMin>40?'⚠️':'⏱️';
+    const procCtx={
+      packing: idleMin>60
+        ?'No Packing, esse nível de ociosidade quase sempre está relacionado a falta de insumos no caveirão por período prolongado, paradas repetidas da esteira ou abastecimento desequilibrado de totes HV. Além disso, a necessidade de deslocamento para busca de bandejas e insumos consome tempo que não é computado como produção. Acione o supervisor para regularizar o abastecimento da linha imediatamente.'
+        :idleMin>40
+        ?'Verifique se há momentos em que o caveirão fica sem insumos, forçando o operador a aguardar reabastecimento, ou se a esteira está parando com frequência. O abastecimento sequencial de totes HV para o mesmo rep também pode gerar períodos de espera entre uma tarefa e outra — alinha com o supervisor para redistribuição.'
+        :'Parte desse tempo é esperada no fluxo (troca de insumos, reorganização da bancada, aguardar próximo tote), mas vale observar se o caveirão está sempre abastecido e se a esteira está fluindo sem paradas desnecessárias.',
+      machine: idleMin>60
+        ?'No processo Machine, esse volume de ociosidade indica paralisações frequentes ou prolongadas do equipamento — falhas de selagem, trocas de flyer demoradas ou instabilidades que tiram a máquina de operação. Acione manutenção para avaliação preventiva do equipamento.'
+        :idleMin>40
+        ?'As trocas de flyer e as paradas para ajuste do equipamento podem estar tomando mais tempo do que o necessário. Cada parada não planejada da máquina contribui para esse acúmulo de ociosidade. Registre os horários das paradas para identificar se há um padrão e facilitar a manutenção preventiva.'
+        :'Parte desse tempo é natural no processo de Machine (troca de flyer, ajuste de selagem), mas fique atento se as paradas estão aumentando em frequência — pode ser sinal de necessidade de manutenção preventiva.',
+      wallin: idleMin>60
+        ?'No Wall In, esse volume de tempo ocioso é crítico e geralmente indica instabilidade sistêmica prolongada, operador preso aguardando liberação do processo por longos períodos ou ausência de PS para impressão MELI — sem impressão disponível, o processo para completamente. Escale para supervisor e TI com urgência.'
+        :idleMin>40
+        ?'Os travamentos sistêmicos e os momentos em que o operador aguarda continuidade do processo estão se acumulando. Verifique a disponibilidade da impressora MELI e registre os horários dos travamentos para repassar ao time de TI.'
+        :'Parte desse tempo pode ser de travamentos pontuais do sistema ou ajustes operacionais. Registre as ocorrências de instabilidade — mesmo os travamentos curtos se acumulam ao longo do turno e impactam o resultado final.'
+    }[proc];
+    items.push({type:nivel,icon,text:`Aproximadamente ${idleMin} minutos de tempo ocioso identificados no turno (diferença entre tempo em processo e tempo efetivo). ${procCtx}`});
+  }
+
+  // ── DESTAQUE GERAL ──
+  if(liqPct>=100&&efetPct>=100&&utilOk){
+    const destaque={
+      packing:`Excelente turno! Com ${units.toLocaleString('pt-BR')} unidades embaladas e todos os indicadores no verde, esse é o padrão que faz a diferença na operação. Bipagem ágil, flyers finalizados corretamente e aproveitamento consistente do tempo — sem ociosidade, sem relançamentos. Parabéns, manter essa constância é o que define um operador de alto nível.`,
+      machine:`Turno excelente! Com ${units.toLocaleString('pt-BR')} unidades processadas e todos os indicadores no verde, a máquina operou com alta disponibilidade, as trocas de flyer foram ágeis e não houve falhas de selagem relevantes. Esse nível de desempenho reflete domínio do equipamento e do processo.`,
+      wallin:`Turno excelente! Com ${units.toLocaleString('pt-BR')} unidades processadas e todos os indicadores no verde, o Wall In operou sem instabilidades sistêmicas relevantes e com PS disponível durante todo o fluxo. Bipagem consistente e processo fluindo do início ao fim. Parabéns pelo desempenho!`
+    }[proc];
+    items.push({type:'ok',icon:'🌟',text:destaque});
+  }
+
+  return items;
+}
+
+function renderMelhorias(){
+  const container=document.getElementById('mel-container'); if(!container)return;
+  const s=FS.melhorias;
+  const all=[];
+  for(const[proc,rows]of Object.entries(RAW_DATA)){
+    const meta=METAS[proc],metaEfet=Math.round(meta.liq*1.15);
+    rows.forEach(r=>{
+      if(!validRow(r))return;
+      const liq=r['Prod. liquida sist.'],efet=r['Prod. Efetiva'],util=parseUtil(r['Utilização']);
+      const liqPct=(liq/meta.liq)*100,efetPct=(efet/metaEfet)*100,utilOk=util>=meta.util;
+      all.push({proc,id:r['ID'],liq,efet,util,units:r['Unidades'],metaLiq:meta.liq,metaEfet,metaUtil:meta.util,liqPct,efetPct,utilOk,procTime:r['Tempo em processo sistêmico'],efetTime:r['Tempo efetivo']});
+    });
+  }
+  all.sort((a,b)=>b.liq-a.liq);
+  const filtered=s.ids.length?all.filter(e=>s.ids.includes(`${e.id}-${e.proc}`)):all;
+  // apply status filter
+  const filteredFinal = filtered.filter(e=>{
+    if(s.procs.length && !s.procs.includes(e.proc)) return false;
+    if(s.status.length){
+      const allOk=e.liqPct>=100&&e.efetPct>=100&&e.utilOk;
+      const allBad=e.liqPct<80&&e.efetPct<80&&!e.utilOk;
+      const st=allOk?'meta':allBad?'critico':'parcial';
+      if(!s.status.includes(st)) return false;
+    }
+    return true;
+  });
+  if(!filteredFinal.length){container.innerHTML=`<div class="no-results">Nenhum resultado para os filtros selecionados.</div>`;return}
+  container.innerHTML=filteredFinal.map(r=>{
+    const dicas=gerarDicas(r);
+    const allOk=r.liqPct>=100&&r.efetPct>=100&&r.utilOk, allBad=r.liqPct<80&&r.efetPct<80&&!r.utilOk;
+    const status=allOk?'meta':allBad?'critico':'parcial';
+    const statusLbl=allOk?'META ✓':allBad?'CRÍTICO':'PARCIAL';
+    const summary=allOk?`Excelente — todos os indicadores atingiram a meta no ${PROC_LABELS[r.proc]}.`:allBad?`Atenção — todos os indicadores abaixo da meta. Recomenda-se acompanhamento próximo.`:`Desempenho parcial — ${dicas.filter(d=>d.type==='ok').length} de 3 indicadores dentro da meta.`;
+    return `<div class="mel-card" style="border-left-color:${PROC_COLORS[r.proc]}">
+      <div class="mel-header" onclick="toggleMel(this)">
+        <div class="mel-id">${r.id}</div>
+        <div class="mel-proc-tag">${PROC_LABELS[r.proc]}</div>
+        <span class="mel-status-tag ${status}">${statusLbl}</span>
+        <span class="mel-chevron">›</span>
+      </div>
+      <div class="mel-body">
+        <div class="mel-summary">${summary}</div>
+        <div class="mel-items">${dicas.map(d=>`<div class="mel-item ${d.type}"><div class="mel-icon">${d.icon}</div><div class="mel-text">${d.text}</div></div>`).join('')}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function toggleMel(h){
+  const b=h.nextElementSibling,c=h.querySelector('.mel-chevron');
+  const open=b.classList.toggle('open');
+  c.style.transform=open?'rotate(90deg)':'';
+}
+
+// ── RERENDER ──
+function rerender(scope){
+  if(['packing','machine','wallin'].includes(scope))renderTable(scope);
+  else if(scope==='scorecard')renderScorecard();
+  else if(scope==='melhorias')renderMelhorias();
+}
+
+// ── TABS ──
+document.getElementById('navBar').querySelectorAll('.tab').forEach(tab=>{
+  tab.addEventListener('click',()=>{
+    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('tab-'+tab.dataset.tab).classList.add('active');
+  });
+});
+
+// ── DATE ──
+function updateDate(){
+  const p=document.getElementById('datePicker'); if(!p.value)return;
+  const[y,m,d]=p.value.split('-').map(Number);
+  const dt=new Date(y,m-1,d);
+  // date display removed //=dt.toLocaleDateString('pt-BR',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+}
+
+// ── INIT ──
+function initAll(){
+  ['packing','machine','wallin'].forEach(p=>{buildProcFilter(p);renderTable(p)});
+  buildSCFilter(); renderScorecard();
+  buildMelFilter(); renderMelhorias();
+  const today=new Date().toISOString().split('T')[0];
+  document.getElementById('datePicker').value=today;
+  updateDate();
+}
+initAll();
 </script>
 </body>
 </html>
